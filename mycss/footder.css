@@ -1,0 +1,67 @@
+.mymainfooter {
+    background-color: #f8f9fa; /* Màu nền xám nhạt */
+    border-radius: 10px; /* Bo tròn góc */
+    padding: 20px; /* Khoảng cách nội dung với các cạnh */
+  }
+  
+  .mymainfooter h4 {
+    color: #3f640b; /* Màu chữ xanh đậm */
+    font-weight: bold;
+  }
+  
+  .mymainfooter ul {
+    list-style: none; /* Bỏ dấu chấm đầu dòng */
+    padding: 0; /* Loại bỏ khoảng cách mặc định */
+  }
+  
+  .mymainfooter ul li a {
+    color: #3f640b; /* Màu chữ xanh đậm */
+    text-decoration: none; /* Loại bỏ gạch chân */
+  }
+  
+  .mymainfooter ul li a:hover {
+    text-decoration: underline; /* Hiển thị gạch chân khi hover */
+  }
+  
+  .mymainfooter .btn {
+    border-radius: 5px; /* Bo tròn các góc của nút */
+  }
+  
+  .mymainfooter .btn-outline-success, 
+  .mymainfooter .btn-outline-danger, 
+  .mymainfooter .btn-outline-warning, 
+  .mymainfooter .btn-outline-info {
+    color: #3f640b; /* Màu xanh đậm */
+    border-color: #3f640b; /* Viền xanh đậm */
+  }
+  
+  .mymainfooter .btn-outline-success:hover,
+  .mymainfooter .btn-outline-danger:hover,
+  .mymainfooter .btn-outline-warning:hover,
+  .mymainfooter .btn-outline-info:hover {
+    background-color: #3f640b; /* Màu nền xanh khi hover */
+    color: #fff; /* Màu chữ trắng khi hover */
+  }
+  
+  .mymainfooter .input-group input[type="text"] {
+    border-radius: 5px; /* Bo tròn ô nhập liệu */
+    border: 1px solid #ced4da; /* Viền ô nhập liệu */
+    padding: 5px;
+    margin-right: 10px; /* Khoảng cách giữa ô nhập liệu và nút gửi */
+  }
+  
+  .mymainfooter .input-group input[type="submit"] {
+    border-radius: 5px; /* Bo tròn nút gửi */
+    background-color: #3f640b; /* Nền xanh đậm */
+    color: #fff; /* Màu chữ trắng */
+    border: none;
+    padding: 5px 15px;
+  }
+  
+  .mymainfooter .input-group input[type="submit"]:hover {
+    background-color: #3f640b; /* Màu xanh đậm hơn khi hover */
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #e9ecef; /* Màu nền khi hover trên dòng của bảng */
+  }
