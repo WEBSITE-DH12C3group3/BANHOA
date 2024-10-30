@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/BANHOA/Front-end/public/Eden.png">
+    <link rel="stylesheet" href="/BANHOA/css/bootstrap.css">
+    <link rel="stylesheet" href="/BANHOA/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/BANHOA/mycss/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/BANHOA/assets/owlcarousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/BANHOA/assets/owlcarousel/assets/owl.theme.default.min.css">
+    <script src="/BANHOA/assets/vendors/jquery.min.js"></script>
+    <script src="/BANHOA/assets/owlcarousel/owl.carousel.js"></script>
+    <link rel="stylesheet" href="/BANHOA/mycss/footder.css">
+  <style>
+    /* Custom CSS */
+    .product-image {
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+      object-fit: cover;
+    }
+    .discount-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: red;
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <section class="myheader">
+    <div class="container py-3">
+        <div class="row">
+            <div class="col">
+                <div class="row-md-2">
+                    <div class="col-4">
+                        <img src="/BANHOA/Front-end/public/nopgeden.png" class="img-fluid" width="80px" alt="">
+                    </div>
+                    <div class="col-8">
+                        <p><b>EDEN gửi gắm yêu thương</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 py-3" >
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Tìm Kiếm" aria-label="Tìm Kiếm" aria-describedby="basic-addon2">
+                    <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-magnifying-glass"></i></span>
+                </div>
+            </div>
+            <div class="col-md-6" >
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-3 ">
+                                <div class="fs-3"><i class="fa-solid fa-phone-volume"></i></div>
+                            </div>
+                            <div class="col-9 text-danger">
+                                Tư vấn hỗ trợ: <br>
+                                <strong>0349459165</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="fs-3"><i class="fa-regular fa-comment-dots"></i></div>
+                            </div>
+                            <div class="col-9 text-danger">
+                                Nhắn Tin: <br>
+                                <strong>0349459165</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row ">
+                            <div class="col-3">
+                                <a href="#" class="position-relative" >
+                                    <span class="fs-2 tx-dark text-dark"><i class="fa-solid fa-bag-shopping"></i></span>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    0
+                                        <span class="visually-hidden">unread messages</span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="col-9">
+                                Giỏ Hàng <br>
+                                Của Bạn
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="fs-3"><i class="fa-regular fa-user"></i></div>
+                            </div>
+                            <div class="col-9">
+                                <div class="dropdown">
+                                    Xin chào!
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tài khoản
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/BANHOA/Front-end/Customer/dangky.html">Đăng ký</a></li>
+                                        <li><a class="dropdown-item" href="#">Đăng nhập</a></li>
+                                    </ul>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+<hr>
+ <section>
+    <!-- Header -->
+    <header class="bg-light p-3 text-center">
+      <h1>Hoa Sinh Nhật</h1>
+    </header>
+  
+    <!-- Main content -->
+    <div class="container my-5">
+      <div class="row">
+        <!-- Filter and Sorting -->
+        <div class="col-12 d-flex justify-content-between mb-4">
+          <div>
+            <button class="btn btn-outline-secondary">Sắp xếp theo</button>
+            <select class="form-select d-inline w-auto">
+              <option value="default">Mặc định</option>
+              <option value="price">Giá</option>
+              <option value="name">Tên</option>
+            </select>
+          </div>
+          <div>
+            <button class="btn btn-outline-secondary">Số lượng hiển thị</button>
+            <select class="form-select d-inline w-auto">
+              <option value="4">4</option>
+              <option value="8">8</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+        </div>
+  
+        <!-- Product Cards -->
+        <!-- Row 1 -->
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card">
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon1.jpg" class="card-img-top product-image" alt="Adorable">
+            <div class="card-body text-center">
+              <h5 class="card-title">Adorable</h5>
+              <p class="text-muted">850,000 VND</p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card">
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon2.jpg" class="card-img-top product-image" alt="Tinh Khiết (Thạch Thảo Trắng)">
+            <div class="card-body text-center">
+              <h5 class="card-title">Tinh Khiết (Thạch Thảo Trắng)</h5>
+              <p class="text-muted">420,000 VND</p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card">
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon3.jpg" class="card-img-top product-image" alt="Hạ Về (Cúc Tana Xinh)">
+            <div class="card-body text-center">
+              <h5 class="card-title">Hạ Về (Cúc Tana Xinh)</h5>
+              <p class="text-muted">560,000 VND</p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card position-relative">
+            <span class="discount-badge">15% Giảm</span>
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon4.jpg" class="card-img-top product-image" alt="Be Happy">
+            <div class="card-body text-center">
+              <h5 class="card-title">Be Happy</h5>
+              <p class="text-muted">720,000 VND <del>850,000 VND</del></p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Row 2 -->
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card">
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon1.jpg" class="card-img-top product-image" alt="Adorable">
+            <div class="card-body text-center">
+              <h5 class="card-title">Adorable</h5>
+              <p class="text-muted">850,000 VND</p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card">
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon2.jpg" class="card-img-top product-image" alt="Tinh Khiết (Thạch Thảo Trắng)">
+            <div class="card-body text-center">
+              <h5 class="card-title">Tinh Khiết (Thạch Thảo Trắng)</h5>
+              <p class="text-muted">420,000 VND</p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card">
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon3.jpg" class="card-img-top product-image" alt="Hạ Về (Cúc Tana Xinh)">
+            <div class="card-body text-center">
+              <h5 class="card-title">Hạ Về (Cúc Tana Xinh)</h5>
+              <p class="text-muted">560,000 VND</p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card position-relative">
+            <span class="discount-badge">15% Giảm</span>
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon4.jpg" class="card-img-top product-image" alt="Be Happy">
+            <div class="card-body text-center">
+              <h5 class="card-title">Be Happy</h5>
+              <p class="text-muted">720,000 VND <del>850,000 VND</del></p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Row 3 -->
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card">
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon9.jpg" class="card-img-top product-image" alt="Mộng Mơ (Hoa Cúc)">
+            <div class="card-body text-center">
+              <h5 class="card-title">Mộng Mơ (Hoa Cúc)</h5>
+              <p class="text-muted">420,000 VND</p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card">
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon10.jpg" class="card-img-top product-image" alt="Hoa Tươi Sáng">
+            <div class="card-body text-center">
+              <h5 class="card-title">Hoa Tươi Sáng</h5>
+              <p class="text-muted">620,000 VND</p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-3 col-sm-6 mb-4">
+          <div class="card">
+            <img src="/BANHOA/Front-end/hoaicon/hoaicon11.jpg" class="card-img-top product-image" alt="Nắng Mai (Hoa Hướng Dương)">
+            <div class="card-body text-center">
+              <h5 class="card-title">Nắng Mai (Hoa Hướng Dương)</h5>
+              <p class="text-muted">520,000 VND</p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+        </div>
+  
+ </section>
+  <!-- Footer -->
+  <section class="mymainfooter bg-dark text-danger py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Giới Thiệu</h4>
+                <ul class="list-menu">
+                    <li><a href="#">trang chu</a></li>
+                    <li><a href="#">gioi thieu</a></li>
+                    <li><a href="#">san pham</a></li>
+                    <li><a href="#">lien he</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>Mua Hàng</h4>
+                <ul>
+                    <li><a href="#">trang chu</a></li>
+                    <li><a href="#">gioi thieu</a></li>
+                    <li><a href="#">san pham</a></li>
+                    <li><a href="#">lien he</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-3">
+                <h4>Chăm Sóc Khách Hàng</h4>
+                <ul>
+                    <li><a href="#">trang chu</a></li>
+                    <li><a href="#">gioi thieu</a></li>
+                    <li><a href="#">san pham</a></li>
+                    <li><a href="#">lien he</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>Liên Lạc</h4>
+                <ul>
+                    <li><a href="#">trang chu</a></li>
+                    <li><a href="#">gioi thieu</a></li>
+                    <li><a href="#">san pham</a></li>
+                    <li><a href="#">lien he</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-dark table-hover">
+                    <tr>
+                        <th>Số Điện Thoại</th>
+                        <td><a href="tel:+84349459165">0349459165</a></td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td><a href="mailto:mynameistrang@gmail.com">mynameistrang@gmail.com</a></td>
+                    </tr>
+                    <tr>
+                        <th>Địa Chỉ</th>
+                        <td class="text-primary">Cầu Diễn-Bắc Từ Liêm-Hà Nội</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <form method="get">
+                            <label for="send"></label>
+                            <input type="text" id="send" placeholder="nội dung">
+                            <input type="submit" value="Gửi">
+                        </form>
+                    </div>
+                </div>
+                <div class="row-md-6">
+                    <!-- <div class="col-4"> -->
+                        <button type="button" class="btn btn-outline-success fs-2"><a href="#"><i class="fa-brands fa-facebook"></i></a></button>
+                    <!-- </div> -->
+                    <!-- <div class="col-4"> -->
+                        <button type="button" class="btn btn-outline-danger fs-2" ><a href="#"><i class="fa-brands fa-instagram"></i></a></button>
+                    <!-- </div> -->
+                    <!-- <div class="col-4"> -->
+                        <button type="button" class="btn btn-outline-warning fs-2"><a href="#"><i class="fa-brands fa-twitter"></i></a></button>
+                    <!-- </div> -->
+                    <button type="button" class="btn btn-outline-info fs-2"><a href="#"><img src="/BANHOA/Front-end/public/nopgeden.png" width="37px" alt=""></a></button>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+</section>
+  <!-- Link Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+      
