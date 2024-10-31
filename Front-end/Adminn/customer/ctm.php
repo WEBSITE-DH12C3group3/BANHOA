@@ -1,5 +1,6 @@
 <?php
 include '/xampp/htdocs/BANHOA/database/connect.php';
+$db = new Database();
 ?>
 <!Doctype html>
 <html lang="en">
@@ -107,38 +108,51 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Họ tên</th>
-                            <th scope="col">Tài khoản</th>
+                            <th scope="col">Tên đăng nhập</th>
                             <th scope="col">Email</th>
                             <th scope="col">Mật khẩu</th>
                             <th scope="col">Số điện thoại</th>
                             <th scope="col">Địa chỉ</th>
                             <th scope="col">Vai trò</th>
-                            <th scope="col">Thời gian</th>
-                            <th scope="col"> Chức năng</th>
+                            <th scope="col">Ngày tạo</th>
+                            <th scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $sql = "SELECT * FROM users ORDER BY id, fullname";
-                        $rs = mysqli_query($conn, $sql);
-                        while ($row = mysqli_fetch_assoc($rs)) {
-                        ?>
-                            <tr>
-                                <td><?php echo $row['id'] ?></td>
-                                <td><?php echo $row['fullname'] ?></td>
-                                <td><?php echo $row['user'] ?></td>
-                                <td><?php echo $row['email'] ?></td>
-                                <td><?php echo $row['password'] ?></td>
-                                <td><?php echo $row['phone'] ?></td>
-                                <td><?php echo $row['address'] ?></td>
-                                <td><?php echo $row['role'] ?></td>
-                                <td><?php echo $row['created_at'] ?></td>
-                                <td>
-                                    <a href="edit.php?id=<?php echo $row['id'] ?>" class="btn btn-info">Sửa</a>
-                                    <a onclick="return confirm('Bạn có muốn xóa?')" href="del.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">Xóa</a>
-                                </td>
-                            </tr>
+                        $result = $db->select($sql);
+                        if ($result) {
+                            while ($row = $result->fetch_assoc()) { ?>
+                                <tr>
+                                    <td><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['fullname']; ?></td>
+                                    <td><?php echo $row['user']; ?></td>
+                                    <td><?php echo $row['email']; ?></td>
+                                    <td><?php echo $row['password']; ?></td>
+                                    <td><?php echo $row['phone']; ?></td>
+                                    <td><?php echo $row['address']; ?></td>
+                                    <td><?php echo $row['role']; ?></td>
+                                    <td><?php echo $row['created_at']; ?></td>
+                                    <td>
+                                        <a type="button" class="btn btn-primary"
+                                            data-toggle="modal"
+                                            data-target="#editc"
+                                            data-id="<?php echo $row['id']; ?>"
+                                            data-fullname="<?php echo $row['fullname']; ?>"
+                                            data-user="<?php echo $row['user']; ?>"
+                                            data-email="<?php echo $row['email']; ?>"
+                                            data-password="<?php echo $row['password']; ?>"
+                                            data-phone="<?php echo $row['phone']; ?>"
+                                            data-address="<?php echo $row['address']; ?>" style="color: white;">Sửa</a>
+
+                                        <a onclick="return confirm('Bạn có muốn xóa?')" href="deluser.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </tr>
                         <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -148,47 +162,84 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
     </div>
 
     <!-- Modal for Adding Customer -->
-    <div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editc" tabindex="-1" role="dialog" aria-labelledby="editcLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addCustomerModalLabel">Thêm Khách Hàng Mới</h5>
+                    <h5 class="modal-title" id="editcLabel">Sửa Khách Hàng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="addCustomerForm" method="post">
+                    <form id="editForm" method="POST" action="edituser.php">
+                        <div class="form-group">
+                            <label for="customerName">Mã Khách Hàng</label>
+                            <input type="text" class="form-control" id="customerID" name="customerID" placeholder="Mã khách hàng" value="<?php echo $row['id'] ?>" readonly>
+                        </div>
                         <div class="form-group">
                             <label for="customerName">Tên Khách Hàng</label>
-                            <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Nhập tên khách hàng" required>
+                            <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Tên khách hàng" required value="<?php echo $row['fullname'] ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="customerName">Tên Tài Khoản</label>
+                            <input type="text" class="form-control" id="customerUser" name="customerUser" placeholder="Tên đăng nhập" required value="<?php echo $row['user'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="customerEmail">Email</label>
-                            <input type="email" class="form-control" id="customerEmail" name="customerEmail" placeholder="Nhập email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="customerPhone">Số Điện Thoại</label>
-                            <input type="text" class="form-control" id="customerPhone" name="customerPhone" placeholder="Nhập số điện thoại" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="customerAddress">Địa Chỉ</label>
-                            <textarea class="form-control" id="customerAddress" name="customerAddress" rows="2" placeholder="Nhập địa chỉ"></textarea>
+                            <input type="email" class="form-control" id="customerEmail" name="customerEmail" placeholder="Nhập email" required value="<?php echo $row['email'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="customerPassword">Mật Khẩu</label>
-                            <input type="password" class="form-control" id="customerPassword" name="customerPassword" placeholder="Nhập mật khẩu" required>
+                            <input type="password" class="form-control" id="customerPassword" name="customerPassword" placeholder="Nhập mật khẩu" required value="<?php echo $row['password'] ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="customerPhone">Số Điện Thoại</label>
+                            <input type="text" class="form-control" id="customerPhone" name="customerPhone" placeholder="Nhập số điện thoại" required value="<?php echo $row['phone'] ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="customerAddress">Địa Chỉ</label>
+                            <input type="text" class="form-control" id="customerAddress" name="customerAddress" placeholder="Nhập địa chỉ" required value="<?php echo $row['address'] ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Vai trò</label>
+                            <select name="role" id="role">
+                                <option value="customer">Customer</option>
+                                <option value="admin">Admin</option>
+                            </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="submit" form="addCustomerForm" class="btn btn-primary">Lưu Khách Hàng</button>
+                    <button type="submit" form="editForm" class="btn btn-primary">Lưu Khách Hàng</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        $('#editc').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            var fullname = button.data('fullname');
+            var user = button.data('user');
+            var email = button.data('email');
+            var password = button.data('password');
+            var phone = button.data('phone');
+            var address = button.data('address');
+
+            // Update the modal's content.
+            var modal = $(this);
+            modal.find('#customerID').val(id);
+            modal.find('#customerName').val(fullname);
+            modal.find('#customerUser').val(user);
+            modal.find('#customerEmail').val(email);
+            modal.find('#customerPassword').val(password);
+            modal.find('#customerPhone').val(phone);
+            modal.find('#customerAddress').val(address);
+        });
+    </script>
 
 </body>
 

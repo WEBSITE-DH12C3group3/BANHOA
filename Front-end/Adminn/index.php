@@ -21,7 +21,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
 
     <!-- Additional JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   
+
     <link rel="stylesheet" href="/BANHOA/Front-end/Adminn/css/style.css">
 </head>
 
@@ -63,7 +63,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                                 Quản Lí Đơn Hàng</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/ctm.php"><i class="fas fa-user"></i>Quản Lí Khách Hàng</a>
+                            <a href="/BANHOA/Front-end/Adminn/customer/ctm.php"><i class="fas fa-user"></i>Quản Lí Khách Hàng</a>
                         </li>
                     </ul>
                 </li>
@@ -91,7 +91,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
 
             <div class="maincontent">
                 <div class="dashboard">
-                   
+
                     <div class="item total-revenue">
                         <p>Tổng doanh thu (Ngày)</p>
                         <p>0 đ</p>
