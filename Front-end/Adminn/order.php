@@ -63,7 +63,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                                 Quản Lí Đơn Hàng</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/ctm.php"><i class="fas fa-user"></i>Quản Lí Khách Hàng</a>
+                            <a href="/BANHOA/Front-end/Adminn/customer/ctm.php"><i class="fas fa-user"></i>Quản Lí Khách Hàng</a>
                         </li>
                     </ul>
                 </li>
