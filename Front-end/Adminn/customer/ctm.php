@@ -22,6 +22,7 @@ $db = new Database();
 
     <!-- Additional JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/BANHOA/Front-end/Adminn/css/search.js"></script>
     <link rel="stylesheet" href="/BANHOA/Front-end/Adminn/css/style.css">
 </head>
 
@@ -52,7 +53,7 @@ $db = new Database();
                         <i class="fas fa-th-large"></i><span>Quản Lí</span></a>
                     <ul class="collapse list-unstyled menu" id="subm">
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/category.php"><i class="fas fa-list"></i>
+                            <a href="/BANHOA/Front-end/Adminn/category/category.php"><i class="fas fa-list"></i>
                                 Quản Lí Danh Mục</a>
                         </li>
                         <li>
@@ -84,22 +85,22 @@ $db = new Database();
             </ul>
         </nav>
 
-
-
         <!-- Page Content  -->
         <div id="content">
-
 
             <div class="maincontent">
 
                 <div class="search-bar">
-                    <input type="text" placeholder="Nhập Từ Khóa Cần Tìm...">
-                    <button>Tìm Kiếm</button>
+                    <input type="text" id="searchBox"
+                        onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
                 </div>
 
                 <div class="info-bar">
                     <div class="total-posts">
-                        <p>Tổng số khách hàng: </p>
+                        <!-- count -->
+                        <p>Tổng số khách hàng:
+                            <?php $count = $db->count("SELECT * FROM users");
+                            echo $count; ?></p>
                     </div>
                 </div>
 
@@ -108,7 +109,6 @@ $db = new Database();
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Họ tên</th>
-                            <th scope="col">Tên đăng nhập</th>
                             <th scope="col">Email</th>
                             <th scope="col">Mật khẩu</th>
                             <th scope="col">Số điện thoại</th>
@@ -127,7 +127,6 @@ $db = new Database();
                                 <tr>
                                     <td><?php echo $row['id']; ?></td>
                                     <td><?php echo $row['fullname']; ?></td>
-                                    <td><?php echo $row['user']; ?></td>
                                     <td><?php echo $row['email']; ?></td>
                                     <td><?php echo $row['password']; ?></td>
                                     <td><?php echo $row['phone']; ?></td>
@@ -135,12 +134,11 @@ $db = new Database();
                                     <td><?php echo $row['role']; ?></td>
                                     <td><?php echo $row['created_at']; ?></td>
                                     <td>
-                                        <a type="button" class="btn btn-primary"
+                                        <a type="button" class="btn btn-info"
                                             data-toggle="modal"
-                                            data-target="#editc"
+                                            data-target="#edit"
                                             data-id="<?php echo $row['id']; ?>"
                                             data-fullname="<?php echo $row['fullname']; ?>"
-                                            data-user="<?php echo $row['user']; ?>"
                                             data-email="<?php echo $row['email']; ?>"
                                             data-password="<?php echo $row['password']; ?>"
                                             data-phone="<?php echo $row['phone']; ?>"
@@ -157,12 +155,13 @@ $db = new Database();
                         ?>
                     </tbody>
                 </table>
+                <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for Adding Customer -->
-    <div class="modal fade" id="editc" tabindex="-1" role="dialog" aria-labelledby="editcLabel" aria-hidden="true">
+    <!-- Modal for Editing Customer -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -180,10 +179,6 @@ $db = new Database();
                         <div class="form-group">
                             <label for="customerName">Tên Khách Hàng</label>
                             <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Tên khách hàng" required value="<?php echo $row['fullname'] ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="customerName">Tên Tài Khoản</label>
-                            <input type="text" class="form-control" id="customerUser" name="customerUser" placeholder="Tên đăng nhập" required value="<?php echo $row['user'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="customerEmail">Email</label>
@@ -219,11 +214,10 @@ $db = new Database();
     </div>
 
     <script>
-        $('#editc').on('show.bs.modal', function(event) {
+        $('#edit').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var id = button.data('id'); // Extract info from data-* attributes
             var fullname = button.data('fullname');
-            var user = button.data('user');
             var email = button.data('email');
             var password = button.data('password');
             var phone = button.data('phone');
@@ -233,7 +227,6 @@ $db = new Database();
             var modal = $(this);
             modal.find('#customerID').val(id);
             modal.find('#customerName').val(fullname);
-            modal.find('#customerUser').val(user);
             modal.find('#customerEmail').val(email);
             modal.find('#customerPassword').val(password);
             modal.find('#customerPhone').val(phone);

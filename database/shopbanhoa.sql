@@ -4,26 +4,26 @@ USE websitehoa;
 
 -- 1. Tạo bảng categories (danh mục sản phẩm)
 CREATE TABLE categories (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    category_name VARCHAR(255) NOT NULL,
+    id VARCHAR(10) PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL
 );
 
 -- 2. Tạo bảng products (sản phẩm)
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_name VARCHAR(255) NOT NULL,
+    image VARCHAR(255),
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL,
-    category_id INT,
+    category_id VARCHAR(10) NOT NULL,
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
--- 3. Tạo bảng customers (người dùng)
+-- 3. Tạo bảng users (người dùng)
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fullname VARCHAR(255) NOT NULL,
-    user VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
@@ -35,11 +35,11 @@ CREATE TABLE users (
 -- 4. Tạo bảng orders (đơn hàng)
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT,
+    user_id INT,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(50),
     total DECIMAL(10, 2),
-    FOREIGN KEY (customer_id) REFERENCES customers(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 -- 5. Tạo bảng order_items (chi tiết các sản phẩm trong từng đơn hàng)
@@ -56,10 +56,10 @@ CREATE TABLE order_items (
 -- 6. Tạo bảng cart_items (giỏ hàng)
 CREATE TABLE cart_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT,
+    user_id INT,
     product_id INT,
     quantity INT NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 

@@ -51,7 +51,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                         <i class="fas fa-th-large"></i><span>Quản Lí</span></a>
                     <ul class="collapse list-unstyled menu" id="subm">
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/category.php"><i class="fas fa-list"></i>
+                            <a href="/BANHOA/Front-end/Adminn/category/category.php"><i class="fas fa-list"></i>
                                 Quản Lí Danh Mục</a>
                         </li>
                         <li>

@@ -56,11 +56,24 @@ class Database
             return false;
         }
     }
+
     public function delete($query)
     {
         $result = $this->conn->query($query);
         if ($result) {
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Phương thức đếm số dòng dữ liệu (mới thêm)
+    public function count($query)
+    {
+        $result = $this->conn->query($query);
+        if ($result) {
+            $count = $result->num_rows;
+            return $count;
         } else {
             return false;
         }
