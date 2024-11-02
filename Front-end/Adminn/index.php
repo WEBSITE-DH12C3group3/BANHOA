@@ -1,5 +1,6 @@
 <?php
 include '/xampp/htdocs/BANHOA/database/connect.php';
+// include '/xampp/htdocs/BANHOA/Front-end/Adminn/checkacc.php';
 ?>
 <!Doctype html>
 <html lang="en">
@@ -55,7 +56,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                                 Quản Lí Danh Mục</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/product.php"><i class="fas fa-box"></i>
+                            <a href="/BANHOA/Front-end/Adminn/product/product.php"><i class="fas fa-box"></i>
                                 Quản Lí Sản Phẩm</a>
                         </li>
                         <li>

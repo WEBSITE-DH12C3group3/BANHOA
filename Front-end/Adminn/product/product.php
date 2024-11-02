@@ -1,5 +1,6 @@
 <?php
 include '/xampp/htdocs/BANHOA/database/connect.php';
+$db = new Database();
 ?>
 <!Doctype html>
 <html lang="en">
@@ -21,7 +22,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
 
     <!-- Additional JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script src="/BANHOA/Front-end/Adminn/css/search.js"></script>
     <link rel="stylesheet" href="/BANHOA/Front-end/Adminn/css/style.css">
 </head>
 
@@ -52,11 +53,11 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                         <i class="fas fa-th-large"></i><span>Quản Lí</span></a>
                     <ul class="collapse list-unstyled menu" id="subm">
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/category.php"><i class="fas fa-list"></i>
+                            <a href="/BANHOA/Front-end/Adminn/category/category.php"><i class="fas fa-list"></i>
                                 Quản Lí Danh Mục</a>
                         </li>
                         <li class="active">
-                            <a href="/BANHOA/Front-end/Adminn/product.php"><i class="fas fa-box"></i>
+                            <a href="/BANHOA/Front-end/Adminn/product/product.php"><i class="fas fa-box"></i>
                                 Quản Lí Sản Phẩm</a>
                         </li>
                         <li>
@@ -64,7 +65,8 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                                 Quản Lí Đơn Hàng</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/customer/ctm.php"><i class="fas fa-user"></i>Quản Lí Khách Hàng</a>
+                            <a href="/BANHOA/Front-end/Adminn/customer/ctm.php"><i class="fas fa-user"></i>
+                                Quản Lí Khách Hàng</a>
                         </li>
                     </ul>
                 </li>
@@ -78,126 +80,234 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                     <a href="#"><i class="fas fa-comments"></i><span>Phản Hồi</span></a>
                 </li>
                 <li class="">
-                    <a href="#"><i class="fas fa-sign-out-alt"></i><span>Đăng xuất</span>
-                    </a>
+                    <a href="#"><i class="fas fa-sign-out-alt"></i>
+                        <span>Đăng xuất</span></a>
                 </li>
             </ul>
         </nav>
 
-
-
         <!-- Page Content  -->
         <div id="content">
-
 
             <div class="maincontent">
 
                 <div class="search-bar">
-                    <input type="text" placeholder="Nhập Từ Khóa Cần Tìm...">
-                    <button>Tìm Kiếm</button>
-                </div>
-
-                <div class="info-bar">
-                    <div class="total-posts">
-                        <p>Tổng số sản phẩm: 2</p>
-                    </div>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addpro">
+                    <input type="text" id="searchBox"
+                        onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add">
                         Thêm sản phẩm
                     </button>
                 </div>
 
-                <table>
+                <div class="info-bar">
+                    <div class="total-posts">
+                        <!-- count -->
+                        <p>Tổng số sản phẩm:
+                            <?php $count = $db->count("SELECT * FROM products");
+                            echo $count; ?></p>
+                    </div>
+                </div>
+
+                <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Sản Phẩm</th>
-                            <th>Danh Mục</th>
-                            <th>Nổi bật</th>
-                            <th>Mới</th>
-                            <th>Hiện thị</th>
-                            <th>Tác vụ</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Hình ảnh</th>
+                            <th scope="col">Miêu tả</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Kho</th>
+                            <th scope="col">Danh mục</th>
+                            <th scope="col" style="width: 137px;">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody class="img-tb">
-                        <tr>
-                            <td>1</td>
-                            <td><img src="/BANHOA/Front-end/Adminn/img/logo.img.png" alt="Ảnh 1"></td>
-                            <td>Hoa 1</td>
-                            <td>Hoa cưới</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox" checked></td>
-                            <td>
-                                <button class="edit">Sửa</button>
-                                <button class="delete">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><img src="/BANHOA/Front-end/Adminn/img/logo.img.png" alt="Ảnh 1"></td>
-                            <td>Hoa 2</td>
-                            <td>Hoa tang</td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox" checked></td>
-                            <td>
-                                <button class="edit">Sửa</button>
-                                <button class="delete">Xóa</button>
-                            </td>
-                        </tr>
-                        <!-- Thêm các hàng khác ở đây -->
+                    <tbody>
+                        <?php
+                        $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.stock, c.category_name
+                                FROM products p
+                                JOIN categories c ON p.category_id = c.id
+                                ORDER BY p.id, p.product_name, c.category_name";
+                        $result = $db->select($sql);
+                        if ($result) {
+                            while ($row = $result->fetch_assoc()) { ?>
+                                <tr>
+                                    <td><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['product_name']; ?></td>
+                                    <td><?php echo $row['image']; ?></td>
+                                    <td><?php echo $row['description']; ?></td>
+                                    <td><?php echo $row['price']; ?></td>
+                                    <td><?php echo $row['stock']; ?></td>
+                                    <td><?php echo $row['category_name']; ?></td>
+                                    <td>
+                                        <a type=" button" class="btn btn-info"
+                                            data-toggle="modal"
+                                            data-target="#edit"
+                                            data-id="<?php echo $row['id']; ?>"
+                                            data-product_name="<?php echo $row['product_name']; ?>"
+                                            data-image="<?php echo $row['image']; ?>"
+                                            data-description="<?php echo $row['description']; ?>"
+                                            data-price="<?php echo $row['price']; ?>"
+                                            data-stock="<?php echo $row['stock']; ?>"
+                                            data-category_name="<?php echo $row['category_name']; ?>"
+                                            style="color: white;">Sửa</a>
+
+                                        <a onclick="return confirm('Bạn có muốn xóa?')" href="delpro.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                        <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
+                <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
-    <!-- Modal for Adding Product -->
-    <div class="modal fade" id="addpro" tabindex="-1" role="dialog" aria-labelledby="addproLabel" aria-hidden="true">
+    <!-- Modal for Editing Product -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addproLabel">Thêm Sản Phẩm Mới</h5>
+                    <h5 class="modal-title" id="editLabel">Sửa Sản phẩm</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="addProductForm" method="post" enctype="multipart/form-data">
+                    <form id="editForm" method="POST" action="editpro.php">
                         <div class="form-group">
-                            <label for="productName">Tên Sản Phẩm</label>
-                            <input type="text" class="form-control" id="productName" name="productName" placeholder="Nhập tên sản phẩm" required>
+                            <label for="id">Mã Sản phẩm</label>
+                            <input type="text" class="form-control" id="id" name="id" placeholder="Mã sản phẩm" value="<?php echo $row['id'] ?>" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="productDescription">Mô Tả</label>
-                            <textarea class="form-control" id="productDescription" name="productDescription" rows="3" placeholder="Nhập mô tả sản phẩm"></textarea>
+                            <label for="product_name">Tên Sản phẩm</label>
+                            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Tên sản phẩm" required value="<?php echo $row['product_name'] ?>">
                         </div>
                         <div class="form-group">
-                            <label for="productPrice">Giá</label>
-                            <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Nhập giá sản phẩm" required>
+                            <label for="image">Hình ảnh</label>
+                            <input type="text" class="form-control" id="image" name="image" placeholder="URL Hình ảnh" value="<?php echo $row['image'] ?>">
                         </div>
                         <div class="form-group">
-                            <label for="productCategory">Danh Mục</label>
-                            <select class="form-control" id="productCategory" name="productCategory" required>
-                                <option value="" disabled selected>Chọn danh mục</option>
-                                <option value="electronics">Điện Tử</option>
-                                <option value="fashion">Thời Trang</option>
-                                <option value="home">Đồ Gia Dụng</option>
-                                <option value="beauty">Làm Đẹp</option>
+                            <label for="description">Mô tả</label>
+                            <textarea class="form-control" id="description" name="description" placeholder="Mô tả"><?php echo $row['description'] ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Giá</label>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="Giá sản phẩm" required value="<?php echo $row['price'] ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Số lượng</label>
+                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng" required value="<?php echo $row['stock'] ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="category_name">Danh mục</label>
+                            <select class="form-control" id="category_name" name="category_id" required>
+                                <?php
+                                // Truy vấn để lấy các danh mục từ bảng categories
+                                $sql = "SELECT id, category_name FROM categories";
+                                $result = $db->select($sql);
+                                if ($result) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option value='" . $row['id'] . "'>" . $row['category_name'] . "</option>";
+                                    }
+                                } else {
+                                    echo "<option value=''>Không có danh mục nào</option>"; // Thêm thông báo nếu không có danh mục
+                                }
+                                ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="productImage">Ảnh Sản Phẩm</label>
-                            <input type="file" class="form-control-file" id="productImage" name="productImage">
-                        </div>
-
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="submit" form="addProductForm" class="btn btn-primary">Thêm</button>
+                    <button type="submit" form="editForm" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#edit').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            var product_name = button.data('product_name');
+            var image = button.data('image');
+            var description = button.data('description');
+            var price = button.data('price');
+            var stock = button.data('stock');
+            var category_name = button.data('category_name');
+
+            // Update the modal's content.
+            var modal = $(this);
+            modal.find('#id').val(id);
+            modal.find('#product_name').val(product_name);
+            modal.find('#image').val(image);
+            modal.find('#description').val(description);
+            modal.find('#price').val(price);
+            modal.find('#stock').val(stock);
+            modal.find('#category_name').val(category_name);
+
+        });
+    </script>
+
+
+    <!-- Modal for Editing Product -->
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addLabel">Sửa Sản phẩm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addForm" method="POST" action="addpro.php">
+                        <div class="form-group">
+                            <label for="product_name">Tên Sản phẩm</label>
+                            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Tên sản phẩm" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Hình ảnh</label>
+                            <input type="file" class="form-control" id="image" name="image" placeholder="URL Hình ảnh">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Mô tả</label>
+                            <textarea class="form-control" id="description" name="description" placeholder="Mô tả"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Giá</label>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="Giá sản phẩm" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Số lượng</label>
+                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category_name">Danh mục</label>
+                            <select class="form-control" id="category_name" name="category_id" required>
+                                <option value="">Chọn danh mục</option>
+                                <?php
+                                // Truy vấn để lấy các danh mục từ bảng categories
+                                $sql = "SELECT id, category_name FROM categories";
+                                $result = $db->select($sql);
+                                if ($result) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option value='" . $row['id'] . "'>" . $row['category_name'] . "</option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" form="editForm" class="btn btn-primary">Thêm</button>
                 </div>
             </div>
         </div>

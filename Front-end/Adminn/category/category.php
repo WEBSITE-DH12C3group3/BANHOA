@@ -57,7 +57,7 @@ $db = new Database();
                                 Quản Lí Danh Mục</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/product.php"><i class="fas fa-box"></i>
+                            <a href="/BANHOA/Front-end/Adminn/product/product.php"><i class="fas fa-box"></i>
                                 Quản Lí Sản Phẩm</a>
                         </li>
                         <li>
@@ -113,7 +113,7 @@ $db = new Database();
                         <tr>
                             <th scope="col" style="width: 140px;">ID</th>
                             <th scope="col">Tên danh mục</th>
-                            <th scope="col" style="width: 140px;">Hành động</th>
+                            <th scope="col" style="width: 137px;">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
