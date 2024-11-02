@@ -155,7 +155,7 @@ $db = new Database();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editcLabel">Sửa Danh mục</h5>
+                    <h5 class="modal-title" id="editLabel">Sửa Danh mục</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -195,6 +195,36 @@ $db = new Database();
         });
     </script>
 
+
+    <!-- Modal for Editing Category -->
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addLabel">Thêm Danh mục</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addForm" method="POST" action="addcate.php">
+                        <div class="form-group">
+                            <label for="ID">Mã Danh mục</label>
+                            <input type="text" class="form-control" id="ID" name="ID" placeholder="Mã danh mục" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Name">Tên Danh mục</label>
+                            <input type="text" class="form-control" id="Name" name="Name" placeholder="Tên danh mục" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" form="addForm" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
