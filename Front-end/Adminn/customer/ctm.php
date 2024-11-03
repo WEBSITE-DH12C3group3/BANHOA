@@ -104,7 +104,7 @@ $db = new Database();
                     </div>
                 </div>
 
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="Table">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -155,7 +155,13 @@ $db = new Database();
                         ?>
                     </tbody>
                 </table>
+
                 <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
+                <div class="pagination-container" style="display: flex; justify-content: center;">
+                    <div class="pagination" id="pagination" style="align-self: center;">
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -234,6 +240,7 @@ $db = new Database();
         });
     </script>
 
+    <script src="/BANHOA/Front-end/Adminn/css/pagination.js"></script>
 </body>
 
 </html>

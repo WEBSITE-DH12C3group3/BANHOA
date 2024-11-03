@@ -11,6 +11,14 @@ $db = new Database();
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title>EDEN | Sản phẩm</title>
     <link rel="icon" href="/BANHOA/Front-end/Adminn/img/logo.png" type="image/png">
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Additional JavaScript Libraries -->
+    <script src="/BANHOA/Front-end/Adminn/css/search.js"></script>
+
     <!-- CSS Stylesheets -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -31,7 +39,7 @@ $db = new Database();
             <ul class="list-unstyled components">
                 <li>
                     <a href="/BANHOA/Front-end/Adminn/index.php">
-                        <i class="fas fa-chart-bar"></i><span> Thống kê</span></a>
+                        <i class="fas fa-chart-bar"></i><span>Thống kê</span></a>
                 </li>
 
                 <li>
@@ -246,7 +254,7 @@ $db = new Database();
                             <label for="image">Hình ảnh hiện tại</label><br />
                             <img id="image" src="../uploads/<?php echo $row['image']; ?>" alt="Current image" width="150px" height="auto"><br />
                             <label for="image">Chọn hình ảnh mới (nếu muốn thay đổi):</label>
-                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                            <input type="file" class="form-control" id="image" name="image" placeholder="URL Hình ảnh" accept="image/*">
                         </div>
                         <div class="form-group">
                             <label for="description">Mô tả</label>
@@ -310,13 +318,6 @@ $db = new Database();
         });
     </script>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <!-- Additional JavaScript Libraries -->
-    <script src="/BANHOA/Front-end/Adminn/css/search.js"></script>
     <script src="/BANHOA/Front-end/Adminn/css/pagination.js"></script>
 </body>
 

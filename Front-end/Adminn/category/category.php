@@ -108,7 +108,7 @@ $db = new Database();
                     </div>
                 </div>
 
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="Table">
                     <thead>
                         <tr>
                             <th scope="col" style="width: 140px;">ID</th>
@@ -145,7 +145,13 @@ $db = new Database();
                         ?>
                     </tbody>
                 </table>
+
                 <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
+                <div class="pagination-container" style="display: flex; justify-content: center;">
+                    <div class="pagination" id="pagination" style="align-self: center;">
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -163,12 +169,12 @@ $db = new Database();
                 <div class="modal-body">
                     <form id="editForm" method="POST" action="editcate.php">
                         <div class="form-group">
-                            <label for="ID">Mã Danh mục</label>
-                            <input type="text" class="form-control" id="ID" name="ID" placeholder="Mã danh mục" value="<?php echo $row['id'] ?>" readonly>
+                            <label for="cateid">Mã Danh mục</label>
+                            <input type="text" class="form-control" id="cateid" name="cateid" placeholder="Mã danh mục" value="<?php echo $row['id'] ?>" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="Name">Tên Danh mục</label>
-                            <input type="text" class="form-control" id="Name" name="Name" placeholder="Tên danh mục" required value="<?php echo $row['category_name'] ?>">
+                            <label for="catename">Tên Danh mục</label>
+                            <input type="text" class="form-control" id="catename" name="catename" placeholder="Tên danh mục" required value="<?php echo $row['category_name'] ?>">
                         </div>
 
                     </form>
@@ -189,8 +195,8 @@ $db = new Database();
 
             // Update the modal's content.
             var modal = $(this);
-            modal.find('#ID').val(id);
-            modal.find('#Name').val(category_name);
+            modal.find('#cateid').val(id);
+            modal.find('#catename').val(category_name);
 
         });
     </script>
@@ -225,6 +231,8 @@ $db = new Database();
             </div>
         </div>
     </div>
+
+    <script src="/BANHOA/Front-end/Adminn/css/pagination.js"></script>
 </body>
 
 </html>
