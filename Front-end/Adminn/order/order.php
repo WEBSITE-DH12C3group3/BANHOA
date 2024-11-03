@@ -99,7 +99,7 @@ $db = new Database();
                     <div class="total-posts">
                         <!-- count -->
                         <p>Tổng số khách hàng:
-                            <?php $count = $db->count("SELECT * FROM users");
+                            <?php $count = $db->count("SELECT * FROM orders");
                             echo $count; ?></p>
                     </div>
                 </div>
