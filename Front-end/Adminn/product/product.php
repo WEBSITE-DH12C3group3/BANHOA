@@ -14,15 +14,6 @@ $db = new Database();
     <!-- CSS Stylesheets -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <!-- Additional JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/BANHOA/Front-end/Adminn/css/search.js"></script>
     <link rel="stylesheet" href="/BANHOA/Front-end/Adminn/css/style.css">
 </head>
 
@@ -40,7 +31,7 @@ $db = new Database();
             <ul class="list-unstyled components">
                 <li>
                     <a href="/BANHOA/Front-end/Adminn/index.php">
-                        <i class="fas fa-chart-bar"></i><span>Thống kê</span></a>
+                        <i class="fas fa-chart-bar"></i><span> Thống kê</span></a>
                 </li>
 
                 <li>
@@ -108,7 +99,7 @@ $db = new Database();
                     </div>
                 </div>
 
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="Table">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -133,7 +124,7 @@ $db = new Database();
                                 <tr>
                                     <td><?php echo $row['id']; ?></td>
                                     <td><?php echo $row['product_name']; ?></td>
-                                    <td><?php echo $row['image']; ?></td>
+                                    <td><img src="../uploads/<?php echo $row['image']; ?>" alt="product image" width="150px" height="auto"></td>
                                     <td><?php echo $row['description']; ?></td>
                                     <td><?php echo $row['price']; ?></td>
                                     <td><?php echo $row['stock']; ?></td>
@@ -150,7 +141,6 @@ $db = new Database();
                                             data-stock="<?php echo $row['stock']; ?>"
                                             data-category_name="<?php echo $row['category_name']; ?>"
                                             style="color: white;">Sửa</a>
-
                                         <a onclick="return confirm('Bạn có muốn xóa?')" href="delpro.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Xóa</a>
                                     </td>
                                 </tr>
@@ -163,6 +153,71 @@ $db = new Database();
                     </tbody>
                 </table>
                 <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
+
+                <div class="pagination-container" style="display: flex; justify-content: center;">
+                    <div class="pagination" id="pagination" style="align-self: center;">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Addting Product -->
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addLabel">Sửa Sản phẩm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addForm" method="POST" action="addpro.php" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="product_name">Tên Sản phẩm</label>
+                            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Tên sản phẩm" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Hình ảnh</label>
+                            <input type="file" class="form-control" id="image" name="image" placeholder="URL Hình ảnh" accept="image/*" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Mô tả</label>
+                            <textarea class="form-control" id="description" name="description" placeholder="Mô tả"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Giá</label>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="Giá sản phẩm" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Số lượng</label>
+                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category_name">Danh mục</label>
+                            <select class="form-control" id="category_name" name="category_id" required>
+                                <option value="">Chọn danh mục</option>
+                                <?php
+                                // Truy vấn để lấy các danh mục từ bảng categories
+                                $sql = "SELECT id, category_name FROM categories";
+                                $result = $db->select($sql);
+                                if ($result) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option value='" . $row['id'] . "'>" . $row['category_name'] . "</option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" form="addForm" class="btn btn-primary">Thêm</button>
+                </div>
             </div>
         </div>
     </div>
@@ -178,7 +233,7 @@ $db = new Database();
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="editForm" method="POST" action="editpro.php">
+                    <form id="editForm" method="POST" action="editpro.php" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="id">Mã Sản phẩm</label>
                             <input type="text" class="form-control" id="id" name="id" placeholder="Mã sản phẩm" value="<?php echo $row['id'] ?>" readonly>
@@ -188,8 +243,10 @@ $db = new Database();
                             <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Tên sản phẩm" required value="<?php echo $row['product_name'] ?>">
                         </div>
                         <div class="form-group">
-                            <label for="image">Hình ảnh</label>
-                            <input type="text" class="form-control" id="image" name="image" placeholder="URL Hình ảnh" value="<?php echo $row['image'] ?>">
+                            <label for="image">Hình ảnh hiện tại</label><br />
+                            <img id="image" src="../uploads/<?php echo $row['image']; ?>" alt="Current image" width="150px" height="auto"><br />
+                            <label for="image">Chọn hình ảnh mới (nếu muốn thay đổi):</label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
                         </div>
                         <div class="form-group">
                             <label for="description">Mô tả</label>
@@ -235,7 +292,7 @@ $db = new Database();
             var button = $(event.relatedTarget); // Button that triggered the modal
             var id = button.data('id'); // Extract info from data-* attributes
             var product_name = button.data('product_name');
-            var image = button.data('image');
+            var image = button.data('image'); // Lấy URL hình ảnh từ data-* attributes
             var description = button.data('description');
             var price = button.data('price');
             var stock = button.data('stock');
@@ -245,74 +302,22 @@ $db = new Database();
             var modal = $(this);
             modal.find('#id').val(id);
             modal.find('#product_name').val(product_name);
-            modal.find('#image').val(image);
+            modal.find('#image').attr('src', '../uploads/' + image); // Cập nhật URL hình ảnh trong modal
             modal.find('#description').val(description);
             modal.find('#price').val(price);
             modal.find('#stock').val(stock);
             modal.find('#category_name').val(category_name);
-
         });
     </script>
 
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <!-- Modal for Editing Product -->
-    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addLabel">Sửa Sản phẩm</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="addForm" method="POST" action="addpro.php">
-                        <div class="form-group">
-                            <label for="product_name">Tên Sản phẩm</label>
-                            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Tên sản phẩm" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="image">Hình ảnh</label>
-                            <input type="file" class="form-control" id="image" name="image" placeholder="URL Hình ảnh">
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Mô tả</label>
-                            <textarea class="form-control" id="description" name="description" placeholder="Mô tả"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Giá</label>
-                            <input type="text" class="form-control" id="price" name="price" placeholder="Giá sản phẩm" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="stock">Số lượng</label>
-                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="category_name">Danh mục</label>
-                            <select class="form-control" id="category_name" name="category_id" required>
-                                <option value="">Chọn danh mục</option>
-                                <?php
-                                // Truy vấn để lấy các danh mục từ bảng categories
-                                $sql = "SELECT id, category_name FROM categories";
-                                $result = $db->select($sql);
-                                if ($result) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<option value='" . $row['id'] . "'>" . $row['category_name'] . "</option>";
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="submit" form="editForm" class="btn btn-primary">Thêm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Additional JavaScript Libraries -->
+    <script src="/BANHOA/Front-end/Adminn/css/search.js"></script>
+    <script src="/BANHOA/Front-end/Adminn/css/pagination.js"></script>
 </body>
 
 </html>

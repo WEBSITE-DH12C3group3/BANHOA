@@ -1,6 +1,6 @@
 <?php
 include '/xampp/htdocs/BANHOA/database/connect.php';
-// include '/xampp/htdocs/BANHOA/Front-end/Adminn/checkacc.php';
+// include '/xampp/htdocs/BANHOA/Front-end/Adminn/exit.php';
 ?>
 <!Doctype html>
 <html lang="en">
@@ -78,13 +78,11 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                     <a href="#"><i class="fas fa-comments"></i><span>Phản Hồi</span></a>
                 </li>
                 <li class="">
-                    <a href="#"><i class="fas fa-sign-out-alt"></i>
+                    <a href="index.php?act=logout"><i class="fas fa-sign-out-alt"></i>
                         <span>Đăng xuất</span></a>
                 </li>
             </ul>
         </nav>
-
-
 
         <!-- Page Content  -->
         <div id="content">
