@@ -60,7 +60,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                                 Quản Lí Sản Phẩm</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/order.php"><i class="fas fa-shopping-cart"></i>
+                            <a href="/BANHOA/Front-end/Adminn/order/order.php"><i class="fas fa-shopping-cart"></i>
                                 Quản Lí Đơn Hàng</a>
                         </li>
                         <li>
@@ -69,10 +69,6 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                     </ul>
                 </li>
 
-                <li>
-                    <a href="" data-toggle="collapse" aria-expanded="false">
-                        <i class="fas fa-percent"></i><span>Khuyến Mãi</span></a>
-                </li>
 
                 <li class="">
                     <a href="#"><i class="fas fa-comments"></i><span>Phản Hồi</span></a>

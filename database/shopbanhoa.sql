@@ -15,6 +15,8 @@ CREATE TABLE products (
     image VARCHAR(255),
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
+    sale INT(3) NOT NULL,
+    price_sale DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL,
     category_id VARCHAR(10) NOT NULL,
     FOREIGN KEY (category_id) REFERENCES categories(id)

@@ -19,15 +19,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $price = isset($_POST['price']) ? mysqli_real_escape_string($db->conn, $_POST['price']) : '';
             $stock = isset($_POST['stock']) ? mysqli_real_escape_string($db->conn, $_POST['stock']) : '';
             $category_id = isset($_POST['category_id']) ? mysqli_real_escape_string($db->conn, $_POST['category_id']) : '';
+            $sale = isset($_POST['sale']) ? mysqli_real_escape_string($db->conn, $_POST['sale']) : '';
 
-            if (empty($name) || empty($price) || empty($stock) || empty($category_id)) {
+            if (empty($name) || empty($price) || empty($sale) || empty($stock) || empty($category_id)) {
                 echo "<script>alert('Vui lòng điền đầy đủ thông tin cần thiết!'); window.location.href = 'product.php';</script>";
                 exit();
             }
 
             // Chuẩn bị câu lệnh SQL
-            $stmt = $db->conn->prepare("INSERT INTO products (product_name, image, description, price, stock, category_id) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssdis", $name, $image, $description, $price, $stock, $category_id);
+            $stmt = $db->conn->prepare("INSERT INTO products (product_name, image, description, price, sale, stock, category_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssdiis", $name, $image, $description, $price, $sale, $stock, $category_id);
 
             // Thực thi câu lệnh
             if ($stmt->execute()) {

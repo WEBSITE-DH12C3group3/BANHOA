@@ -61,7 +61,7 @@ $db = new Database();
                                 Quản Lí Sản Phẩm</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/order.php"><i class="fas fa-shopping-cart"></i>
+                            <a href="/BANHOA/Front-end/Adminn/order/order.php"><i class="fas fa-shopping-cart"></i>
                                 Quản Lí Đơn Hàng</a>
                         </li>
                         <li>

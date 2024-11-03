@@ -111,10 +111,11 @@ $db = new Database();
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Tên sản phẩm</th>
                             <th scope="col">Hình ảnh</th>
+                            <th scope="col">Tên sản phẩm</th>
                             <th scope="col">Miêu tả</th>
                             <th scope="col">Giá</th>
+                            <th scope="col">Sale</th>
                             <th scope="col">Kho</th>
                             <th scope="col">Danh mục</th>
                             <th scope="col" style="width: 137px;">Hành động</th>
@@ -122,7 +123,7 @@ $db = new Database();
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.stock, c.category_name
+                        $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.sale, p.stock, c.category_name
                                 FROM products p
                                 JOIN categories c ON p.category_id = c.id
                                 ORDER BY p.id, p.product_name, c.category_name";
@@ -131,10 +132,11 @@ $db = new Database();
                             while ($row = $result->fetch_assoc()) { ?>
                                 <tr>
                                     <td><?php echo $row['id']; ?></td>
+                                    <td><img src="../uploads/<?php echo $row['image']; ?>" alt="product image" width="100px" height="auto"></td>
                                     <td><?php echo $row['product_name']; ?></td>
-                                    <td><img src="../uploads/<?php echo $row['image']; ?>" alt="product image" width="150px" height="auto"></td>
                                     <td><?php echo $row['description']; ?></td>
                                     <td><?php echo $row['price']; ?></td>
+                                    <td><?php echo $row['sale']; ?>%</td>
                                     <td><?php echo $row['stock']; ?></td>
                                     <td><?php echo $row['category_name']; ?></td>
                                     <td>
@@ -146,6 +148,7 @@ $db = new Database();
                                             data-image="<?php echo $row['image']; ?>"
                                             data-description="<?php echo $row['description']; ?>"
                                             data-price="<?php echo $row['price']; ?>"
+                                            data-sale="<?php echo $row['sale']; ?>"
                                             data-stock="<?php echo $row['stock']; ?>"
                                             data-category_name="<?php echo $row['category_name']; ?>"
                                             style="color: white;">Sửa</a>
@@ -199,6 +202,10 @@ $db = new Database();
                         <div class="form-group">
                             <label for="price">Giá</label>
                             <input type="text" class="form-control" id="price" name="price" placeholder="Giá sản phẩm" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sale">Sale (%)</label>
+                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" required>
                         </div>
                         <div class="form-group">
                             <label for="stock">Số lượng</label>
@@ -265,6 +272,10 @@ $db = new Database();
                             <input type="text" class="form-control" id="price" name="price" placeholder="Giá sản phẩm" required value="<?php echo $row['price'] ?>">
                         </div>
                         <div class="form-group">
+                            <label for="sale">Sale (%)</label>
+                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" required value="<?php echo $row['sale'] ?>">
+                        </div>
+                        <div class="form-group">
                             <label for="stock">Số lượng</label>
                             <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng" required value="<?php echo $row['stock'] ?>">
                         </div>
@@ -303,6 +314,7 @@ $db = new Database();
             var image = button.data('image'); // Lấy URL hình ảnh từ data-* attributes
             var description = button.data('description');
             var price = button.data('price');
+            var sale = button.data('sale');
             var stock = button.data('stock');
             var category_name = button.data('category_name');
 
@@ -313,6 +325,7 @@ $db = new Database();
             modal.find('#image').attr('src', '../uploads/' + image); // Cập nhật URL hình ảnh trong modal
             modal.find('#description').val(description);
             modal.find('#price').val(price);
+            modal.find('#sale').val(sale);
             modal.find('#stock').val(stock);
             modal.find('#category_name').val(category_name);
         });

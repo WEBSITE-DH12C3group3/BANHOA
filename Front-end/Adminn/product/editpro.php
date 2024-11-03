@@ -10,9 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $price = isset($_POST['price']) ? mysqli_real_escape_string($db->conn, $_POST['price']) : '';
     $stock = isset($_POST['stock']) ? mysqli_real_escape_string($db->conn, $_POST['stock']) : '';
     $category_id = isset($_POST['category_id']) ? mysqli_real_escape_string($db->conn, $_POST['category_id']) : '';
+    $sale = isset($_POST['sale']) ? mysqli_real_escape_string($db->conn, $_POST['sale']) : '';
 
-
-    if (empty($name) || empty($price) || empty($stock) || empty($category_id) || empty($id)) {
+    if (empty($name) || empty($price) || empty($sale) || empty($stock) || empty($category_id) || empty($id)) {
         echo "<script>alert('Vui lòng điền đầy đủ thông tin cần thiết!'); window.location.href = 'product.php'; </script>";
         exit();
     }
@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_path = "../uploads/" . basename($image);
 
         if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-            $sql = "UPDATE products SET product_name=?, image=?, description=?, price=?, stock=?, category_id=? WHERE id=?";
+            $sql = "UPDATE products SET product_name=?, image=?, description=?, price=?, sale=?, stock=?, category_id=? WHERE id=?";
             $stmt = $db->conn->prepare($sql);
-            $stmt->bind_param("sssdisi", $name, $image, $description, $price, $stock, $category_id, $id);
+            $stmt->bind_param("sssdiisi", $name, $image, $description, $price, $sale, $stock, $category_id, $id);
         } else {
             echo "<script>alert('Lỗi khi tải ảnh lên!'); window.location.href = 'product.php'; </script>";
             error_log("Upload file failed: " . print_r($_FILES['image'], true));
