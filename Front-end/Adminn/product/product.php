@@ -18,7 +18,7 @@ $db = new Database();
 
     <!-- Additional JavaScript Libraries -->
     <script src="/BANHOA/Front-end/Adminn/css/search.js"></script>
-
+    <script src="/BANHOA/Front-end/Adminn/css/sale.js"></script>
     <!-- CSS Stylesheets -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -42,11 +42,6 @@ $db = new Database();
                         <i class="fas fa-chart-bar"></i><span>Thống kê</span></a>
                 </li>
 
-                <li>
-                    <a href="" data-toggle="collapse" aria-expanded="false">
-                        <i class="fas fa-bell"></i><span>Thông Báo</span></a>
-                </li>
-
                 <li class="dropdown">
                     <a href="#subm" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-th-large"></i><span>Quản Lí</span></a>
@@ -68,11 +63,6 @@ $db = new Database();
                                 Quản Lí Khách Hàng</a>
                         </li>
                     </ul>
-                </li>
-
-                <li>
-                    <a href="" data-toggle="collapse" aria-expanded="false">
-                        <i class="fas fa-percent"></i><span>Khuyến Mãi</span></a>
                 </li>
 
                 <li class="">
@@ -205,7 +195,7 @@ $db = new Database();
                         </div>
                         <div class="form-group">
                             <label for="sale">Sale (%)</label>
-                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" required>
+                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" required min="0" max="99" step="1" value="0" />
                         </div>
                         <div class="form-group">
                             <label for="stock">Số lượng</label>
@@ -273,7 +263,7 @@ $db = new Database();
                         </div>
                         <div class="form-group">
                             <label for="sale">Sale (%)</label>
-                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" required value="<?php echo $row['sale'] ?>">
+                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" required value="<?php echo $row['sale'] ?>" min="0" max="99" step="1">
                         </div>
                         <div class="form-group">
                             <label for="stock">Số lượng</label>
@@ -330,6 +320,7 @@ $db = new Database();
             modal.find('#category_name').val(category_name);
         });
     </script>
+
 
     <script src="/BANHOA/Front-end/Adminn/css/pagination.js"></script>
 </body>

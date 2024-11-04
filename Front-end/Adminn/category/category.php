@@ -43,11 +43,6 @@ $db = new Database();
                         <i class="fas fa-chart-bar"></i><span>Thống kê</span></a>
                 </li>
 
-                <li>
-                    <a href="" data-toggle="collapse" aria-expanded="false">
-                        <i class="fas fa-bell"></i><span>Thông Báo</span></a>
-                </li>
-
                 <li class="dropdown">
                     <a href="#subm" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-th-large"></i><span>Quản Lí</span></a>
@@ -69,11 +64,6 @@ $db = new Database();
                                 Quản Lí Khách Hàng</a>
                         </li>
                     </ul>
-                </li>
-
-                <li>
-                    <a href="" data-toggle="collapse" aria-expanded="false">
-                        <i class="fas fa-percent"></i><span>Khuyến Mãi</span></a>
                 </li>
 
                 <li class="">

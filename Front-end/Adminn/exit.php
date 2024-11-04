@@ -15,6 +15,6 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] == "admin")) {
     }
 } else {
     // Nếu không phải admin, điều hướng về trang đăng nhập
-    header('Location: /BANHOA/database/login.php');
+    header('Location: /BANHOA/Front-end/Customer/dangnhap.php'); // Chuyển đến trang đăng nhập
     exit(); // Kết thúc script
 }

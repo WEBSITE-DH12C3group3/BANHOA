@@ -1,6 +1,7 @@
 <?php
 include '/xampp/htdocs/BANHOA/database/connect.php';
 // include '/xampp/htdocs/BANHOA/Front-end/Adminn/exit.php';
+session_start();
 ?>
 <!Doctype html>
 <html lang="en">
@@ -35,6 +36,9 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                 <a href="index.php">
                     <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
+                <?php
+                echo $_SESSION["users_id"];
+                ?>
             </div>
             <ul class="list-unstyled components">
                 <li class="active">
