@@ -6,7 +6,6 @@ USE websitehoa;
 CREATE TABLE categories (
     id VARCHAR(10) PRIMARY KEY,
     category_name VARCHAR(255) NOT NULL
-    -- xoa description cua m di
 );
 
 -- 2. Tạo bảng products (sản phẩm)
@@ -16,10 +15,10 @@ CREATE TABLE products (
     image VARCHAR(255),
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
-    -- sale INT(3),
-    -- price_sale DECIMAL(10, 2),
+    sale INT(3),
+    price_sale DECIMAL(10, 2),
     stock INT NOT NULL,
-    -- remark 0 or 1    
+    remark TINYINT(1) DEFAULT 0,
     category_id VARCHAR(10) NOT NULL,
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
@@ -28,7 +27,6 @@ CREATE TABLE products (
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fullname VARCHAR(255) NOT NULL,
-    -- xoa user
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
@@ -61,7 +59,7 @@ CREATE TABLE order_items (
 -- 6. Tạo bảng cart_items (giỏ hàng)
 CREATE TABLE cart_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT, -- doi tu customer_id sang user_id
+    user_id INT,
     product_id INT,
     quantity INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
