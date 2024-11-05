@@ -1,7 +1,7 @@
 <?php
-require 'path/to/PHPMailer/src/Exception.php';
-require 'path/to/PHPMailer/src/PHPMailer.php';
-require 'path/to/PHPMailer/src/SMTP.php';
+require '/xampp/htdocs/BANHOA/PHPMAILER/src/Exception.php';
+require '/xampp/htdocs/BANHOA/PHPMAILER/src/PHPMailer.php';
+require '/xampp/htdocs/BANHOA/PHPMAILER/src/SMTP.php';
 
 
 //Import PHPMailer classes into the global namespace
@@ -22,13 +22,13 @@ class Mailer{
             $mail->CharSet = 'utf-8';                                          //Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'hoahoavuive2004@gmail.com';                     //SMTP username
-            $mail->Password   = 'vuive2004*';                               //SMTP password
+            $mail->Username   = 'mynameistrang19012004@gmail.com';                     //SMTP username
+            $mail->Password   = 'xfnjjkemflzndhvu';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
         
             //Recipients
-            $mail->setFrom('hoahoavuive2004@gmail.com', 'Mailer');
+            $mail->setFrom('mynameistrang19012004@gmail.com', 'BANHOA');
             $mail->addAddress($addressMail);     //Add a recipient
     
             //Content

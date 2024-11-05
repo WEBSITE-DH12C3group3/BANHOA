@@ -1,8 +1,11 @@
 <?php
-    session_start();
+session_start();
+ob_start();
+require '/xampp/htdocs/BANHOA/database/sendmailreset.php';
+
     $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
     unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
-?>
+    ?>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -87,60 +90,52 @@
     
     <!-- Hiển thị thông báo lỗi nếu có -->
     <?php if (!empty($error)): ?>
-        <div class="message" style="color: red;"><?= htmlspecialchars($error) ?></div>
+        <div class="message" style="color: <?= strpos($error, 'Mã xác nhận') !== false ? 'red' : 'green'; ?>;">
+            <?= htmlspecialchars($error) ?>
+        </div>
     <?php endif; ?>
     
-    <!-- Bước 1: Nhập Email -->
+    <!-- Form nhập email để gửi mã xác nhận -->
     <form id="emailForm" method="POST" action="/BANHOA/database/resetpassword.php">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" placeholder="email@example.com" required>
         <button type="submit" name="resetpassword">Gửi mã xác nhận</button>
     </form>
     
-    <!-- Bước 2: Nhập mã xác nhận (ẩn mặc định) -->
-    <form id="codeForm" style="display: none;">
+    <!-- Form nhập mã xác nhận (ẩn mặc định) -->
+    <form id="codeForm" method="POST" action="/BANHOA/database/resetpassword.php" style="display: none;">
         <label for="code">Mã xác nhận</label>
         <input type="text" id="code" name="code" placeholder="Nhập mã xác nhận" required>
-        <button type="submit">Xác nhận mã</button>
+        <button type="submit" name="checkCode">Xác nhận mã</button>
     </form>
 
-    <a href="login.html" class="back-link">Quay lại trang đăng nhập</a>
+    <a href="/BANHOA/database/login.php" class="back-link">Quay lại trang đăng nhập</a>
     <div class="message" id="message"></div>
 </div>
 
 <script>
-    // // Kiểm tra nếu có thông báo từ PHP
-    // const phpMessage = "<?= isset($error) ? htmlspecialchars($error) : '' ?>";
-    // const messageDiv = document.getElementById("message");
+        // Lấy thông báo từ PHP và hiển thị
+        const phpMessage = "<?= htmlspecialchars($error) ?>";
+        const messageDiv = document.getElementById("message");
 
-    if (phpMessage.includes("Mã xác nhận đã được gửi")) {
-        // Nếu email được gửi thành công, hiển thị form nhập mã
-        messageDiv.innerText = phpMessage;
-        messageDiv.style.color = "green";
-        document.getElementById("emailForm").style.display = "none";
-        document.getElementById("codeForm").style.display = "block";
-    } else if (phpMessage) {
-        // Nếu có lỗi (email chưa đăng ký hoặc không hợp lệ)
-        messageDiv.innerText = phpMessage;
-        messageDiv.style.color = "red";
-    }
-
-    document.getElementById("codeForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        const code = document.getElementById("code").value;
-        
-        if (code) {
-            // Giả sử mã xác nhận là chính xác
-            messageDiv.innerText = "Mã xác nhận chính xác. Bạn có thể đặt lại mật khẩu.";
-            messageDiv.style.color = "green";
-            // Tiếp tục: chuyển đến trang đặt lại mật khẩu
-        } else {
-            messageDiv.innerText = "Vui lòng nhập mã xác nhận hợp lệ.";
-            messageDiv.style.color = "red";
+        // Kiểm tra nếu có thông báo "Mã xác nhận đã được gửi"
+        if (phpMessage.includes("Mã xác nhận đã được gửi")) {
+            // messageDiv.innerText = phpMessage;
+            // messageDiv.style.color = "green";
+            document.getElementById("emailForm").style.display = "none"; // Ẩn form nhập email
+            document.getElementById("codeForm").style.display = "block"; // Hiển thị form nhập mã
+        } else if (phpMessage.includes("Mã xác nhận không hợp lệ")) {
+            // Nếu mã xác nhận sai, hiển thị lại form mã xác nhận
+            // messageDiv.innerText = phpMessage;
+            // messageDiv.style.color = "red";
+            document.getElementById("emailForm").style.display = "none"; // Ẩn form email
+            document.getElementById("codeForm").style.display = "block"; // Giữ form nhập mã
+        } else if (phpMessage) {
+            // Nếu có lỗi khác (như email chưa đăng ký hoặc không hợp lệ)
+            // messageDiv.innerText = phpMessage;
+            // messageDiv.style.color = "red";
         }
-    });
-</script>
+    </script>
 
 </body>
 </html>
