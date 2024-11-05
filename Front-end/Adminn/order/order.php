@@ -130,7 +130,9 @@ $db = new Database();
                                     <td><?php echo $row['order_date']; ?></td>
                                     <td><?php echo $row['status']; ?></td>
                                     <td>
-                                        <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
+                                        <?php if ($row['status'] != 'Đã duyệt') { ?>
+                                            <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
+                                        <?php } ?>
                                         <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
