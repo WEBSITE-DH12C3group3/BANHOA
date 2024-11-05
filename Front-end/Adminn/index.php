@@ -1,7 +1,11 @@
 <?php
-include '/xampp/htdocs/BANHOA/database/connect.php';
-// include '/xampp/htdocs/BANHOA/Front-end/Adminn/exit.php';
 session_start();
+include '/xampp/htdocs/BANHOA/database/connect.php';
+if (!isset($_SESSION['role']) || $_SESSION['role'] != "admin") {
+    header('Location: /BANHOA/Front-end/Customer/dangnhap.php');
+    exit();
+}
+include '/xampp/htdocs/BANHOA/Front-end/Adminn/exit.php';
 ?>
 <!Doctype html>
 <html lang="en">
@@ -37,7 +41,7 @@ session_start();
                     <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
                 <?php
-                echo $_SESSION["users_id"];
+                echo $_SESSION["user_name"];
                 ?>
             </div>
             <ul class="list-unstyled components">

@@ -15,11 +15,11 @@ if (isset($_POST['btn-login'])) {
     // Kiểm tra nếu có kết quả
     if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        
+
         // Kiểm tra mật khẩu
         if ($password == $row['password']) {
             // Lưu thông tin người dùng vào session
-            $_SESSION['users_id'] = $row['id'];
+            $_SESSION['user_name'] = $row['fullname'];
             $_SESSION['role'] = $row['role'];
 
             // Chuyển hướng đến giao diện khách hàng hoặc admin
@@ -37,6 +37,5 @@ if (isset($_POST['btn-login'])) {
     }
 }
 
-header("Location: /BANHOA/Front-end/Customer/dangnhap.php");
-exit();
-?>
+// header("Location: /BANHOA/Front-end/Customer/dangnhap.php");
+// exit();
