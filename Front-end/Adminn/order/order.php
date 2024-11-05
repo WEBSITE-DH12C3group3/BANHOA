@@ -1,5 +1,5 @@
 <?php
-include '/xampp/htdocs/BANHOA/database/connect.php';
+include '../baidautot.php';
 $db = new Database();
 ?>
 <!Doctype html>
@@ -37,6 +37,13 @@ $db = new Database();
                     <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
             </div>
+            <div class="sidebar-header">
+                <a href=""> <i class="fas fa-user"></i><span>
+                        <?php
+                        echo $_SESSION["fullname"];
+                        ?>
+                    </span></a>
+            </div>
             <ul class="list-unstyled components">
                 <li>
                     <a href="/BANHOA/Front-end/Adminn/index.php">
@@ -69,7 +76,7 @@ $db = new Database();
                     <a href="#"><i class="fas fa-comments"></i><span>Phản Hồi</span></a>
                 </li>
                 <li class="">
-                    <a href="#"><i class="fas fa-sign-out-alt"></i>
+                    <a href="../index.php?act=logout" onclick="return confirm('Bạn có muốn đăng xuất?')"><i class="fas fa-sign-out-alt"></i>
                         <span>Đăng xuất</span></a>
                 </li>
             </ul>
@@ -88,7 +95,7 @@ $db = new Database();
                 <div class="info-bar">
                     <div class="total-posts">
                         <!-- count -->
-                        <p>Tổng số khách hàng:
+                        <p>Tổng số đơn hàng:
                             <?php $count = $db->count("SELECT * FROM orders");
                             echo $count; ?></p>
                     </div>
@@ -103,7 +110,7 @@ $db = new Database();
                             <th scope="col">Tổng tiền</th>
                             <th scope="col">Ngày tạo</th>
                             <th scope="col">Trạng thái</th>
-                            <th scope="col" style="width: 145x;">Hành động</th>
+                            <th scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,8 +130,8 @@ $db = new Database();
                                     <td><?php echo $row['order_date']; ?></td>
                                     <td><?php echo $row['status']; ?></td>
                                     <td>
-                                        <a type="button" href="" class="btn btn-success" style="color: white;">Duyệt</a>
-                                        <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Xóa</a>
+                                        <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
+                                        <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                         <?php

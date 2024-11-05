@@ -1,11 +1,6 @@
 <?php
-session_start();
-include '/xampp/htdocs/BANHOA/database/connect.php';
-if (!isset($_SESSION['role']) || $_SESSION['role'] != "admin") {
-    header('Location: /BANHOA/Front-end/Customer/dangnhap.php');
-    exit();
-}
-include '/xampp/htdocs/BANHOA/Front-end/Adminn/exit.php';
+include 'baidautot.php';
+
 ?>
 <!Doctype html>
 <html lang="en">
@@ -40,9 +35,13 @@ include '/xampp/htdocs/BANHOA/Front-end/Adminn/exit.php';
                 <a href="index.php">
                     <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
-                <?php
-                echo $_SESSION["fullname"];
-                ?>
+            </div>
+            <div class="sidebar-header">
+                <a href=""> <i class="fas fa-user"></i><span>
+                        <?php
+                        echo $_SESSION["fullname"];
+                        ?>
+                    </span></a>
             </div>
             <ul class="list-unstyled components">
                 <li class="active">
@@ -82,7 +81,7 @@ include '/xampp/htdocs/BANHOA/Front-end/Adminn/exit.php';
                     <a href="#"><i class="fas fa-comments"></i><span>Phản Hồi</span></a>
                 </li>
                 <li class="">
-                    <a href="index.php?act=logout"><i class="fas fa-sign-out-alt"></i>
+                    <a href="index.php?act=logout" onclick="return confirm('ả diu sua?')"><i class="fas fa-sign-out-alt"></i>
                         <span>Đăng xuất</span></a>
                 </li>
             </ul>
@@ -90,7 +89,6 @@ include '/xampp/htdocs/BANHOA/Front-end/Adminn/exit.php';
 
         <!-- Page Content  -->
         <div id="content">
-
 
             <div class="maincontent">
                 <div class="dashboard">

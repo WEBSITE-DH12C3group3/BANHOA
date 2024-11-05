@@ -6,14 +6,14 @@ $db = new Database();
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    $query = "DELETE FROM users WHERE id = $id";
+    $query = "DELETE FROM orders WHERE id = $id";
     if ($db->delete($query)) {
         // Hiển thị thông báo thành công bằng JavaScript
-        echo "<script>alert('Xóa thành công!'); window.location.href = 'ctm.php';</script>";
+        echo "<script>alert('Xóa thành công!'); window.location.href = 'order.php';</script>";
     } else {
         // Hiển thị thông báo lỗi bằng JavaScript
-        echo "<script>alert('Lỗi khi xóa!'); window.location.href = 'ctm.php';</script>";
+        echo "<script>alert('Lỗi khi xóa!'); window.location.href = 'order.php';</script>";
     }
 } else {
-    echo "<script>alert('Mã khách không được xác định.'); window.location.href = 'ctm.php';</script>";
+    echo "<script>alert('Mã khách không được xác định.'); window.location.href = 'order.php';</script>";
 }
