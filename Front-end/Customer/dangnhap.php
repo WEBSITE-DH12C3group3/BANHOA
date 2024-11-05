@@ -1,11 +1,12 @@
 <?php
-    session_start();
-    $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
-    unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
+session_start();
+$error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,14 +22,19 @@
     <link rel="stylesheet" href="/BANHOA/mycss/footder.css">
     <style>
         .form-container {
-            border: 1px solid #ccc; /* Màu của khung */
-            border-radius: 5px; /* Bo góc */
-            padding: 20px; /* Đệm bên trong */
-            background-color: #f9f9f9; /* Màu nền */
+            border: 1px solid #ccc;
+            /* Màu của khung */
+            border-radius: 5px;
+            /* Bo góc */
+            padding: 20px;
+            /* Đệm bên trong */
+            background-color: #f9f9f9;
+            /* Màu nền */
         }
     </style>
     <title>EDEN</title>
 </head>
+
 <body>
     <section class="myheader">
         <div class="container py-3">
@@ -37,7 +43,7 @@
                 <div class="col-md-3 col-4 text-center text-md-start mb-3 mb-md-0">
                     <img src="/BANHOA/Front-end/public/logo1.png" class="img-fluid" width="200px" height="auto" alt="Logo">
                 </div>
-    
+
                 <!-- Search Bar -->
                 <div class="col-md-5 col-4 mb-3 mb-md-0">
                     <div class="input-group">
@@ -47,7 +53,7 @@
                         </button>
                     </div>
                 </div>
-    
+
                 <!-- Cart and Account Section -->
                 <div class="col-md-4 col-4">
                     <div class="d-flex justify-content-center justify-content-md-end align-items-center">
@@ -65,7 +71,7 @@
                                 </div>
                             </div>
                         </div>
-    
+
                         <!-- Account -->
                         <div class="col-6">
                             <div class="fs-3"><i class="fa-regular fa-user"></i></div>
@@ -74,8 +80,8 @@
                                     Xin chào! Tài khoản
                                 </a>
                                 <ul class="  dropdown-menu">
-                                    <li><a class="dropdown-item" href="/BANHOA/Front-end/Customer/dangky.html">Đăng ký</a></li>
-                                    <li><a class="dropdown-item" href="/BANHOA/Front-end/Customer/dangnhap.html">Đăng nhập</a></li>
+                                    <li><a class="dropdown-item" href="/BANHOA/Front-end/Customer/dangky.php">Đăng ký</a></li>
+                                    <li><a class="dropdown-item" href="/BANHOA/Front-end/Customer/dangnhap.php">Đăng nhập</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -89,8 +95,8 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="form-container" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; background-color: #f9f9f9;">
-                    
-                    <h2 class="text-center mb-4">Đăng Nhập</h2>
+
+                        <h2 class="text-center mb-4">Đăng Nhập</h2>
                         <?php if (!empty($error)) : ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php echo $error; ?>
@@ -103,7 +109,7 @@
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email" required>
                             </div>
-                        
+
                             <!-- Password -->
                             <div class="form-group">
                                 <label for="password">Mật khẩu</label>
@@ -116,7 +122,7 @@
                             <div class="d-flex py-3">
                                 <button type="submit" name="btn-login" class="btn btn-primary">Đăng nhập</button>
                             </div>
-                        </form>  
+                        </form>
                     </div>
                 </div>
             </div>
@@ -199,10 +205,10 @@
                 </div>
             </div>
         </div>
-    </section> 
+    </section>
 
     <script src="/BANHOA/js/bootstrap.bundle.min.js"></script>
-    <script src="/BANHOA/js/bootstrap.bundle.js"></script> 
+    <script src="/BANHOA/js/bootstrap.bundle.js"></script>
     <script src="/BANHOA/js/bootstrap.js"></script>
     <script>
         $(document).ready(function() {
@@ -229,9 +235,10 @@
                 }
             })
         })
-        function chuyedoidangnhap(next){
+
+        function chuyedoidangnhap(next) {
             next.preventDefault();
-            window.location.href="/BANHOA/Front-end/Customer/index.html";
+            window.location.href = "/BANHOA/Front-end/Customer/index.html";
         }
     </script>
 </body>
