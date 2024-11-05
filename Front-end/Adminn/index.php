@@ -41,7 +41,7 @@ include '/xampp/htdocs/BANHOA/Front-end/Adminn/exit.php';
                     <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
                 <?php
-                echo $_SESSION["user_name"];
+                echo $_SESSION["users_id"];
                 ?>
             </div>
             <ul class="list-unstyled components">
