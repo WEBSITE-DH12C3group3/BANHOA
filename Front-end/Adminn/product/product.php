@@ -1,5 +1,5 @@
 <?php
-include '/xampp/htdocs/BANHOA/database/connect.php';
+include '../baidautot.php';
 $db = new Database();
 ?>
 <!Doctype html>
@@ -36,6 +36,13 @@ $db = new Database();
                     <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
             </div>
+            <div class="sidebar-header">
+                <a href=""> <i class="fas fa-user"></i><span>
+                        <?php
+                        echo $_SESSION["fullname"];
+                        ?>
+                    </span></a>
+            </div>
             <ul class="list-unstyled components">
                 <li>
                     <a href="/BANHOA/Front-end/Adminn/index.php">
@@ -55,7 +62,7 @@ $db = new Database();
                                 Quản Lí Sản Phẩm</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/order.php"><i class="fas fa-shopping-cart"></i>
+                            <a href="/BANHOA/Front-end/Adminn/order/order.php"><i class="fas fa-shopping-cart"></i>
                                 Quản Lí Đơn Hàng</a>
                         </li>
                         <li>
@@ -69,7 +76,7 @@ $db = new Database();
                     <a href="#"><i class="fas fa-comments"></i><span>Phản Hồi</span></a>
                 </li>
                 <li class="">
-                    <a href="#"><i class="fas fa-sign-out-alt"></i>
+                    <a href="../index.php?act=logout" onclick="return confirm('Bạn có muốn đăng xuất?')"><i class="fas fa-sign-out-alt"></i>
                         <span>Đăng xuất</span></a>
                 </li>
             </ul>
@@ -108,7 +115,7 @@ $db = new Database();
                             <th scope="col">Sale</th>
                             <th scope="col">Kho</th>
                             <th scope="col">Danh mục</th>
-                            <th scope="col" style="width: 137px;">Hành động</th>
+                            <th scope="col" style="width: 120px;">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,8 +148,8 @@ $db = new Database();
                                             data-sale="<?php echo $row['sale']; ?>"
                                             data-stock="<?php echo $row['stock']; ?>"
                                             data-category_name="<?php echo $row['category_name']; ?>"
-                                            style="color: white;">Sửa</a>
-                                        <a onclick="return confirm('Bạn có muốn xóa?')" href="delpro.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Xóa</a>
+                                            style="color: white;"><i class="fa fa-edit"></i></a>
+                                        <a onclick="return confirm('Bạn có muốn xóa?')" href="delpro.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                         <?php
