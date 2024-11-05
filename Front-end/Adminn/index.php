@@ -1,6 +1,5 @@
 <?php
 include 'baidautot.php';
-
 ?>
 <!Doctype html>
 <html lang="en">
@@ -47,11 +46,6 @@ include 'baidautot.php';
                 <li class="active">
                     <a href="/BANHOA/Front-end/Adminn/index.php">
                         <i class="fas fa-chart-bar"></i><span>Thống kê</span></a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <i class="fas fa-bell"></i><span>Thông Báo</span></a>
                 </li>
 
                 <li class="dropdown">
