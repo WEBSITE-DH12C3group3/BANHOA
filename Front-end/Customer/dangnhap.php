@@ -110,7 +110,7 @@
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu" required>
                             </div>
                             <div>
-                                <a href="#">Quên mật khẩu?</a>
+                                <a href="/BANHOA/Front-end/Customer/forgotpassword.php">Quên mật khẩu?</a>
                             </div>
                             <!-- Thẻ button được căn giữa -->
                             <div class="d-flex py-3">

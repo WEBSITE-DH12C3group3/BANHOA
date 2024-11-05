@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+    unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -79,11 +85,16 @@
     <h2>Quên Mật Khẩu</h2>
     <p>Vui lòng nhập email của bạn để nhận mã xác nhận.</p>
     
+    <!-- Hiển thị thông báo lỗi nếu có -->
+    <?php if (!empty($error)): ?>
+        <div class="message" style="color: red;"><?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
+    
     <!-- Bước 1: Nhập Email -->
-    <form id="emailForm">
+    <form id="emailForm" method="POST" action="/BANHOA/database/resetpassword.php">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" placeholder="email@example.com" required>
-        <button type="submit">Gửi mã xác nhận</button>
+        <button type="submit" name="resetpassword">Gửi mã xác nhận</button>
     </form>
     
     <!-- Bước 2: Nhập mã xác nhận (ẩn mặc định) -->
@@ -98,38 +109,35 @@
 </div>
 
 <script>
-    document.getElementById("emailForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        
-        const email = document.getElementById("email").value;
-        const message = document.getElementById("message");
+    // // Kiểm tra nếu có thông báo từ PHP
+    // const phpMessage = "<?= isset($error) ? htmlspecialchars($error) : '' ?>";
+    // const messageDiv = document.getElementById("message");
 
-        if (email) {
-            // Giả sử gửi email thành công, hiển thị form nhập mã
-            message.innerText = "Mã xác nhận đã được gửi đến email của bạn. Vui lòng kiểm tra.";
-            message.style.color = "green";
-            document.getElementById("emailForm").style.display = "none";
-            document.getElementById("codeForm").style.display = "block";
-        } else {
-            message.innerText = "Vui lòng nhập email hợp lệ.";
-            message.style.color = "red";
-        }
-    });
+    if (phpMessage.includes("Mã xác nhận đã được gửi")) {
+        // Nếu email được gửi thành công, hiển thị form nhập mã
+        messageDiv.innerText = phpMessage;
+        messageDiv.style.color = "green";
+        document.getElementById("emailForm").style.display = "none";
+        document.getElementById("codeForm").style.display = "block";
+    } else if (phpMessage) {
+        // Nếu có lỗi (email chưa đăng ký hoặc không hợp lệ)
+        messageDiv.innerText = phpMessage;
+        messageDiv.style.color = "red";
+    }
 
     document.getElementById("codeForm").addEventListener("submit", function(event) {
         event.preventDefault();
 
         const code = document.getElementById("code").value;
-        const message = document.getElementById("message");
-
+        
         if (code) {
             // Giả sử mã xác nhận là chính xác
-            message.innerText = "Mã xác nhận chính xác. Bạn có thể đặt lại mật khẩu.";
-            message.style.color = "green";
+            messageDiv.innerText = "Mã xác nhận chính xác. Bạn có thể đặt lại mật khẩu.";
+            messageDiv.style.color = "green";
             // Tiếp tục: chuyển đến trang đặt lại mật khẩu
         } else {
-            message.innerText = "Vui lòng nhập mã xác nhận hợp lệ.";
-            message.style.color = "red";
+            messageDiv.innerText = "Vui lòng nhập mã xác nhận hợp lệ.";
+            messageDiv.style.color = "red";
         }
     });
 </script>
