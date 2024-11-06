@@ -1,4 +1,6 @@
-
+<?php
+include '/xampp/htdocs/BANHOA/database/connect.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
