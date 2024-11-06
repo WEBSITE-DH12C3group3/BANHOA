@@ -84,10 +84,9 @@ $db = new Database();
         </nav>
 
         <!-- Page Content  -->
-        <div id="content">
+        <div class="maincontent" id="content">
 
-
-            <div class="search-bar" id="content">
+            <div class="search-bar">
                 <input type="text" id="searchBox"
                     onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add">
