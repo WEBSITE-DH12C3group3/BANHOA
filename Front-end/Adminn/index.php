@@ -102,55 +102,55 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
         </nav>
 
         <div id="content">
-    <!-- Hiển thị các mục doanh thu cố định (Ngày, Tuần, Tháng) -->
-    <div class="maincontent">
-        <div class="dashboard">
-            <div class="item total-revenue">
-                <p>Tổng doanh thu (Ngày)</p>
-                <p><?php echo number_format($total_revenue_day, 0, ',', '.') . " đ"; ?></p>
+            <!-- Hiển thị các mục doanh thu cố định (Ngày, Tuần, Tháng) -->
+            <div class="maincontent">
+                <div class="dashboard">
+                    <div class="item total-revenue">
+                        <p>Tổng doanh thu (Ngày)</p>
+                        <p><?php echo number_format($total_revenue_day, 0, ',', '.') . " đ"; ?></p>
+                    </div>
+                    <div class="item total-revenue-week">
+                        <p>Tổng doanh thu (Tuần)</p>
+                        <p><?php echo number_format($total_revenue_week, 0, ',', '.') . " đ"; ?></p>
+                    </div>
+                    <div class="item total-revenue-month">
+                        <p>Tổng doanh thu (Tháng)</p>
+                        <p><?php echo number_format($total_revenue_month, 0, ',', '.') . " đ"; ?></p>
+                    </div>
+                </div>
             </div>
-            <div class="item total-revenue-week">
-                <p>Tổng doanh thu (Tuần)</p>
-                <p><?php echo number_format($total_revenue_week, 0, ',', '.') . " đ"; ?></p>
+
+            <!-- Form chọn khoảng thời gian (đặt ở dưới cùng) -->
+            <div class="date-range-form" id="content">
+                <form method="GET" action="">
+                    <label for="start_date">Từ ngày:</label>
+                    <input type="date" id="start_date" name="start_date" required>
+
+                    <label for="end_date">Đến ngày:</label>
+                    <input type="date" id="end_date" name="end_date" required>
+
+                    <button type="submit">Xem doanh thu</button>
+                </form>
             </div>
-            <div class="item total-revenue-month">
-                <p>Tổng doanh thu (Tháng)</p>
-                <p><?php echo number_format($total_revenue_month, 0, ',', '.') . " đ"; ?></p>
-            </div>                   
-        </div>               
-    </div>
 
-    <!-- Form chọn khoảng thời gian (đặt ở dưới cùng) -->
-    <div class="date-range-form">
-        <form method="GET" action="">
-            <label for="start_date">Từ ngày:</label>
-            <input type="date" id="start_date" name="start_date" required>
+            <?php
+            // Khởi tạo biến doanh thu trong khoảng tùy chọn
+            $total_revenue_custom = 0;
 
-            <label for="end_date">Đến ngày:</label>
-            <input type="date" id="end_date" name="end_date" required>
+            // Xử lý khi người dùng gửi form
+            if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
+                $start_date = $_GET['start_date'];
+                $end_date = $_GET['end_date'];
 
-            <button type="submit">Xem doanh thu</button>
-        </form>
-    </div>
-
-    <?php
-    // Khởi tạo biến doanh thu trong khoảng tùy chọn
-    $total_revenue_custom = 0;
-
-    // Xử lý khi người dùng gửi form
-    if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
-        $start_date = $_GET['start_date'];
-        $end_date = $_GET['end_date'];
-
-        // Truy vấn doanh thu cho khoảng thời gian được chọn
-        $sql_custom = "SELECT SUM(total) AS total_revenue_custom 
+                // Truy vấn doanh thu cho khoảng thời gian được chọn
+                $sql_custom = "SELECT SUM(total) AS total_revenue_custom 
                        FROM orders 
                        WHERE order_date BETWEEN '$start_date' AND '$end_date'";
-        $result_custom = $conn->query($sql_custom);
-        $total_revenue_custom = $result_custom->fetch_assoc()['total_revenue_custom'] ?? 0;
-        
-        // Hiển thị bảng doanh thu cho khoảng thời gian tùy chọn
-        echo "
+                $result_custom = $conn->query($sql_custom);
+                $total_revenue_custom = $result_custom->fetch_assoc()['total_revenue_custom'] ?? 0;
+
+                // Hiển thị bảng doanh thu cho khoảng thời gian tùy chọn
+                echo "
         <div class='custom-revenue'>
             <h3>Doanh thu từ ngày $start_date đến ngày $end_date</h3>
             <table class='table'>
@@ -168,9 +168,9 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
                 </tbody>
             </table>
         </div>";
-    }
-    ?>
-</div>
+            }
+            ?>
+        </div>
 
 
 
@@ -180,7 +180,7 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
             </div> -->
     </div>
 
-    
+
 
 </body>
 
