@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream
 <?php
 include 'header.php';
+=======
+<?php 
+    include 'header.php'; 
+>>>>>>> Stashed changes
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,7 +123,7 @@ include 'header.php';
                 <div class="account-sidebar">
                     <ul>
                         <li><a href="#">Thông tin tài khoản</a></li>
-                        <li><a href="#">Đổi mật khẩu</a></li>
+                        <li><a href="/BANHOA/database/updatepassword.php">Đổi mật khẩu</a></li>
                         <li><a href="#">Xem lại đơn hàng</a></li>
                         <li><a href="#">Giới thiệu Enden đến người thân</a></li>
                         <li><a href="/BANHOA/database/logout.php">Đăng xuất</a></li>
