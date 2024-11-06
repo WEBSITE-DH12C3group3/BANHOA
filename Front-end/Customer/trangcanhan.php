@@ -1,4 +1,8 @@
-<?php include 'header.php'; ?>
+<?php 
+session_start();
+include 'header.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -119,7 +123,7 @@
                         <li><a href="#">Đổi mật khẩu</a></li>
                         <li><a href="#">Xem lại đơn hàng</a></li>
                         <li><a href="#">Giới thiệu Enden đến người thân</a></li>
-                        <li><a href="#">Đăng xuất</a></li>
+                        <li><a href="/BANHOA/database/logout.php">Đăng xuất</a></li>
                     </ul>
                 </div>
             </div>

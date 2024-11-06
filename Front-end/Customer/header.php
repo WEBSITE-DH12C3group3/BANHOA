@@ -1,6 +1,4 @@
-<?php
-include '/xampp/htdocs/BANHOA/database/connect.php';
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,14 +28,12 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
         <div class="row align-items-center">
           <!-- Logo -->
           <div class="col-md-3 col-4 text-center text-md-start mb-3 mb-md-0">
-            <a href="/BANHOA/Front-end/Customer/index.php">
-              <img
-                src="/BANHOA/Front-end/public/logo1.png"
-                class="img-fluid"
-                width="200px"
-                height="auto"
-                alt="Logo" />
-            </a>
+            <img
+              src="/BANHOA/Front-end/public/logo1.png"
+              class="img-fluid"
+              width="200px"
+              height="auto"
+              alt="Logo" />
           </div>
 
           <!-- Search Bar -->
@@ -66,7 +62,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
               <div class="col-6">
                 <div class="me-4 position-relative text-center">
                   <a
-                    href="/BANHOA/Front-end/Customer/giohang.php"
+                    href="/BANHOA/Front-end/Customer/giohang.html"
                     class="position-relative text-dark">
                     <span class="fs-2"><i class="fa-solid fa-bag-shopping"></i></span>
                     <span
@@ -84,28 +80,55 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
               <!-- Account -->
               <div class="col-6">
                 <div class="fs-3"><i class="fa-regular fa-user"></i></div>
-                <div class="dropdown nav-item">
-                  <a
-                    class="btn btn-secondary dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Xin chào! Tài khoản
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a
-                        class="dropdown-item"
-                        href="/BANHOA/Front-end/Customer/dangky.php">Đăng ký</a>
-                    </li>
-                    <li>
-                      <a
-                        class="dropdown-item"
-                        href="/BANHOA/Front-end/Customer/dangnhap.php">Đăng nhập</a>
-                    </li>
-                  </ul>
-                </div>
+                <?php if(empty($_SESSION['users_id'])):?>
+                  <div class="dropdown nav-item">
+                    <a
+                      class="btn btn-secondary dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Xin chào! Tài khoản
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="/BANHOA/Front-end/Customer/dangky.php">Đăng ký</a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="/BANHOA/Front-end/Customer/dangnhap.php">Đăng nhập</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <?php else:?>
+                    <div class="dropdown nav-item">
+                    
+                    <a
+                      class="btn btn-secondary dropdown-toggle"
+                      href="#"  
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <section>Hello <br><?=$_SESSION['fullname']?></section>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="/BANHOA/Front-end/Customer/trangcanhan.php">Trang cá nhân</a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="/BANHOA/database/logout.php">Đăng xuất</a>
+                      </li>
+                    </ul>
+                  </div>
+                    
+                <?php endif;?>
               </div>
             </div>
           </div>
