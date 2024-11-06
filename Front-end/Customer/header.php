@@ -1,4 +1,5 @@
 <?php
+session_start(); // Đảm bảo session đã được start
 include '/xampp/htdocs/BANHOA/database/connect.php';
 ?>
 <!DOCTYPE html>
@@ -7,7 +8,6 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
   <link rel="icon" type="image/png" href="/BANHOA/Front-end/public/Eden.png">
   <link rel="stylesheet" href="/BANHOA/css/bootstrap.css">
   <link rel="stylesheet" href="/BANHOA/css/bootstrap.min.css">
@@ -30,12 +30,14 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
         <div class="row align-items-center">
           <!-- Logo -->
           <div class="col-md-3 col-4 text-center text-md-start mb-3 mb-md-0">
-            <img
-              src="/BANHOA/Front-end/public/logo1.png"
-              class="img-fluid"
-              width="200px"
-              height="auto"
-              alt="Logo" />
+            <a href="index.php">
+              <img
+                src="/BANHOA/Front-end/public/logo1.png"
+                class="img-fluid"
+                width="200px"
+                height="auto"
+                alt="Logo" />
+            </a>
           </div>
 
           <!-- Search Bar -->
@@ -64,7 +66,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
               <div class="col-6">
                 <div class="me-4 position-relative text-center">
                   <a
-                    href="/BANHOA/Front-end/Customer/giohang.html"
+                    href="giohang.php"
                     class="position-relative text-dark">
                     <span class="fs-2"><i class="fa-solid fa-bag-shopping"></i></span>
                     <span
@@ -82,7 +84,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
               <!-- Account -->
               <div class="col-6">
                 <div class="fs-3"><i class="fa-regular fa-user"></i></div>
-                <?php if(empty($_SESSION['users_id'])):?>
+                <?php if (empty($_SESSION['users_id'])): ?>
                   <div class="dropdown nav-item">
                     <a
                       class="btn btn-secondary dropdown-toggle"
@@ -96,31 +98,31 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                       <li>
                         <a
                           class="dropdown-item"
-                          href="/BANHOA/Front-end/Customer/dangky.php">Đăng ký</a>
+                          href="dangky.php">Đăng ký</a>
                       </li>
                       <li>
                         <a
                           class="dropdown-item"
-                          href="/BANHOA/Front-end/Customer/dangnhap.php">Đăng nhập</a>
+                          href="dangnhap.php">Đăng nhập</a>
                       </li>
                     </ul>
                   </div>
-                  <?php else:?>
-                    <div class="dropdown nav-item">
-                    
+                <?php else: ?>
+                  <div class="dropdown nav-item">
+
                     <a
                       class="btn btn-secondary dropdown-toggle"
-                      href="#"  
+                      href="#"
                       role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <section>Hello <br><?=$_SESSION['fullname']?></section>
+                      <section>Hello <br><?= $_SESSION['fullname'] ?></section>
                     </a>
                     <ul class="dropdown-menu">
                       <li>
                         <a
                           class="dropdown-item"
-                          href="/BANHOA/Front-end/Customer/trangcanhan.php">Trang cá nhân</a>
+                          href="trangcanhan.php">Trang cá nhân</a>
                       </li>
                       <li>
                         <a
@@ -129,8 +131,8 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                       </li>
                     </ul>
                   </div>
-                    
-                <?php endif;?>
+
+                <?php endif; ?>
               </div>
             </div>
           </div>

@@ -99,7 +99,7 @@ $db = new Database();
                 <div class="info-bar">
                     <div class="total-posts">
                         <!-- count -->
-                        <p>Tổng số khách hàng:
+                        <p>Tổng số danh mục:
                             <?php $count = $db->count("SELECT * FROM categories");
                             echo $count; ?></p>
                     </div>

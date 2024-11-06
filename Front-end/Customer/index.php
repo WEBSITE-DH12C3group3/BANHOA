@@ -1,5 +1,4 @@
 <?php
-session_start();
 include 'header.php';
 
 ?>
@@ -7,8 +6,6 @@ include 'header.php';
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* produc CSS */
         .product-image {
@@ -28,7 +25,6 @@ include 'header.php';
             border-radius: 5px;
             font-size: 14px;
         }
-    </style>
     </style>
     <title>EDEN</title>
 </head>
@@ -207,7 +203,7 @@ include 'header.php';
                                     <li><a href="#" class="active">Trang Chủ</a></li>
                                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Danh Mục</a>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="/BANHOA/Front-end/Customer/hoasinhnhat.html">Hoa sinh nhật</a></li>
+                                            <li><a class="dropdown-item" href="/BANHOA/Front-end/Customer/hoasinhnhat.php">Hoa sinh nhật</a></li>
                                             <li><a class="dropdown-item" href="#">Hoa khai chương</a></li>
                                             <li><a class="dropdown-item" href="#">Hoa tang</a></li>
                                         </ul>

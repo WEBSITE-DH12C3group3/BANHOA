@@ -3,9 +3,7 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gioi hang</title>
+  <title>EDEN | Giỏ Hàng</title>
   <!-- Bootstrap CSS -->
   <style>
     .cart-item img {

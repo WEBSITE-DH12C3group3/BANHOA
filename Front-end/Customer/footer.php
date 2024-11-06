@@ -77,10 +77,10 @@
                         </div>
                     </div>
                     <div class="row-md-6">
-                        <button type="button" class="btn btn-outline-success fs-2"><a href="#"><i class="fa-brands fa-facebook"></i></a></button>
-                        <button type="button" class="btn btn-outline-danger fs-2"><a href="#"><i class="fa-brands fa-instagram"></i></a></button>
-                        <button type="button" class="btn btn-outline-warning fs-2"><a href="#"><i class="fa-brands fa-twitter"></i></a></button>
-                        <button type="button" class="btn btn-outline-info fs-2"><a href="#"><img src="/BANHOA/Front-end/public/nopgeden.png" width="37px" alt=""></a></button>
+                        <button type="button" class="btn btn-outline-success fs-2"><a href="https://www.facebook.com/nam.hsgc3"><i class="fa-brands fa-facebook"></i></a></button>
+                        <button type="button" class="btn btn-outline-danger fs-2"><a href="https://www.instagram.com/_n4.m/"><i class="fa-brands fa-instagram"></i></a></button>
+                        <button type="button" class="btn btn-outline-warning fs-2"><a href="https://x.com/neaammmm"><i class="fa-brands fa-x-twitter"></i></a></button>
+                        <button type="button" class="btn btn-outline-info fs-2"><a href="https://github.com/WEBSITE-DH12C3group3/BANHOA"><i class="fa-brands fa-github"></i></a></button>
                     </div>
                 </div>
             </div>
