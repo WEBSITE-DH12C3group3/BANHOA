@@ -29,7 +29,6 @@ $db = new Database();
     <div class="wrapper">
         <div class="body-overlay"></div>
         <!-- Sidebar  -->
-
         <nav id="sidebar">
             <div class="sidebar-header">
                 <a href="/BANHOA/Front-end/Adminn/index.php">
@@ -83,95 +82,90 @@ $db = new Database();
         </nav>
 
         <!-- Page Content  -->
-        <div id="content">
 
-            <div class="maincontent">
+        <div class="maincontent" id="content">
+            <div class="search-bar">
+                <input type="text" id="searchBox"
+                    onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add">
+                    Thêm sản phẩm
+                </button>
+            </div>
 
-                <div class="search-bar">
-                    <input type="text" id="searchBox"
-                        onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add">
-                        Thêm sản phẩm
-                    </button>
+            <div class="info-bar">
+                <div class="total-posts">
+                    <!-- count -->
+                    <p>Tổng số sản phẩm:
+                        <?php $count = $db->count("SELECT * FROM products");
+                        echo $count; ?></p>
                 </div>
+            </div>
 
-                <div class="info-bar">
-                    <div class="total-posts">
-                        <!-- count -->
-                        <p>Tổng số sản phẩm:
-                            <?php $count = $db->count("SELECT * FROM products");
-                            echo $count; ?></p>
-                    </div>
-                </div>
-
-                <table class="table table-bordered" id="Table">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Hình ảnh</th>
-                            <th scope="col">Tên sản phẩm</th>
-                            <th scope="col">Miêu tả</th>
-                            <th scope="col">Giá</th>
-                            <th scope="col">Sale</th>
-                            <th scope="col">Kho</th>
-                            <th scope="col">Nổi bật</th>
-                            <th scope="col">Danh mục</th>
-                            <th scope="col" style="width: 120px;">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.sale, p.stock, p.remark, c.category_name
+            <table class="table table-bordered" id="Table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Hình ảnh</th>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Miêu tả</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Sale</th>
+                        <th scope="col">Kho</th>
+                        <th scope="col">Nổi bật</th>
+                        <th scope="col">Danh mục</th>
+                        <th scope="col" style="width: 120px;">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.sale, p.stock, p.remark, c.category_name
                                 FROM products p
                                 JOIN categories c ON p.category_id = c.id
                                 ORDER BY p.id, p.product_name, c.category_name";
-                        $result = $db->select($sql);
-                        if ($result) {
-                            while ($row = $result->fetch_assoc()) { ?>
-                                <tr>
-                                    <td><?php echo $row['id']; ?></td>
-                                    <td><img src="../uploads/<?php echo $row['image']; ?>" alt="product image" width="100px" height="auto"></td>
-                                    <td><?php echo $row['product_name']; ?></td>
-                                    <td><?php echo $row['description']; ?></td>
-                                    <td><?php echo $row['price']; ?></td>
-                                    <td><?php echo $row['sale']; ?>%</td>
-                                    <td><?php echo $row['stock']; ?></td>
-                                    <td><?php if ($row['remark'] == 1) echo "Có";
-                                        else echo "Không"; ?></td>
-                                    <td><?php echo $row['category_name']; ?></td>
-                                    <td>
-                                        <a type="button" class="btn btn-info"
-                                            data-toggle="modal"
-                                            data-target="#edit"
-                                            data-id="<?php echo $row['id']; ?>"
-                                            data-product_name="<?php echo $row['product_name']; ?>"
-                                            data-image="<?php echo $row['image']; ?>"
-                                            data-description="<?php echo $row['description']; ?>"
-                                            data-price="<?php echo $row['price']; ?>"
-                                            data-sale="<?php echo $row['sale']; ?>"
-                                            data-stock="<?php echo $row['stock']; ?>"
-                                            data-remark="<?php echo $row['remark']; ?>"
-                                            data-category_name=" <?php echo $row['category_name']; ?>"
-                                            style="color: white;"><i class="fa fa-edit"></i></a>
-                                        <a onclick="return confirm('Bạn có muốn xóa?')" href="delpro.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                        <?php
-                            }
-                        } else {
-                            echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
+                    $result = $db->select($sql);
+                    if ($result) {
+                        while ($row = $result->fetch_assoc()) { ?>
+                            <tr>
+                                <td><?php echo $row['id']; ?></td>
+                                <td><img src="../uploads/<?php echo $row['image']; ?>" alt="product image" width="100px" height="auto"></td>
+                                <td><?php echo $row['product_name']; ?></td>
+                                <td><?php echo $row['description']; ?></td>
+                                <td><?php echo $row['price']; ?></td>
+                                <td><?php echo $row['sale']; ?>%</td>
+                                <td><?php echo $row['stock']; ?></td>
+                                <td><?php if ($row['remark'] == 1) echo "Có";
+                                    else echo "Không"; ?></td>
+                                <td><?php echo $row['category_name']; ?></td>
+                                <td>
+                                    <a type="button" class="btn btn-info"
+                                        data-toggle="modal"
+                                        data-target="#edit"
+                                        data-id="<?php echo $row['id']; ?>"
+                                        data-product_name="<?php echo $row['product_name']; ?>"
+                                        data-image="<?php echo $row['image']; ?>"
+                                        data-description="<?php echo $row['description']; ?>"
+                                        data-price="<?php echo $row['price']; ?>"
+                                        data-sale="<?php echo $row['sale']; ?>"
+                                        data-stock="<?php echo $row['stock']; ?>"
+                                        data-remark="<?php echo $row['remark']; ?>"
+                                        data-category_name=" <?php echo $row['category_name']; ?>"
+                                        style="color: white;"><i class="fa fa-edit"></i></a>
+                                    <a onclick="return confirm('Bạn có muốn xóa?')" href="delpro.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                    <?php
                         }
-                        ?>
-                    </tbody>
-                </table>
-                <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
+                    } else {
+                        echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
 
-                <div class="pagination-container" style="display: flex; justify-content: center;">
-                    <div class="pagination" id="pagination" style="align-self: center;">
-                    </div>
+            <div class="pagination-container" style="display: flex; justify-content: center;">
+                <div class="pagination" id="pagination" style="align-self: center;">
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -345,8 +339,6 @@ $db = new Database();
             modal.find('#category_id').val(category_name); // Cập nhật danh mục trong modal
         });
     </script>
-
-
     <script src="/BANHOA/Front-end/Adminn/css/pagination.js"></script>
 </body>
 

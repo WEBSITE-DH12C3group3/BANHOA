@@ -83,75 +83,72 @@ $db = new Database();
         </nav>
 
         <!-- Page Content  -->
-        <div id="content">
 
-            <div class="maincontent">
+        <div class="maincontent" id="content">
 
-                <div class="search-bar">
-                    <input type="text" id="searchBox"
-                        onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
+            <div class="search-bar">
+                <input type="text" id="searchBox"
+                    onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
+            </div>
+
+            <div class="info-bar">
+                <div class="total-posts">
+                    <!-- count -->
+                    <p>Tổng số đơn hàng:
+                        <?php $count = $db->count("SELECT * FROM orders");
+                        echo $count; ?></p>
                 </div>
+            </div>
 
-                <div class="info-bar">
-                    <div class="total-posts">
-                        <!-- count -->
-                        <p>Tổng số đơn hàng:
-                            <?php $count = $db->count("SELECT * FROM orders");
-                            echo $count; ?></p>
-                    </div>
-                </div>
-
-                <table class="table table-bordered" id="Table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Mã đơn</th>
-                            <th scope="col">Tên khách hàng</th>
-                            <th scope="col">Số điện thoại</th>
-                            <th scope="col">Tổng tiền</th>
-                            <th scope="col">Ngày tạo</th>
-                            <th scope="col">Trạng thái</th>
-                            <th scope="col">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT o.id, o.order_code, u.fullname, u.phone, o.order_date, o.total, o.status
+            <table class="table table-bordered" id="Table">
+                <thead>
+                    <tr>
+                        <th scope="col">Mã đơn</th>
+                        <th scope="col">Tên khách hàng</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Ngày tạo</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = "SELECT o.id, o.order_code, u.fullname, u.phone, o.order_date, o.total, o.status
                                 FROM orders o
                                 JOIN users u ON o.user_id = u.id
                                 ORDER BY o.id, o.order_code";
-                        $result = $db->select($sql);
-                        if ($result) {
-                            while ($row = $result->fetch_assoc()) { ?>
-                                <tr>
-                                    <td><?php echo $row['order_code']; ?></td>
-                                    <td><?php echo $row['fullname']; ?></td>
-                                    <td><?php echo $row['phone']; ?></td>
-                                    <td><?php echo $row['total']; ?></td>
-                                    <td><?php echo $row['order_date']; ?></td>
-                                    <td><?php echo $row['status']; ?></td>
-                                    <td>
-                                        <a href="" class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                                        <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                        <?php if ($row['status'] != 'Đã duyệt') { ?>
-                                            <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
-                                        <?php } ?>
-                                    </td>
-                                </tr>
-                        <?php
-                            }
-                        } else {
-                            echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
+                    $result = $db->select($sql);
+                    if ($result) {
+                        while ($row = $result->fetch_assoc()) { ?>
+                            <tr>
+                                <td><?php echo $row['order_code']; ?></td>
+                                <td><?php echo $row['fullname']; ?></td>
+                                <td><?php echo $row['phone']; ?></td>
+                                <td><?php echo $row['total']; ?></td>
+                                <td><?php echo $row['order_date']; ?></td>
+                                <td><?php echo $row['status']; ?></td>
+                                <td>
+                                    <a href="" class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                    <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    <?php if ($row['status'] != 'Đã duyệt') { ?>
+                                        <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                    <?php
                         }
-                        ?>
-                    </tbody>
-                </table>
+                    } else {
+                        echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
 
-                <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
-                <div class="pagination-container" style="display: flex; justify-content: center;">
-                    <div class="pagination" id="pagination" style="align-self: center;">
-                    </div>
+            <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
+            <div class="pagination-container" style="display: flex; justify-content: center;">
+                <div class="pagination" id="pagination" style="align-self: center;">
                 </div>
-
             </div>
         </div>
     </div>

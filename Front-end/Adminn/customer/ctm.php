@@ -85,82 +85,79 @@ $db = new Database();
         </nav>
 
         <!-- Page Content  -->
-        <div id="content">
 
-            <div class="maincontent">
+        <div class="maincontent" id="content">
 
-                <div class="search-bar">
-                    <input type="text" id="searchBox"
-                        onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
+            <div class="search-bar">
+                <input type="text" id="searchBox"
+                    onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
+            </div>
+
+            <div class="info-bar">
+                <div class="total-posts">
+                    <!-- count -->
+                    <p>Tổng số khách hàng:
+                        <?php $count = $db->count("SELECT * FROM users");
+                        echo $count; ?></p>
                 </div>
+            </div>
 
-                <div class="info-bar">
-                    <div class="total-posts">
-                        <!-- count -->
-                        <p>Tổng số khách hàng:
-                            <?php $count = $db->count("SELECT * FROM users");
-                            echo $count; ?></p>
-                    </div>
-                </div>
+            <table class="table table-bordered" id="Table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Họ tên</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mật khẩu</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Địa chỉ</th>
+                        <th scope="col">Vai trò</th>
+                        <th scope="col">Ngày tạo</th>
+                        <th scope="col" style="width: 137px;">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = "SELECT * FROM users ORDER BY id, fullname";
+                    $result = $db->select($sql);
+                    if ($result) {
+                        while ($row = $result->fetch_assoc()) { ?>
+                            <tr>
+                                <td><?php echo $row['id']; ?></td>
+                                <td><?php echo $row['fullname']; ?></td>
+                                <td><?php echo $row['email']; ?></td>
+                                <td><?php echo $row['password']; ?></td>
+                                <td><?php echo $row['phone']; ?></td>
+                                <td><?php echo $row['address']; ?></td>
+                                <td><?php echo $row['role']; ?></td>
+                                <td><?php echo $row['created_at']; ?></td>
+                                <td>
+                                    <a type="button" class="btn btn-info"
+                                        data-toggle="modal"
+                                        data-target="#edit"
+                                        data-id="<?php echo $row['id']; ?>"
+                                        data-fullname="<?php echo $row['fullname']; ?>"
+                                        data-email="<?php echo $row['email']; ?>"
+                                        data-password="<?php echo $row['password']; ?>"
+                                        data-phone="<?php echo $row['phone']; ?>"
+                                        data-address="<?php echo $row['address']; ?>" style="color: white;"><i class="fa fa-edit"></i></a>
 
-                <table class="table table-bordered" id="Table">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Họ tên</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Mật khẩu</th>
-                            <th scope="col">Số điện thoại</th>
-                            <th scope="col">Địa chỉ</th>
-                            <th scope="col">Vai trò</th>
-                            <th scope="col">Ngày tạo</th>
-                            <th scope="col" style="width: 137px;">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT * FROM users ORDER BY id, fullname";
-                        $result = $db->select($sql);
-                        if ($result) {
-                            while ($row = $result->fetch_assoc()) { ?>
-                                <tr>
-                                    <td><?php echo $row['id']; ?></td>
-                                    <td><?php echo $row['fullname']; ?></td>
-                                    <td><?php echo $row['email']; ?></td>
-                                    <td><?php echo $row['password']; ?></td>
-                                    <td><?php echo $row['phone']; ?></td>
-                                    <td><?php echo $row['address']; ?></td>
-                                    <td><?php echo $row['role']; ?></td>
-                                    <td><?php echo $row['created_at']; ?></td>
-                                    <td>
-                                        <a type="button" class="btn btn-info"
-                                            data-toggle="modal"
-                                            data-target="#edit"
-                                            data-id="<?php echo $row['id']; ?>"
-                                            data-fullname="<?php echo $row['fullname']; ?>"
-                                            data-email="<?php echo $row['email']; ?>"
-                                            data-password="<?php echo $row['password']; ?>"
-                                            data-phone="<?php echo $row['phone']; ?>"
-                                            data-address="<?php echo $row['address']; ?>" style="color: white;"><i class="fa fa-edit"></i></a>
-
-                                        <a onclick="return confirm('Bạn có muốn xóa?')" href="deluser.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                        <?php
-                            }
-                        } else {
-                            echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
+                                    <a onclick="return confirm('Bạn có muốn xóa?')" href="deluser.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                    <?php
                         }
-                        ?>
-                    </tbody>
-                </table>
+                    } else {
+                        echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
 
-                <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
-                <div class="pagination-container" style="display: flex; justify-content: center;">
-                    <div class="pagination" id="pagination" style="align-self: center;">
-                    </div>
+            <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
+            <div class="pagination-container" style="display: flex; justify-content: center;">
+                <div class="pagination" id="pagination" style="align-self: center;">
                 </div>
-
             </div>
         </div>
     </div>

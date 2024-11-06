@@ -86,69 +86,66 @@ $db = new Database();
         <!-- Page Content  -->
         <div id="content">
 
-            <div class="maincontent">
 
-                <div class="search-bar">
-                    <input type="text" id="searchBox"
-                        onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add">
-                        Thêm danh mục
-                    </button>
+            <div class="search-bar" id="content">
+                <input type="text" id="searchBox"
+                    onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add">
+                    Thêm danh mục
+                </button>
+            </div>
+
+            <div class="info-bar">
+                <div class="total-posts">
+                    <!-- count -->
+                    <p>Tổng số danh mục:
+                        <?php $count = $db->count("SELECT * FROM categories");
+                        echo $count; ?></p>
                 </div>
+            </div>
 
-                <div class="info-bar">
-                    <div class="total-posts">
-                        <!-- count -->
-                        <p>Tổng số danh mục:
-                            <?php $count = $db->count("SELECT * FROM categories");
-                            echo $count; ?></p>
-                    </div>
-                </div>
+            <table class="table table-bordered" id="Table">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 140px;">ID</th>
+                        <th scope="col">Tên danh mục</th>
+                        <th scope="col" style="width: 120px;">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = "SELECT * FROM categories ORDER BY id, category_name";
+                    $result = $db->select($sql);
+                    if ($result) {
+                        while ($row = $result->fetch_assoc()) { ?>
+                            <tr>
+                                <td><?php echo $row['id']; ?></td>
+                                <td><?php echo $row['category_name']; ?></td>
 
-                <table class="table table-bordered" id="Table">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="width: 140px;">ID</th>
-                            <th scope="col">Tên danh mục</th>
-                            <th scope="col" style="width: 120px;">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT * FROM categories ORDER BY id, category_name";
-                        $result = $db->select($sql);
-                        if ($result) {
-                            while ($row = $result->fetch_assoc()) { ?>
-                                <tr>
-                                    <td><?php echo $row['id']; ?></td>
-                                    <td><?php echo $row['category_name']; ?></td>
+                                <td>
+                                    <a type="button" class="btn btn-info"
+                                        data-toggle="modal"
+                                        data-target="#edit"
+                                        data-id="<?php echo $row['id']; ?>"
+                                        data-category_name="<?php echo $row['category_name']; ?>"
+                                        style="color: white;"><i class="fa fa-edit"></i></a>
 
-                                    <td>
-                                        <a type="button" class="btn btn-info"
-                                            data-toggle="modal"
-                                            data-target="#edit"
-                                            data-id="<?php echo $row['id']; ?>"
-                                            data-category_name="<?php echo $row['category_name']; ?>"
-                                            style="color: white;"><i class="fa fa-edit"></i></a>
-
-                                        <a onclick="return confirm('Bạn có muốn xóa?')" href="delcate.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                        <?php
-                            }
-                        } else {
-                            echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
+                                    <a onclick="return confirm('Bạn có muốn xóa?')" href="delcate.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                    <?php
                         }
-                        ?>
-                    </tbody>
-                </table>
+                    } else {
+                        echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
 
-                <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
-                <div class="pagination-container" style="display: flex; justify-content: center;">
-                    <div class="pagination" id="pagination" style="align-self: center;">
-                    </div>
+            <div id="noResult" style="display: none;">Không tìm thấy kết quả phù hợp.</div>
+            <div class="pagination-container" style="display: flex; justify-content: center;">
+                <div class="pagination" id="pagination" style="align-self: center;">
                 </div>
-
             </div>
         </div>
     </div>
