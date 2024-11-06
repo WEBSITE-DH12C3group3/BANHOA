@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
 <?php
 include 'header.php';
-=======
-<?php 
-    include 'header.php'; 
->>>>>>> Stashed changes
 ?>
 <!DOCTYPE html>
 <html lang="en">
