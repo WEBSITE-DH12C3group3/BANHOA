@@ -44,7 +44,7 @@ include 'header.php';
                         </div>
                         <!-- Thẻ button được căn giữa -->
                         <div class="d-flex py-3 form-group">
-                            <button type="submit" class="btn btn-block">Đăng nhập</button>
+                            <button type="submit" class="btn btn-block nuts">Đăng nhập</button>
                         </div>
                     </form>
                 </div>

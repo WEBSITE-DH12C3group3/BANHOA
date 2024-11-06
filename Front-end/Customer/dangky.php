@@ -54,7 +54,7 @@
 
                             <!-- Submit Button -->
                             <div class="d-flex py-3 form-group">
-                                <button type="submit" class="btn btn-block">Đăng Ký</button>
+                                <button type="submit" class="btn btn-block nuts">Đăng Ký</button>
                             </div>
                         </form>
                     </div>
