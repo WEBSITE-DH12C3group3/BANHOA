@@ -140,7 +140,7 @@ $db = new Database();
                                         else echo "Không"; ?></td>
                                     <td><?php echo $row['category_name']; ?></td>
                                     <td>
-                                        <a type=" button" class="btn btn-info"
+                                        <a type="button" class="btn btn-info"
                                             data-toggle="modal"
                                             data-target="#edit"
                                             data-id="<?php echo $row['id']; ?>"
@@ -150,8 +150,8 @@ $db = new Database();
                                             data-price="<?php echo $row['price']; ?>"
                                             data-sale="<?php echo $row['sale']; ?>"
                                             data-stock="<?php echo $row['stock']; ?>"
-                                            data-category_name="<?php echo $row['category_name']; ?>"
                                             data-remark="<?php echo $row['remark']; ?>"
+                                            data-category_name=" <?php echo $row['category_name']; ?>"
                                             style="color: white;"><i class="fa fa-edit"></i></a>
                                         <a onclick="return confirm('Bạn có muốn xóa?')" href="delpro.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                     </td>
@@ -297,6 +297,7 @@ $db = new Database();
                         <div class="form-group">
                             <label for="category_name">Danh mục</label>
                             <select class="form-control" id="category_name" name="category_id" required>
+                                <option value="">Chọn danh mục</option>
                                 <?php
                                 // Truy vấn để lấy các danh mục từ bảng categories
                                 $sql = "SELECT id, category_name FROM categories";
@@ -305,8 +306,6 @@ $db = new Database();
                                     while ($row = $result->fetch_assoc()) {
                                         echo "<option value='" . $row['id'] . "'>" . $row['category_name'] . "</option>";
                                     }
-                                } else {
-                                    echo "<option value=''>Không có danh mục nào</option>"; // Thêm thông báo nếu không có danh mục
                                 }
                                 ?>
                             </select>
@@ -331,8 +330,8 @@ $db = new Database();
             var price = button.data('price');
             var sale = button.data('sale');
             var stock = button.data('stock');
-            var category_name = button.data('category_name');
-
+            var remark = button.data('remark');
+            var category_id = button.data('category_id'); // Lấy danh mục từ data-* attributes
             // Update the modal's content.
             var modal = $(this);
             modal.find('#id').val(id);
@@ -342,7 +341,8 @@ $db = new Database();
             modal.find('#price').val(price);
             modal.find('#sale').val(sale);
             modal.find('#stock').val(stock);
-            modal.find('#category_name').val(category_name);
+            modal.find('#remark').val(remark); // Cập nhật giá trị nổi bật trong modal
+            modal.find('#category_id').val(category_name); // Cập nhật danh mục trong modal
         });
     </script>
 
