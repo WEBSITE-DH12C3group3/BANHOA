@@ -1,7 +1,5 @@
-<?php 
-session_start();
+<?php
 include 'header.php';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -249,9 +247,9 @@ include 'header.php';
                     };
                 }
             </script>
-            <?php include 'footer.php'; ?>
-
         </div>
+    </div>
 </body>
+<?php include 'footer.php'; ?>
 
 </html>

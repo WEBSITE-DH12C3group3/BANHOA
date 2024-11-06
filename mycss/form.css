@@ -31,15 +31,12 @@ body {
   margin-right: 10px;
 }
 
-button[type="submit"] {
+.log {
   background-color: #28a228;
   cursor: pointer;
-}
-
-button[type="submit"]:hover {
-  background-color: #165816;
-}
-
-.nuts {
   color: #fff;
+}
+
+.log :hover {
+  background-color: #165816;
 }

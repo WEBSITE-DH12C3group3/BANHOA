@@ -15,9 +15,9 @@ include 'header.php';
 
 <body>
     <section>
-        <div class="container  mt-5 py-5">
+        <div class="container mt-5 py-5">
             <div class="row justify-content-center">
-                <div class="form-container" style="border: 1px solid #ccc; border-radius: 5px; padding: 20px; background-color: #f9f9f9;">
+                <div class="form-container">
 
                     <h2 class="text-center mb-4">Đăng Nhập</h2>
                     <?php if (!empty($error)) : ?>
@@ -44,7 +44,7 @@ include 'header.php';
                         </div>
                         <!-- Thẻ button được căn giữa -->
                         <div class="d-flex py-3 form-group">
-                            <button type="submit" class="btn btn-block nuts">Đăng nhập</button>
+                            <button type="submit" name="btn-login" class="btn btn-block log">Đăng nhập</button>
                         </div>
                     </form>
                 </div>
@@ -81,7 +81,7 @@ include 'header.php';
 
         function chuyedoidangnhap(next) {
             next.preventDefault();
-            window.location.href = "index.html";
+            window.location.href = "/BANHOA/Front-end/Customer/index.html";
         }
     </script>
 </body>

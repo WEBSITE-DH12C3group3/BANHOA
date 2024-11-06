@@ -1,6 +1,7 @@
 <?php
 session_start(); // Đảm bảo session đã được start
 include '/xampp/htdocs/BANHOA/database/connect.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,20 +43,21 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
 
           <!-- Search Bar -->
           <div class="col-md-5 col-4 mb-3 mb-md-0">
-            <div class="input-group">
+            <form method="get" action="search.php" class="input-group">
               <input
                 type="text"
                 class="form-control"
                 placeholder="Tìm Kiếm"
                 aria-label="Tìm Kiếm"
-                aria-describedby="basic-addon2" />
+                aria-describedby="basic-addon2"
+                name="q" />
               <button
                 class="btn btn-outline-secondary"
-                type="button"
+                type="submit"
                 id="basic-addon2">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </button>
-            </div>
+            </form>
           </div>
 
           <!-- Cart and Account Section -->
@@ -83,7 +85,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
 
               <!-- Account -->
               <div class="col-6">
-                <div class="fs-3"><i class="fa-regular fa-user"></i></div>
+                <div class="fs-3"></div>
                 <?php if (empty($_SESSION['users_id'])): ?>
                   <div class="dropdown nav-item">
                     <a
@@ -92,7 +94,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                       role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      Xin chào! Tài khoản
+                      Xin chào! <i class="fa-regular fa-user"></i>
                     </a>
                     <ul class="dropdown-menu">
                       <li>
@@ -107,16 +109,24 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                       </li>
                     </ul>
                   </div>
-                <?php else: ?>
+                <?php else:
+                  function shortenName($name, $maxLength)
+                  {
+                    if (strlen($name) > $maxLength) {
+                      return substr($name, 0, $maxLength) . "...";
+                    }
+                    return $name;
+                  }
+                  $name = shortenName($_SESSION['fullname'], 10); // Rút gọn nếu dài hơn 10 ký tự
+                ?>
                   <div class="dropdown nav-item">
-
-                    <a
-                      class="btn btn-secondary dropdown-toggle"
+                    <a class="btn btn-secondary dropdown-toggle"
                       href="#"
                       role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <section>Hello <br><?= $_SESSION['fullname'] ?></section>
+                      <i class="fa-regular fa-user"></i>
+                      <?php echo $name; ?><!-- Hiển thị tên người dùng --></a>
                     </a>
                     <ul class="dropdown-menu">
                       <li>
