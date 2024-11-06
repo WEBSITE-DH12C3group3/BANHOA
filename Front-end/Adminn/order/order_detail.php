@@ -1,6 +1,7 @@
 <?php
 include '../baidautot.php';
 $db = new Database();
+$code = $_GET['code'];
 ?>
 <!Doctype html>
 <html lang="en">
@@ -9,7 +10,7 @@ $db = new Database();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <title>EDEN | Đơn hàng</title>
+    <title>EDEN | Chi tiế đơn hàng</title>
     <link rel="icon" href="/BANHOA/Front-end/Adminn/img/logo.png" type="image/png">
     <!-- CSS Stylesheets -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -94,8 +95,8 @@ $db = new Database();
             <div class="info-bar">
                 <div class="total-posts">
                     <!-- count -->
-                    <p>Tổng số đơn hàng:
-                        <?php $count = $db->count("SELECT * FROM orders");
+                    <p>Tổng số:
+                        <?php
                         echo $count; ?></p>
                 </div>
             </div>
@@ -104,37 +105,33 @@ $db = new Database();
                 <thead>
                     <tr>
                         <th scope="col">Mã đơn</th>
-                        <th scope="col">Tên khách hàng</th>
-                        <th scope="col">Số điện thoại</th>
-                        <th scope="col">Tổng tiền</th>
-                        <th scope="col">Ngày tạo</th>
-                        <th scope="col">Trạng thái</th>
-                        <th scope="col">Hành động</th>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Thành tiền</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT o.id, o.order_code, u.fullname, u.phone, o.order_date, o.total, o.status
-                                FROM orders o
-                                JOIN users u ON o.user_id = u.id
-                                ORDER BY o.id, o.order_code";
+                    $sql = "SELECT o.order_code, p.product_name, p.price, oi.quantity
+                            FROM order_items oi
+                            JOIN orders o ON oi.order_id = o.id
+                            JOIN products p ON oi.product_id = p.id
+                            WHERE o.order_code = '$code'";
                     $result = $db->select($sql);
+                    $total = 0;
+                    $count = 0;
                     if ($result) {
-                        while ($row = $result->fetch_assoc()) { ?>
+                        while ($row = $result->fetch_assoc()) {
+                            $total += $row['price'] * $row['quantity'];
+                            $count += 1;
+                    ?>
                             <tr>
                                 <td><?php echo $row['order_code']; ?></td>
-                                <td><?php echo $row['fullname']; ?></td>
-                                <td><?php echo $row['phone']; ?></td>
-                                <td><?php echo $row['total']; ?></td>
-                                <td><?php echo $row['order_date']; ?></td>
-                                <td><?php echo $row['status']; ?></td>
-                                <td>
-                                    <a href="order_detail.php?code=<?php echo $row['order_code']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                                    <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                    <?php if ($row['status'] != 'Đã duyệt') { ?>
-                                        <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
-                                    <?php } ?>
-                                </td>
+                                <td><?php echo $row['product_name']; ?></td>
+                                <td><?php echo $row['price']; ?></td>
+                                <td><?php echo $row['quantity']; ?></td>
+                                <td><?php echo $row['price'] * $row['quantity']; ?></td>
                             </tr>
                     <?php
                         }
@@ -142,6 +139,11 @@ $db = new Database();
                         echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";
                     }
                     ?>
+                    <tr>
+                        <td colspan="3"><a href="order.php" class="btn btn-success">Trờ về đơn hàng</a></td>
+                        <td>Tổng giá trị đơn hàng:</td>
+                        <td><?php echo $total; ?></td>
+                    </tr>
                 </tbody>
             </table>
 
