@@ -24,18 +24,18 @@ class ResetPasswordProcess {
 }
 
 if (isset($_POST['resetPassword'])) {
-    if (!isset($_SESSION['users_id'])) {
-        $_SESSION['error'] = "Bạn chưa xác nhận mã. Vui lòng thử lại!";
-        header("Location: /BANHOA/Front-end/Customer/forgotpassword.php");
-        exit();
-    }
+    // if (!isset($_SESSION['users_id'])) {
+    //     $_SESSION['error'] = "Bạn chưa xác nhận mã. Vui lòng thử lại!";
+    //     header("Location: /BANHOA/Front-end//forgotpassword.php");
+    //     exit();
+    // }
 
     $newPassword = $_POST['new_password'];
     $confirmPassword = $_POST['confirm_password'];
 
     if ($newPassword !== $confirmPassword) {
         $_SESSION['error'] = "Mật khẩu không khớp. Vui lòng thử lại!";
-        header("Location: /BANHOA/Front-end/Customer/resetpassword.php");
+        header("Location: /BANHOA/Front-end/database/resetpassword.php");
         exit();
     }
 
@@ -49,7 +49,7 @@ if (isset($_POST['resetPassword'])) {
         session_destroy();
     } else {
         $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại!";
-        header("Location: /BANHOA/Front-end/Customer/resetpassword.php");
+        header("Location: /BANHOA/Front-end/database/resetpassword.php");
     }
     exit();
 }
