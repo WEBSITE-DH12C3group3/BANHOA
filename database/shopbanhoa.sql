@@ -38,6 +38,7 @@ CREATE TABLE users (
 -- 4. Tạo bảng orders (đơn hàng)
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    order_code VARCHAR(8) NOT NULL,
     user_id INT,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(50),
