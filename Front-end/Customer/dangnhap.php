@@ -1,7 +1,7 @@
 <?php
+include 'header.php';
 $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
 unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
-include 'header.php';
 ?>
 
 <!DOCTYPE html>

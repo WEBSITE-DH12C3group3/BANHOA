@@ -85,6 +85,7 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
 
               <!-- Account -->
               <div class="col-6">
+<<<<<<< Updated upstream
                 <div class="fs-3"></div>
                 <?php if (empty($_SESSION['users_id'])): ?>
                   <div class="dropdown nav-item">
@@ -143,6 +144,36 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                   </div>
 
                 <?php endif; ?>
+=======
+                <div class="fs-3"><i class="fa-regular fa-user"></i></div>
+                
+                <?php if(empty($_SESSION['users_id'])):?>
+                    <div class="dropdown nav-item">
+                      <a
+                        class="btn btn-secondary dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Xin chào! Tài khoản
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/BANHOA/Front-end/Customer/dangky.php">Đăng ký</a>
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/BANHOA/Front-end/Customer/dangnhap.php">Đăng nhập</a>
+                        </li>
+                      </ul>
+                    </div>
+                <?php else: ?>
+                    <a href="/BANHOA/Front-end/Customer/trangcanhan.php"><section>Chao <?=$_SESSION['fullname']?></section></a> 
+                <?php endif;?>
+>>>>>>> Stashed changes
               </div>
             </div>
           </div>
