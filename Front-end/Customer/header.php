@@ -1,7 +1,6 @@
 <?php
 session_start(); // Đảm bảo session đã được start
 include '/xampp/htdocs/BANHOA/database/connect.php';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
