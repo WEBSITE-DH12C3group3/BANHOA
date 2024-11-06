@@ -152,7 +152,7 @@
       </table>
 
       <div class="d-flex justify-content-between py-4">
-        <a href="thanhtoan.html">
+        <a href="thanhtoan.php">
           <button class="btn btn-primary">Mua Ngay</button>
         </a>
 

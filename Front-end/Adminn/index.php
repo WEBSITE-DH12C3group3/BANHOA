@@ -1,6 +1,29 @@
 <?php
-include 'baidautot.php';
+include 'baidautot.php';  // Bao gồm file chứa lớp Database
+
+// Khởi tạo đối tượng Database
+$db = new Database();
+$conn = $db->conn;  // Lấy kết nối từ thuộc tính conn của đối tượng
+
+// Kiểm tra kết nối
+if (!$conn) {
+    die("Kết nối không thành công.");
+}
+
+// Ví dụ thực hiện tính toán doanh thu
+$sql = "SELECT SUM(total) AS total_revenue_day FROM orders WHERE DATE(order_date) = CURDATE()";
+$result = $conn->query($sql);
+$total_revenue_day = $result->fetch_assoc()['total_revenue_day'] ?? 0;
+
+$sql_week = "SELECT SUM(total) AS total_revenue_week FROM orders WHERE WEEK(order_date) = WEEK(CURDATE())";
+$result_week = $conn->query($sql_week);
+$total_revenue_week = $result_week->fetch_assoc()['total_revenue_week'] ?? 0;
+
+$sql_month = "SELECT SUM(total) AS total_revenue_month FROM orders WHERE MONTH(order_date) = MONTH(CURDATE())";
+$result_month = $conn->query($sql_month);
+$total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
 ?>
+
 <!Doctype html>
 <html lang="en">
 
@@ -47,7 +70,6 @@ include 'baidautot.php';
                     <a href="/BANHOA/Front-end/Adminn/index.php">
                         <i class="fas fa-chart-bar"></i><span>Thống kê</span></a>
                 </li>
-
                 <li class="dropdown">
                     <a href="#subm" class="dropdown-toggle">
                         <i class="fas fa-th-large"></i><span>Quản Lí</span></a>
@@ -69,8 +91,6 @@ include 'baidautot.php';
                         </li>
                     </ul>
                 </li>
-
-
                 <li class="">
                     <a href="#"><i class="fas fa-comments"></i><span>Phản Hồi</span></a>
                 </li>
@@ -81,54 +101,78 @@ include 'baidautot.php';
             </ul>
         </nav>
 
-        <!-- Page Content  -->
         <div id="content">
-
-            <div class="maincontent">
-                <div class="dashboard">
-
-                    <div class="item total-revenue">
-                        <p>Tổng doanh thu (Ngày)</p>
-                        <p>0 đ</p>
-                    </div>
-                    <div class="item total-revenue-week">
-                        <p>Tổng doanh thu (Tuần)</p>
-                        <p>2,740,000 đ</p>
-                    </div>
-                    <div class="item total-revenue-month">
-                        <p>Tổng doanh thu (Tháng)</p>
-                        <p>2,740,000 đ</p>
-                    </div>
-                    <div class="item total-orders">
-                        <p>Tổng đơn</p>
-                        <p>7</p>
-                    </div>
-                    <div class="item total-customers">
-                        <p>Tổng khách hàng</p>
-                        <p>2</p>
-                    </div>
-                    <div class="item total-products">
-                        <p>Tổng sản phẩm</p>
-                        <p>9</p>
-                    </div>
-                    <div class="item total-product-types">
-                        <p>Tổng loại sản phẩm</p>
-                        <p>8</p>
-                    </div>
-                </div>
-
-                <div class="chart-section">
-                    <div class="chart">
-                        <h2>Biểu đồ thống kê Doanh thu</h2>
-                        <canvas id="revenueChart"></canvas>
-                    </div>
-                    <div class="category-statistics">
-                        <h2>Thống kê danh mục</h2>
-                        <canvas id="categoryChart"></canvas>
-                    </div>
-                </div>
+    <!-- Hiển thị các mục doanh thu cố định (Ngày, Tuần, Tháng) -->
+    <div class="maincontent">
+        <div class="dashboard">
+            <div class="item total-revenue">
+                <p>Tổng doanh thu (Ngày)</p>
+                <p><?php echo number_format($total_revenue_day, 0, ',', '.') . " đ"; ?></p>
             </div>
-        </div>
+            <div class="item total-revenue-week">
+                <p>Tổng doanh thu (Tuần)</p>
+                <p><?php echo number_format($total_revenue_week, 0, ',', '.') . " đ"; ?></p>
+            </div>
+            <div class="item total-revenue-month">
+                <p>Tổng doanh thu (Tháng)</p>
+                <p><?php echo number_format($total_revenue_month, 0, ',', '.') . " đ"; ?></p>
+            </div>                   
+        </div>               
+    </div>
+
+    <!-- Form chọn khoảng thời gian (đặt ở dưới cùng) -->
+    <div class="date-range-form">
+        <form method="GET" action="">
+            <label for="start_date">Từ ngày:</label>
+            <input type="date" id="start_date" name="start_date" required>
+
+            <label for="end_date">Đến ngày:</label>
+            <input type="date" id="end_date" name="end_date" required>
+
+            <button type="submit">Xem doanh thu</button>
+        </form>
+    </div>
+
+    <?php
+    // Khởi tạo biến doanh thu trong khoảng tùy chọn
+    $total_revenue_custom = 0;
+
+    // Xử lý khi người dùng gửi form
+    if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
+        $start_date = $_GET['start_date'];
+        $end_date = $_GET['end_date'];
+
+        // Truy vấn doanh thu cho khoảng thời gian được chọn
+        $sql_custom = "SELECT SUM(total) AS total_revenue_custom 
+                       FROM orders 
+                       WHERE order_date BETWEEN '$start_date' AND '$end_date'";
+        $result_custom = $conn->query($sql_custom);
+        $total_revenue_custom = $result_custom->fetch_assoc()['total_revenue_custom'] ?? 0;
+        
+        // Hiển thị bảng doanh thu cho khoảng thời gian tùy chọn
+        echo "
+        <div class='custom-revenue'>
+            <h3>Doanh thu từ ngày $start_date đến ngày $end_date</h3>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>Khoảng thời gian</th>
+                        <th>Tổng doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Từ ngày " . date('d-m-Y', strtotime($start_date)) . " đến ngày " . date('d-m-Y', strtotime($end_date)) . "</td>
+                        <td>" . number_format($total_revenue_custom, 0, ',', '.') . " đ</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>";
+    }
+    ?>
+</div>
+
+
 
 
 
@@ -136,58 +180,7 @@ include 'baidautot.php';
             </div> -->
     </div>
 
-    <script>
-        // Biểu đồ Doanh thu (Cột)
-        const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
-        const revenueChart = new Chart(ctxRevenue, {
-            type: 'bar',
-            data: {
-                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
-                datasets: [{
-                    label: 'Doanh thu (VND)',
-                    data: [1200000, 1900000, 3000000, 2500000, 2800000],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        // Biểu đồ Thống kê danh mục (Tròn)
-        const ctxCategory = document.getElementById('categoryChart').getContext('2d');
-        const categoryChart = new Chart(ctxCategory, {
-            type: 'pie',
-            data: {
-                labels: ['Hoa Đám Tang', 'Hoa Chúc Mừng', 'Hoa Đám Cưới', 'Hoa Bỉ Ngạn Vàng', 'Hoa Để Bàn'],
-                datasets: [{
-                    label: 'Thống kê danh mục',
-                    data: [300000, 500000, 1000000, 1500000, 2000000],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            }
-        });
-    </script>
+    
 
 </body>
 
