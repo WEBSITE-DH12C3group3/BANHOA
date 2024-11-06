@@ -11,8 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stock = isset($_POST['stock']) ? mysqli_real_escape_string($db->conn, $_POST['stock']) : '';
     $category_id = isset($_POST['category_id']) ? mysqli_real_escape_string($db->conn, $_POST['category_id']) : '';
     $sale = isset($_POST['sale']) ? mysqli_real_escape_string($db->conn, $_POST['sale']) : '';
+    $remark = isset($_POST['remark']) ? mysqli_real_escape_string($db->conn, $_POST['remark']) : '';
 
-    if (empty($name) || empty($price) || empty($sale) || empty($stock) || empty($category_id) || empty($id)) {
+    if (empty($name) || empty($price) || empty($sale) || empty($stock) || empty($category_id) || empty($id) || empty($remark)) {
         echo "<script>alert('Vui lòng điền đầy đủ thông tin cần thiết!'); window.location.href = 'product.php'; </script>";
         exit();
     }
@@ -32,9 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit(); // Dừng xử lý nếu upload ảnh thất bại
         }
     } else { // Không có ảnh mới, giữ nguyên ảnh cũ
-        $sql = "UPDATE products SET product_name=?, description=?, price=?, stock=?, category_id=? WHERE id=?";
+        $sql = "UPDATE products SET product_name=?, description=?, price=?, stock=?, category_id=?, remark=? WHERE id=?";
         $stmt = $db->conn->prepare($sql);
-        $stmt->bind_param("ssdisi", $name, $description, $price, $stock, $category_id, $id);
+        $stmt->bind_param("ssdisii", $name, $description, $price, $stock, $category_id, $remark, $id);
     }
 
 

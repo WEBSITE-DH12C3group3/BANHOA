@@ -1,3 +1,6 @@
+<?php
+include '/xampp/htdocs/BANHOA/database/connect.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,12 +30,14 @@
         <div class="row align-items-center">
           <!-- Logo -->
           <div class="col-md-3 col-4 text-center text-md-start mb-3 mb-md-0">
-            <img
-              src="/BANHOA/Front-end/public/logo1.png"
-              class="img-fluid"
-              width="200px"
-              height="auto"
-              alt="Logo" />
+            <a href="/BANHOA/Front-end/Customer/index.php">
+              <img
+                src="/BANHOA/Front-end/public/logo1.png"
+                class="img-fluid"
+                width="200px"
+                height="auto"
+                alt="Logo" />
+            </a>
           </div>
 
           <!-- Search Bar -->
@@ -61,7 +66,7 @@
               <div class="col-6">
                 <div class="me-4 position-relative text-center">
                   <a
-                    href="/BANHOA/Front-end/Customer/giohang.html"
+                    href="/BANHOA/Front-end/Customer/giohang.php"
                     class="position-relative text-dark">
                     <span class="fs-2"><i class="fa-solid fa-bag-shopping"></i></span>
                     <span

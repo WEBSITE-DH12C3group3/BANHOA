@@ -114,13 +114,14 @@ $db = new Database();
                             <th scope="col">Giá</th>
                             <th scope="col">Sale</th>
                             <th scope="col">Kho</th>
+                            <th scope="col">Nổi bật</th>
                             <th scope="col">Danh mục</th>
                             <th scope="col" style="width: 120px;">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.sale, p.stock, c.category_name
+                        $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.sale, p.stock, p.remark, c.category_name
                                 FROM products p
                                 JOIN categories c ON p.category_id = c.id
                                 ORDER BY p.id, p.product_name, c.category_name";
@@ -135,6 +136,8 @@ $db = new Database();
                                     <td><?php echo $row['price']; ?></td>
                                     <td><?php echo $row['sale']; ?>%</td>
                                     <td><?php echo $row['stock']; ?></td>
+                                    <td><?php if ($row['remark'] == 1) echo "Có";
+                                        else echo "Không"; ?></td>
                                     <td><?php echo $row['category_name']; ?></td>
                                     <td>
                                         <a type=" button" class="btn btn-info"
@@ -148,6 +151,7 @@ $db = new Database();
                                             data-sale="<?php echo $row['sale']; ?>"
                                             data-stock="<?php echo $row['stock']; ?>"
                                             data-category_name="<?php echo $row['category_name']; ?>"
+                                            data-remark="<?php echo $row['remark']; ?>"
                                             style="color: white;"><i class="fa fa-edit"></i></a>
                                         <a onclick="return confirm('Bạn có muốn xóa?')" href="delpro.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                     </td>
@@ -207,6 +211,13 @@ $db = new Database();
                         <div class="form-group">
                             <label for="stock">Số lượng</label>
                             <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="remark">Nổi bật</label>
+                            <select class="form-control" name="remark" id="remark" required>
+                                <option value="0">Không nổi bật</option>
+                                <option value="1">Nổi bật</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="category_name">Danh mục</label>
@@ -275,6 +286,13 @@ $db = new Database();
                         <div class="form-group">
                             <label for="stock">Số lượng</label>
                             <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng" required value="<?php echo $row['stock'] ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="remark">Nổi bật</label>
+                            <select class="form-control" name="remark" id="remark" required>
+                                <option value="0">Không nổi bật</option>
+                                <option value="1">Nổi bật</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="category_name">Danh mục</label>
