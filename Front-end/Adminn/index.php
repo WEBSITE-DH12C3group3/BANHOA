@@ -84,10 +84,10 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
             </ul>
         </nav>
 
-        <div id="content">
+        <div lass="maincontent" id="content">
             <!-- Hiển thị các mục doanh thu cố định (Ngày, Tuần, Tháng) -->
-            <div class="maincontent">
-                <div class="dashboard">
+            <div>
+                <div class="dashboard" style="margin-left: 60px;">
                     <div class="item total-revenue">
                         <p>Tổng doanh thu (Ngày)</p>
                         <p><?php echo number_format($total_revenue_day, 0, ',', '.') . " đ"; ?></p>
@@ -104,15 +104,15 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
             </div>
 
             <!-- Form chọn khoảng thời gian (đặt ở dưới cùng) -->
-            <div class="date-range-form" id="content">
+            <div class="date-range-form" style="text-align: center; margin: 20px;">
                 <form method="GET" action="">
                     <label for="start_date">Từ ngày:</label>
-                    <input type="date" id="start_date" name="start_date" required>
+                    <input type="date" id="start_date" name="start_date" required style="border-radius: 5px;">
 
                     <label for="end_date">Đến ngày:</label>
-                    <input type="date" id="end_date" name="end_date" required>
+                    <input type="date" id="end_date" name="end_date" required style="border-radius: 5px;">
 
-                    <button type="submit">Xem doanh thu</button>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Xem</button>
                 </form>
             </div>
 
@@ -134,8 +134,8 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
 
                 // Hiển thị bảng doanh thu cho khoảng thời gian tùy chọn
                 echo "
-        <div class='custom-revenue'>
-            <h3>Doanh thu từ ngày $start_date đến ngày $end_date</h3>
+        <div class='container'>
+            <h5 style='text-align: center;'>Doanh thu từ ngày $start_date đến ngày $end_date</h5>
             <table class='table'>
                 <thead>
                     <tr>

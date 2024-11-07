@@ -8,6 +8,8 @@ require '/xampp/htdocs/BANHOA/database/resetpassword.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đặt Lại Mật Khẩu</title>
+    <link rel="icon" type="image/png" href="/BANHOA/Front-end/public/Eden.png">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -40,7 +42,7 @@ require '/xampp/htdocs/BANHOA/database/resetpassword.php';
         }
 
         input[type="password"] {
-            width: 80%;
+            width: 95%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;

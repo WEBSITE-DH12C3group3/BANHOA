@@ -9,10 +9,13 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quên Mật Khẩu</title>
+    <link rel="icon" type="image/png" href="/BANHOA/Front-end/public/Eden.png">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,6 +26,7 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
             margin: 0;
             background-color: #f5f5f5;
         }
+
         .container {
             max-width: 400px;
             width: 100%;
@@ -31,27 +35,33 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             text-align: center;
             color: #333;
         }
+
         p {
             text-align: center;
             color: #666;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
             color: #333;
         }
-        input[type="email"], input[type="text"] {
-            width: 100%;
+
+        input[type="email"],
+        input[type="text"] {
+            width: 95%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
         }
+
         button {
             width: 100%;
             padding: 10px;
@@ -62,9 +72,11 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
             font-size: 16px;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #45a049;
         }
+
         .back-link {
             display: block;
             text-align: center;
@@ -72,9 +84,11 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
             color: #4CAF50;
             text-decoration: none;
         }
+
         .back-link:hover {
             text-decoration: underline;
         }
+
         .message {
             color: #333;
             text-align: center;
@@ -82,38 +96,39 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Quên Mật Khẩu</h2>
-    <p>Vui lòng nhập email của bạn để nhận mã xác nhận.</p>
-    
-    <!-- Hiển thị thông báo lỗi nếu có -->
-    <?php if (!empty($error)): ?>
-        <div class="message" style="color: <?= strpos($error, 'Mã xác nhận') !== false ? 'red' : 'green'; ?>;">
-            <?= htmlspecialchars($error) ?>
-        </div>
-    <?php endif; ?>
-    
-    <!-- Form nhập email để gửi mã xác nhận -->
-    <form id="emailForm" method="POST" action="/BANHOA/database/resetpassword.php">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="email@example.com" required>
-        <button type="submit" name="resetpassword">Gửi mã xác nhận</button>
-    </form>
-    
-    <!-- Form nhập mã xác nhận (ẩn mặc định) -->
-    <form id="codeForm" method="POST" action="/BANHOA/database/resetpassword.php" style="display: none;">
-        <label for="code">Mã xác nhận</label>
-        <input type="text" id="code" name="code" placeholder="Nhập mã xác nhận" required>
-        <button type="submit" name="checkCode">Xác nhận mã</button>
-    </form>
+    <div class="container">
+        <h2>Quên Mật Khẩu</h2>
+        <p>Vui lòng nhập email của bạn để nhận mã xác nhận.</p>
 
-    <a href="/BANHOA/database/login.php" class="back-link">Quay lại trang đăng nhập</a>
-    <div class="message" id="message"></div>
-</div>
+        <!-- Hiển thị thông báo lỗi nếu có -->
+        <?php if (!empty($error)): ?>
+            <div class="message" style="color: <?= strpos($error, 'Mã xác nhận') !== false ? 'red' : 'green'; ?>;">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
 
-<script>
+        <!-- Form nhập email để gửi mã xác nhận -->
+        <form id="emailForm" method="POST" action="/BANHOA/database/resetpassword.php">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="email@example.com" required>
+            <button type="submit" name="resetpassword">Gửi mã xác nhận</button>
+        </form>
+
+        <!-- Form nhập mã xác nhận (ẩn mặc định) -->
+        <form id="codeForm" method="POST" action="/BANHOA/database/resetpassword.php" style="display: none;">
+            <label for="code">Mã xác nhận</label>
+            <input type="text" id="code" name="code" placeholder="Nhập mã xác nhận" required>
+            <button type="submit" name="checkCode">Xác nhận mã</button>
+        </form>
+
+        <a href="/BANHOA/database/login.php" class="back-link">Quay lại trang đăng nhập</a>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
         // Lấy thông báo từ PHP và hiển thị
         const phpMessage = "<?= htmlspecialchars($error) ?>";
         const messageDiv = document.getElementById("message");
@@ -138,4 +153,5 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
     </script>
 
 </body>
+
 </html>
