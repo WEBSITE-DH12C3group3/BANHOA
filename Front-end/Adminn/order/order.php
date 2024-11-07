@@ -6,24 +6,11 @@ $db = new Database();
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title>EDEN | Đơn hàng</title>
-    <link rel="icon" href="/BANHOA/Front-end/Adminn/img/logo.png" type="image/png">
-    <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- Additional JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/BANHOA/Front-end/Adminn/css/search.js"></script>
-    <link rel="stylesheet" href="/BANHOA/Front-end/Adminn/css/style.css">
 </head>
 
 <body>
@@ -125,11 +112,11 @@ $db = new Database();
                                 <td><?php echo $row['order_code']; ?></td>
                                 <td><?php echo $row['fullname']; ?></td>
                                 <td><?php echo $row['phone']; ?></td>
-                                <td><?php echo $row['total']; ?></td>
+                                <td><?php echo $row['total']; ?>₫</td>
                                 <td><?php echo $row['order_date']; ?></td>
                                 <td><?php echo $row['status']; ?></td>
                                 <td>
-                                    <a href="order_detail.php?code=<?php echo $row['order_code']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                    <a href="order_detail.php?code=<?php echo $row['order_code']; ?>&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>
                                     <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                     <?php if ($row['status'] != 'Đã duyệt') { ?>
                                         <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
@@ -137,6 +124,42 @@ $db = new Database();
                                 </td>
                             </tr>
                     <?php
+                        }
+                        $order_query = "SELECT id FROM orders";
+                        $order_result = $db->select($order_query);
+
+                        if ($order_result) {
+                            while ($order = $order_result->fetch_assoc()) {
+                                $order_id = $order['id'];
+
+                                // Tính tổng tiền cho mỗi đơn hàng dựa trên các sản phẩm trong order_items
+                                $item_query = "SELECT p.price_sale, oi.quantity 
+                       FROM order_items oi
+                       JOIN products p ON oi.product_id = p.id
+                       WHERE oi.order_id = ?";
+
+                                $stmt = $db->conn->prepare($item_query);
+                                $stmt->bind_param("i", $order_id);
+                                $stmt->execute();
+                                $item_result = $stmt->get_result();
+
+                                $total = 0;
+                                if ($item_result) {
+                                    while ($item = $item_result->fetch_assoc()) {
+                                        $total += $item['price_sale'] * $item['quantity'];
+                                    }
+                                }
+
+                                // Cập nhật tổng tiền cho đơn hàng hiện tại trong bảng orders
+                                $update_query = "UPDATE orders SET total = ? WHERE id = ?";
+                                $update_stmt = $db->conn->prepare($update_query);
+                                $update_stmt->bind_param("di", $total, $order_id);
+                                $update_stmt->execute();
+
+                                // echo "Đã cập nhật tổng tiền cho đơn hàng ID: $order_id thành công!<br>";
+                            }
+                        } else {
+                            echo "Không có đơn hàng nào để cập nhật.";
                         }
                     } else {
                         echo "<tr><td colspan='10'>Không có kết quả!</td></tr>";

@@ -2,6 +2,7 @@
 include '../baidautot.php';
 $db = new Database();
 $code = $_GET['code'];
+$id = $_GET['id'];
 ?>
 <!Doctype html>
 <html lang="en">
@@ -92,15 +93,6 @@ $code = $_GET['code'];
                     onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
             </div>
 
-            <div class="info-bar">
-                <div class="total-posts">
-                    <!-- count -->
-                    <p>Tổng số:
-                        <?php
-                        echo $count; ?></p>
-                </div>
-            </div>
-
             <table class="table table-bordered" id="Table">
                 <thead>
                     <tr>
@@ -113,25 +105,23 @@ $code = $_GET['code'];
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT o.order_code, p.product_name, p.price, oi.quantity
+                    $sql = "SELECT o.order_code, p.product_name, p.price_sale AS price, oi.quantity
                             FROM order_items oi
                             JOIN orders o ON oi.order_id = o.id
                             JOIN products p ON oi.product_id = p.id
-                            WHERE o.order_code = '$code'";
+                            WHERE o.order_code = '$code' AND o.id = '$id'";
                     $result = $db->select($sql);
                     $total = 0;
-                    $count = 0;
                     if ($result) {
                         while ($row = $result->fetch_assoc()) {
                             $total += $row['price'] * $row['quantity'];
-                            $count += 1;
                     ?>
                             <tr>
                                 <td><?php echo $row['order_code']; ?></td>
                                 <td><?php echo $row['product_name']; ?></td>
-                                <td><?php echo $row['price']; ?></td>
+                                <td><?php echo $row['price']; ?>₫</td>
                                 <td><?php echo $row['quantity']; ?></td>
-                                <td><?php echo $row['price'] * $row['quantity']; ?></td>
+                                <td><?php echo $row['price'] * $row['quantity']; ?>₫</td>
                             </tr>
                     <?php
                         }
@@ -140,9 +130,9 @@ $code = $_GET['code'];
                     }
                     ?>
                     <tr>
-                        <td colspan="3"><a href="order.php" class="btn btn-success">Trờ về đơn hàng</a></td>
+                        <td colspan="3"><a href="order.php" class="btn btn-success">Trở về đơn hàng</a></td>
                         <td>Tổng giá trị đơn hàng:</td>
-                        <td><?php echo $total; ?></td>
+                        <td><?php echo $total; ?>₫</td>
                     </tr>
                 </tbody>
             </table>
