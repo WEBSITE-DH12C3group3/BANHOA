@@ -183,7 +183,7 @@ $db = new Database();
             $category_id = $category['id'];
             $category_name = $category['category_name'];
             ?>
-            <!-- Tiêu đề danh mục -->
+            <!-- Tiêu đề danh mục với tên danh mục -->
             <div class="row text-center">
                 <div class="title-divider">
                     <span class="title-text" style="color: #3f640b;"><?php echo strtoupper($category_name); ?></span>
@@ -196,8 +196,8 @@ $db = new Database();
                     <div class="container my-5">
                         <div class="row">
                             <?php
-                            // Truy vấn sản phẩm dựa trên danh mục hiện tại
-                            $sql = "SELECT * FROM products WHERE category_id = $category_id ORDER BY id";
+                            // Truy vấn sản phẩm dựa trên danh mục hiện tại (đặt category_id trong dấu ngoặc đơn)
+                            $sql = "SELECT * FROM products WHERE category_id = '$category_id' ORDER BY id";
                             $result = $db->select($sql);
 
                             if ($result) {
@@ -243,6 +243,7 @@ $db = new Database();
     }
     ?>
 </div>
+
                             </div>
                         </div>
                     </div>
