@@ -1,17 +1,7 @@
 <?php
 // Cấu hình kết nối cơ sở dữ liệu
-$servername = "localhost"; // Tên máy chủ
-$username = "root"; // Tên đăng nhập MySQL
-$password = ""; // Mật khẩu MySQL (để trống nếu không đặt mật khẩu)
-$dbname = "websitehoa"; // Thay bằng tên cơ sở dữ liệu của bạn
-
-// Tạo kết nối
-$db = new mysqli($servername, $username, $password, $dbname);
-// Kiểm tra kết nối
-if ($db->connect_error) {
-    die("Kết nối thất bại: " . $db->connect_error);
-}
 include "header.php";
+$db = new Database();
 ?>
 
 <!DOCTYPE html>
@@ -73,53 +63,53 @@ include "header.php";
           </div>
         </div>
         <div class="container my-5">
-    <div class="row">
-        <?php
-        // Fetch products with remark = 1 from the database
-        $sql = "SELECT * FROM products WHERE category_id = 1 ORDER BY id";
-        $result = $db->query($sql);
+          <div class="row">
+            <?php
+            // Fetch products with remark = 1 from the database
+            $sql = "SELECT * FROM products WHERE category_id = 'h1' ORDER BY id";
+            $result = $db->select($sql);
 
-        if ($result) {
-            while ($row = $result->fetch_assoc()) { 
+            if ($result) {
+              while ($row = $result->fetch_assoc()) {
                 $price = number_format($row['price'], 0, ',', '.') . ' VND';
                 $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
-        ?>
+            ?>
                 <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="card">
-                        <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
-                        
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
-                            
-                            <!-- Display price with sale check -->
-                            <p class="text-muted">
-                                <?php if ($price_sale) { 
-                                    // Tính toán phần trăm giảm giá
-                                    $discount_percentage = round(((($row['price'] - $row['price_sale']) / $row['price']) * 100), 2);
-                                ?>
-                                    <!-- Giá gốc bị gạch bỏ, màu đỏ -->
-                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
-                                    <!-- Giá bán giảm nổi bật -->
-                                    <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
-                                    <br>
-                                    <!-- Hiển thị phần trăm giảm giá -->
-                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
-                                <?php } else { ?>
-                                    <!-- Giá bình thường, làm nổi bật -->
-                                    <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
-                                <?php } ?>
-                            </p>
-                            
-                            <a href="#" class="btn btn-primary">Đặt hàng</a>
-                        </div>
+                  <div class="card">
+                    <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+
+                    <div class="card-body text-center">
+                      <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
+
+                      <!-- Display price with sale check -->
+                      <p class="text-muted">
+                        <?php if ($price_sale) {
+                          // Tính toán phần trăm giảm giá
+                          $discount_percentage = round(((($row['price'] - $row['price_sale']) / $row['price']) * 100), 2);
+                        ?>
+                          <!-- Giá gốc bị gạch bỏ, màu đỏ -->
+                          <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
+                          <!-- Giá bán giảm nổi bật -->
+                          <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
+                          <br>
+                          <!-- Hiển thị phần trăm giảm giá -->
+                          <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
+                        <?php } else { ?>
+                          <!-- Giá bình thường, làm nổi bật -->
+                          <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
+                        <?php } ?>
+                      </p>
+
+                      <a href="#" class="btn btn-primary">Đặt hàng</a>
                     </div>
+                  </div>
                 </div>
-        <?php
+            <?php
+              }
             }
-        }
-        ?>
-    </div>
-</div>
+            ?>
+          </div>
+        </div>
 
   </section>
   <!-- Footer -->
