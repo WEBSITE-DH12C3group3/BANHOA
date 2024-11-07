@@ -1,7 +1,25 @@
 <?php
 session_start(); // Đảm bảo session đã được start
 include '/xampp/htdocs/BANHOA/database/connect.php';
+
+// Tạo đối tượng Database
+$db = new Database();
+
+// Truy vấn tất cả danh mục từ bảng `categories`
+$query = "SELECT * FROM categories";
+$categories_result = $db->select($query);
+
+// Khởi tạo mảng danh mục
+$categories = [];
+
+// Kiểm tra nếu có kết quả và đưa vào mảng $categories
+if ($categories_result) {
+    while ($row = $categories_result->fetch_assoc()) {
+        $categories[] = $row;
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,11 +34,25 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
   <link rel="stylesheet" href="/BANHOA/assets/owlcarousel/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="/BANHOA/assets/owlcarousel/assets/owl.theme.default.min.css">
   <link rel="stylesheet" href="/BANHOA/mycss/footder.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Style for the dropdown */
+    .dropdown-menu {
+      display: none; /* Initially hide dropdown */
+      background-color: #f7aaaa;
+    }
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    .dropdown:hover .dropdown-menu {
+      display: block; /* Show dropdown when hovering */
+    }
 
+    .dropdown-item {
+      color: #3f640b !important;
+    }
 
+    .dropdown-item:hover {
+      background-color: #ddd;
+    }
+  </style>
 </head>
 
 <body>
@@ -39,9 +71,8 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                 alt="Logo" />
             </a>
           </div>
-
-          <!-- Search Bar -->
-          <div class="col-md-5 col-4 mb-3 mb-md-0">
+                    <!-- Search Bar -->
+                    <div class="col-md-5 col-4 mb-3 mb-md-0">
             <form method="get" action="search.php" class="input-group">
               <input
                 type="text"
@@ -146,9 +177,11 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
               </div>
             </div>
           </div>
+          <!-- Other Header Content -->
         </div>
       </div>
     </section>
+
     <section class="mymainmenu" style="background-color: #f7aaaa;">
       <div class="container">
         <div class="row" style="color:#3f640b;">
@@ -164,26 +197,15 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
                     <li class="nav-item">
                       <a class="nav-link active" aria-current="page" href="#" style="color: #3f640b;"><b>Trang Chủ</b></a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#" style="color: #3f640b;"><b>Chủ Đề</b></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#" style="color: #3f640b;"><b>Kiểu Dáng</b></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#" style="color: #3f640b;"><b>Tin Tức</b></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#" style="color: #3f640b;"><b>Mới Nhất</b></a>
-                    </li>
+                    <!-- Other menu items -->
                     <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #3f640b;">
-                        <b>Màu Sắc</b>
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #3f640b;">
+                        <b>Danh mục</b>
                       </a>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" style="color: #3f640b;">Trắng</a></li>
-                        <li><a class="dropdown-item" href="#" style="color: #3f640b;">Đỏ</a></li>
-                        <li><a class="dropdown-item" href="#" style="color: #3f640b;">cam</a></li>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <?php foreach ($categories as $category): ?>
+                          <li><a class="dropdown-item" href="category.php?id=<?php echo $category['id']; ?>"><?php echo htmlspecialchars($category['category_name']); ?></a></li>
+                        <?php endforeach; ?>
                       </ul>
                     </li>
                   </ul>
@@ -195,6 +217,34 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
       </div>
     </section>
   </header>
+
+  <!-- Optional: Add JavaScript if you want a click-based dropdown -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Click-based dropdown toggle using jQuery (optional)
+    $(document).ready(function () {
+      $('.dropdown-toggle').click(function (e) {
+        var $el = $(this).next('.dropdown-menu');
+        var isVisible = $el.is(':visible');
+        
+        // Hide all dropdown menus
+        $('.dropdown-menu').slideUp();
+        
+        // Toggle the visibility of the current dropdown
+        if (!isVisible) {
+          $el.stop(true, true).slideDown();
+        }
+      });
+
+      // Close the dropdown if clicked outside
+      $(document).click(function (e) {
+        if (!$(e.target).closest('.dropdown').length) {
+          $('.dropdown-menu').slideUp();
+        }
+      });
+    });
+  </script>
+
 </body>
 
 </html>
