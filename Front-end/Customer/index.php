@@ -1,5 +1,17 @@
 <?php
-include 'header.php';
+// Cấu hình kết nối cơ sở dữ liệu
+$servername = "localhost"; // Tên máy chủ
+$username = "root"; // Tên đăng nhập MySQL
+$password = ""; // Mật khẩu MySQL (để trống nếu không đặt mật khẩu)
+$dbname = "websitehoa"; // Thay bằng tên cơ sở dữ liệu của bạn
+
+// Tạo kết nối
+$db = new mysqli($servername, $username, $password, $dbname);
+// Kiểm tra kết nối
+if ($db->connect_error) {
+    die("Kết nối thất bại: " . $db->connect_error);
+}
+include "header.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,82 +127,27 @@ include 'header.php';
                 </span>
                 <hr>
                 <div class="row py-4">
-                    <div class="large-12 columns">
-                        <div class="owl-carousel owl-theme">
-                            <div class="item hover-effect">
-                                <div class="category-icon ">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon1.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Hồng Pháp</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon ">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon2.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Hồng Vàng</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon3.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Hướng Dương</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon img-fluid">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon4.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Hồng Đỏ</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon5.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Hồng Xanh</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon6.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Mix Màu</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon7.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Diên Vĩ</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon8.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Hồng Nhật</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon9.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Cẩm Tú</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon10.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Lan</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon11.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Hồng Trắng</h6>
-                                </div>
-                            </div>
-                            <div class="item hover-effect">
-                                <div class="category-icon">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon12.jpg" alt="hoaxinh" class="img-fluid rounded-circle">
-                                    <h6>Hoa Trà</h6>
-                                </div>
-                            </div>
+    <div class="large-12 columns">
+        <div class="product-list owl-carousel owl-theme"> <!-- Đặt div này chứa toàn bộ sản phẩm -->
+            <?php
+            $sql = "SELECT * FROM products WHERE remark = 1 ORDER BY id";
+            $result = $db->query($sql);
+            if ($result) {
+                while ($row = $result->fetch_assoc()) { ?>
+                    <div class="item hover-effect">
+                        <div class="category-icon text-center"> <!-- Thêm class 'text-center' để căn giữa -->
+                            <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" alt="hoaxinh" class="img-fluid rounded-circle">
+                            <h6 class="mt-2"><?php echo $row['product_name']; ?></h6> <!-- Thêm margin-top để tạo khoảng cách giữa ảnh và chữ -->
                         </div>
                     </div>
+            <?php
+                }
+            }
+            ?>
+        </div>
+    </div>
+</div>
+
                 </div>
             </div>
             <div class="row">
@@ -225,167 +182,184 @@ include 'header.php';
                     <div class="row">
                         <div class="col">
                             <div class="product-list mb-3">
-                                <div class="product_title border-bottom">
-                                    <div class="title-text">HOA SINH NHẬT</div>
-                                </div>
-                                <div class="product_list-s py-3" style="background-color: #f7aaaa;">
-                                    <div class="row">
-                                        <!-- Sản phẩm 1 -->
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card">
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon1.jpg" class="card-img-top product-image" alt="Adorable">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Adorable(Tình Yêu Thuần Khiết)</h5>
-                                                    <p class="text-muted">850,000 VND</p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card">
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon2.jpg" class="card-img-top product-image" alt="Tinh Khiết (Thạch Thảo Trắng)">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Tinh Khiết (Thạch Thảo Trắng)</h5>
-                                                    <p class="text-muted">420,000 VND</p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card">
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon3.jpg" class="card-img-top product-image" alt="Hạ Về (Cúc Tana Xinh)">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Hạ Về (Cúc Tana Xinh)</h5>
-                                                    <p class="text-muted">560,000 VND</p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card position-relative">
-                                                <span class="discount-badge">15% Giảm</span>
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon4.jpg" class="card-img-top product-image" alt="Be Happy">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Be Happy</h5>
-                                                    <p class="text-muted">720,000 VND <del>850,000 VND</del></p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="row text-center">
+                                <div class="title-divider">
+                                    <span class="title-text" style="color: #3f640b;">HOA SINH NHẬT</span>
                                 </div>
                             </div>
+                                <div class="product_list-s py-3" style="background-color: #f7aaaa;">
+                                        <!-- Sản phẩm 1 -->
+                                        <div class="container my-5">
+    <div class="row">
+        <?php
+        // Fetch products with remark = 1 from the database
+        $sql = "SELECT * FROM products WHERE category_id = 1 ORDER BY id";
+        $result = $db->query($sql);
+
+        if ($result) {
+            while ($row = $result->fetch_assoc()) { 
+                $price = number_format($row['price'], 0, ',', '.') . ' VND';
+                $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
+        ?>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card">
+                        <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+                        
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
+                            
+                            <!-- Display price with sale check -->
+                            <p class="text-muted">
+                                <?php if ($price_sale) { 
+                                    // Tính toán phần trăm giảm giá
+                                    $discount_percentage = round(((($row['price'] - $row['price_sale']) / $row['price']) * 100), 2);
+                                ?>
+                                    <!-- Giá gốc bị gạch bỏ, màu đỏ -->
+                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
+                                    <!-- Giá bán giảm nổi bật -->
+                                    <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
+                                    <br>
+                                    <!-- Hiển thị phần trăm giảm giá -->
+                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
+                                <?php } else { ?>
+                                    <!-- Giá bình thường, làm nổi bật -->
+                                    <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
+                                <?php } ?>
+                            </p>
+                            
+                            <a href="#" class="btn btn-primary">Đặt hàng</a>
+                        </div>
+                    </div>
+                </div>
+        <?php
+            }
+        }
+        ?>
+    </div>
+</div>
+
+
+                                        </div>
                             <!-- Danh mục Hoa cưới -->
-                            <div class="product-list mb-3">
-                                <div class="product_title border-bottom">
-                                    <div class="title-text ">HOA CƯỚI</div>
-                                </div>
-                                <div class="product_list-s py-3" style="background-color: #f7aaaa;">
-                                    <div class="row">
-                                        <!-- Sản phẩm 1 -->
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card">
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon1.jpg" class="card-img-top product-image" alt="Adorable">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Adorable(Tình Yêu Thuần Khiết)</h5>
-                                                    <p class="text-muted">850,000 VND</p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card">
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon2.jpg" class="card-img-top product-image" alt="Tinh Khiết (Thạch Thảo Trắng)">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Tinh Khiết (Thạch Thảo Trắng)</h5>
-                                                    <p class="text-muted">420,000 VND</p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card">
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon3.jpg" class="card-img-top product-image" alt="Hạ Về (Cúc Tana Xinh)">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Hạ Về (Cúc Tana Xinh)</h5>
-                                                    <p class="text-muted">560,000 VND</p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card position-relative">
-                                                <span class="discount-badge">15% Giảm</span>
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon4.jpg" class="card-img-top product-image" alt="Be Happy">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Be Happy</h5>
-                                                    <p class="text-muted">720,000 VND <del>850,000 VND</del></p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="row text-center">
+                                <div class="title-divider">
+                                    <span class="title-text" style="color: #3f640b;">HOA CƯỚI</span>
                                 </div>
                             </div>
-                            <!-- Danh mục Hoa khai trương -->
-                            <div class="product-list mb-3">
-                                <div class="product_title border-bottom">
-                                    <div class="title-text">HOA KHAI TRƯƠNG</div>
                                 </div>
+                                <div class="product_list-s py-3" style="background-color: #f7aaaa;">
+                                        <!-- Sản phẩm 1 -->
+                                        <div class="container my-5">
+    <div class="row">
+        <?php
+        // Fetch products with remark = 1 from the database
+        $sql = "SELECT * FROM products WHERE category_id = 3 ORDER BY id";
+        $result = $db->query($sql);
+
+        if ($result) {
+            while ($row = $result->fetch_assoc()) { 
+                $price = number_format($row['price'], 0, ',', '.') . ' VND';
+                $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
+        ?>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card">
+                        <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+                        
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
+                            
+                            <!-- Display price with sale check -->
+                            <p class="text-muted">
+                                <?php if ($price_sale) { 
+                                    // Tính toán phần trăm giảm giá
+                                    $discount_percentage = round(((($row['price'] - $row['price_sale']) / $row['price']) * 100), 2);
+                                ?>
+                                    <!-- Giá gốc bị gạch bỏ, màu đỏ -->
+                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
+                                    <!-- Giá bán giảm nổi bật -->
+                                    <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
+                                    <br>
+                                    <!-- Hiển thị phần trăm giảm giá -->
+                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
+                                <?php } else { ?>
+                                    <!-- Giá bình thường, làm nổi bật -->
+                                    <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
+                                <?php } ?>
+                            </p>
+                            
+                            <a href="#" class="btn btn-primary">Đặt hàng</a>
+                        </div>
+                    </div>
+                </div>
+        <?php
+            }
+        }
+        ?>
+    </div>
+</div>
+
+
+                                            </div>
+
+                            <!-- Danh mục Hoa khai trương -->
+                            <div class="row text-center">
+                                <div class="title-divider">
+                                    <span class="title-text" style="color: #3f640b;">HOA KHAI TRƯƠNG</span>
+                                </div>
+                            </div>
                                 <div class="product_list-s py-3" style="background-color: #f7aaaa;">
                                     <div class="row">
                                         <!-- Sản phẩm 1 -->
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card">
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon1.jpg" class="card-img-top product-image" alt="Adorable">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Adorable(Tình Yêu Thuần Khiết)</h5>
-                                                    <p class="text-muted">850,000 VND</p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <div class="container my-5">
+    <div class="row">
+        <?php
+        // Fetch products with remark = 1 from the database
+        $sql = "SELECT * FROM products WHERE category_id = 2 ORDER BY id";
+        $result = $db->query($sql);
 
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card">
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon2.jpg" class="card-img-top product-image" alt="Tinh Khiết (Thạch Thảo Trắng)">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Tinh Khiết (Thạch Thảo Trắng)</h5>
-                                                    <p class="text-muted">420,000 VND</p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
+        if ($result) {
+            while ($row = $result->fetch_assoc()) { 
+                $price = number_format($row['price'], 0, ',', '.') . ' VND';
+                $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
+        ?>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card">
+                        <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+                        
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
+                            
+                            <!-- Display price with sale check -->
+                            <p class="text-muted">
+                                <?php if ($price_sale) { 
+                                    // Tính toán phần trăm giảm giá
+                                    $discount_percentage = round(((($row['price'] - $row['price_sale']) / $row['price']) * 100), 2);
+                                ?>
+                                    <!-- Giá gốc bị gạch bỏ, màu đỏ -->
+                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
+                                    <!-- Giá bán giảm nổi bật -->
+                                    <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
+                                    <br>
+                                    <!-- Hiển thị phần trăm giảm giá -->
+                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
+                                <?php } else { ?>
+                                    <!-- Giá bình thường, làm nổi bật -->
+                                    <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
+                                <?php } ?>
+                            </p>
+                            
+                            <a href="#" class="btn btn-primary">Đặt hàng</a>
+                        </div>
+                    </div>
+                </div>
+        <?php
+            }
+        }
+        ?>
+    </div>
+</div>
 
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card">
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon3.jpg" class="card-img-top product-image" alt="Hạ Về (Cúc Tana Xinh)">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Hạ Về (Cúc Tana Xinh)</h5>
-                                                    <p class="text-muted">560,000 VND</p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-6 mb-4">
-                                            <div class="card position-relative">
-                                                <span class="discount-badge">15% Giảm</span>
-                                                <img src="/BANHOA/Front-end/hoaicon/hoaicon4.jpg" class="card-img-top product-image" alt="Be Happy">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">Be Happy</h5>
-                                                    <p class="text-muted">720,000 VND <del>850,000 VND</del></p>
-                                                    <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                    
                                 </div>
                             </div>
                         </div>
