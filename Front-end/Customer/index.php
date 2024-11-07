@@ -172,183 +172,77 @@ $db = new Database();
                     <div class="col">
                         <div class="product-list mb-3">
                             <div class="row text-center">
-                                <div class="title-divider">
-                                    <span class="title-text" style="color: #3f640b;">HOA SINH NHẬT</span>
-                                </div>
-                            </div>
-                            <div class="product_list-s py-3" style="background-color: #f7aaaa;">
-                                <!-- Sản phẩm 1 -->
-                                <div class="container my-5">
-                                    <div class="row">
-                                        <?php
-                                        // Fetch products with remark = 1 from the database
-                                        $sql = "SELECT * FROM products WHERE category_id = 1 ORDER BY id";
-                                        $result = $db->select($sql);
-
-                                        if ($result) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                $price = number_format($row['price'], 0, ',', '.') . ' VND';
-                                                $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
-                                        ?>
-                                                <div class="col-md-3 col-sm-6 mb-4">
-                                                    <div class="card">
-                                                        <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
-
-                                                        <div class="card-body text-center">
-                                                            <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
-
-                                                            <!-- Display price with sale check -->
-                                                            <p class="text-muted">
-                                                                <?php if ($price_sale) {
-                                                                    // Tính toán phần trăm giảm giá
-                                                                    $discount_percentage = round(((($row['price'] - $row['price_sale']) / $row['price']) * 100), 2);
-                                                                ?>
-                                                                    <!-- Giá gốc bị gạch bỏ, màu đỏ -->
-                                                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
-                                                                    <!-- Giá bán giảm nổi bật -->
-                                                                    <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
-                                                                    <br>
-                                                                    <!-- Hiển thị phần trăm giảm giá -->
-                                                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
-                                                                <?php } else { ?>
-                                                                    <!-- Giá bình thường, làm nổi bật -->
-                                                                    <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
-                                                                <?php } ?>
-                                                            </p>
-
-                                                            <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <!-- Danh mục Hoa cưới -->
-                            <div class="row text-center">
-                                <div class="title-divider">
-                                    <span class="title-text" style="color: #3f640b;">HOA CƯỚI</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product_list-s py-3" style="background-color: #f7aaaa;">
-                            <!-- Sản phẩm 1 -->
                             <div class="container my-5">
-                                <div class="row">
-                                    <?php
-                                    // Fetch products with remark = 1 from the database
-                                    $sql = "SELECT * FROM products WHERE category_id = 3 ORDER BY id";
-                                    $result = $db->select($sql);
+    <?php
+    // Truy vấn tất cả các danh mục từ cơ sở dữ liệu
+    $category_sql = "SELECT * FROM categories";
+    $category_result = $db->select($category_sql);
 
-                                    if ($result) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            $price = number_format($row['price'], 0, ',', '.') . ' VND';
-                                            $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
+    if ($category_result) {
+        while ($category = $category_result->fetch_assoc()) {
+            $category_id = $category['id'];
+            $category_name = $category['category_name'];
+            ?>
+            <!-- Tiêu đề danh mục -->
+            <div class="row text-center">
+                <div class="title-divider">
+                    <span class="title-text" style="color: #3f640b;"><?php echo strtoupper($category_name); ?></span>
+                </div>
+            </div>
+            
+            <!-- Sản phẩm trong danh mục -->
+            <div class="product_list-s py-3" style="background-color: #f7aaaa;">
+                <div class="row">
+                    <div class="container my-5">
+                        <div class="row">
+                            <?php
+                            // Truy vấn sản phẩm dựa trên danh mục hiện tại
+                            $sql = "SELECT * FROM products WHERE category_id = $category_id ORDER BY id";
+                            $result = $db->select($sql);
+
+                            if ($result) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $price = number_format($row['price'], 0, ',', '.') . ' VND';
+                                    $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
                                     ?>
-                                            <div class="col-md-3 col-sm-6 mb-4">
-                                                <div class="card">
-                                                    <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+                                    <div class="col-md-3 col-sm-6 mb-4">
+                                        <div class="card">
+                                            <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
 
-                                                    <div class="card-body text-center">
-                                                        <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
 
-                                                        <!-- Display price with sale check -->
-                                                        <p class="text-muted">
-                                                            <?php if ($price_sale) {
-                                                                // Tính toán phần trăm giảm giá
-                                                                $discount_percentage = round(((($row['price'] - $row['price_sale']) / $row['price']) * 100), 2);
-                                                            ?>
-                                                                <!-- Giá gốc bị gạch bỏ, màu đỏ -->
-                                                                <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
-                                                                <!-- Giá bán giảm nổi bật -->
-                                                                <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
-                                                                <br>
-                                                                <!-- Hiển thị phần trăm giảm giá -->
-                                                                <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
-                                                            <?php } else { ?>
-                                                                <!-- Giá bình thường, làm nổi bật -->
-                                                                <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
-                                                            <?php } ?>
-                                                        </p>
+                                                <!-- Hiển thị giá -->
+                                                <p class="text-muted">
+                                                    <?php if ($price_sale) {
+                                                        $discount_percentage = round((($row['price'] - $row['price_sale']) / $row['price']) * 100, 2);
+                                                        ?>
+                                                        <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
+                                                        <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
+                                                        <br>
+                                                        <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
+                                                    <?php } else { ?>
+                                                        <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
+                                                    <?php } ?>
+                                                </p>
 
-                                                        <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                    </div>
-                                                </div>
+                                                <a href="#" class="btn btn-primary">Đặt hàng</a>
                                             </div>
-                                    <?php
-                                        }
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                        <!-- Danh mục Hoa khai trương -->
-                        <div class="row text-center">
-                            <div class="title-divider">
-                                <span class="title-text" style="color: #3f640b;">HOA KHAI TRƯƠNG</span>
-                            </div>
-                        </div>
-                        <div class="product_list-s py-3" style="background-color: #f7aaaa;">
-                            <div class="row">
-                                <!-- Sản phẩm 1 -->
-                                <div class="container my-5">
-                                    <div class="row">
-                                        <?php
-                                        // Fetch products with remark = 1 from the database
-                                        $sql = "SELECT * FROM products WHERE category_id = 2 ORDER BY id";
-                                        $result = $db->select($sql);
-
-                                        if ($result) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                $price = number_format($row['price'], 0, ',', '.') . ' VND';
-                                                $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
-                                        ?>
-                                                <div class="col-md-3 col-sm-6 mb-4">
-                                                    <div class="card">
-                                                        <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
-
-                                                        <div class="card-body text-center">
-                                                            <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
-
-                                                            <!-- Display price with sale check -->
-                                                            <p class="text-muted">
-                                                                <?php if ($price_sale) {
-                                                                    // Tính toán phần trăm giảm giá
-                                                                    $discount_percentage = round(((($row['price'] - $row['price_sale']) / $row['price']) * 100), 2);
-                                                                ?>
-                                                                    <!-- Giá gốc bị gạch bỏ, màu đỏ -->
-                                                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
-                                                                    <!-- Giá bán giảm nổi bật -->
-                                                                    <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
-                                                                    <br>
-                                                                    <!-- Hiển thị phần trăm giảm giá -->
-                                                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
-                                                                <?php } else { ?>
-                                                                    <!-- Giá bình thường, làm nổi bật -->
-                                                                    <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
-                                                                <?php } ?>
-                                                            </p>
-
-                                                            <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
+                                        </div>
                                     </div>
-                                </div>
-
-
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+    }
+    ?>
+</div>
                             </div>
                         </div>
                     </div>
