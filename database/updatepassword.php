@@ -91,21 +91,29 @@ require '/xampp/htdocs/BANHOA/database/resetpassword.php';
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
 
-    <form method="POST" action="" onsubmit="return validatePassword()">
+    <form method="POST" action="/BANHOA/database/resetpassword.php" onsubmit="return validatePassword()">
+        <?php if (isset($_SESSION['user_logged_in'])): // Trường hợp người dùng đã đăng nhập ?>
+            <div class="form-group">
+                <label for="oldPassword">Mật khẩu cũ</label>
+                <input type="password" class="form-control" name="old_password" id="oldPassword" placeholder="Nhập mật khẩu cũ" required>
+            </div>
+        <?php endif; ?>
+
         <div class="form-group">
-            <label for="password">Mật khẩu</label>
-            <input type="password" class="form-control" name="new_password" id="password" placeholder="Nhập mật khẩu" required>
+            <label for="password">Mật khẩu mới</label>
+            <input type="password" class="form-control" name="new_password" id="password" placeholder="Nhập mật khẩu mới" required>
         </div>
 
         <div class="form-group">
-            <label for="confirmPassword">Nhập lại mật khẩu</label>
-            <input type="password" class="form-control" name="confirm_password" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+            <label for="confirmPassword">Nhập lại mật khẩu mới</label>
+            <input type="password" class="form-control" name="confirm_password" id="confirmPassword" placeholder="Nhập lại mật khẩu mới" required>
         </div>
 
         <div id="errorMessage" class="error"></div>
 
         <button type="submit" name="updatePassword">Đặt lại mật khẩu</button>
     </form>
+
 </div>
 
 </body>
