@@ -84,65 +84,67 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
 
               <!-- Account -->
               <div class="col-6">
-                <div class="fs-3"></div>
-                <?php if (empty($_SESSION['users_id'])): ?>
-                  <div class="dropdown nav-item">
+    <div class="fs-3"></div>
+    <?php if (empty($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] === false): ?>
+        <!-- Nếu chưa đăng nhập -->
+        <div class="dropdown nav-item">
+            <a
+                class="btn btn-secondary dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Xin chào! <i class="fa-regular fa-user"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
                     <a
-                      class="btn btn-secondary dropdown-toggle"
-                      href="#"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                      Xin chào! <i class="fa-regular fa-user"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="dangky.php">Đăng ký</a>
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="dangnhap.php">Đăng nhập</a>
-                      </li>
-                    </ul>
-                  </div>
-                <?php else:
-                  function shortenName($name, $maxLength)
-                  {
-                    if (strlen($name) > $maxLength) {
-                      return substr($name, 0, $maxLength) . "...";
-                    }
-                    return $name;
-                  }
-                  $name = shortenName($_SESSION['fullname'], 10); // Rút gọn nếu dài hơn 10 ký tự
-                ?>
-                  <div class="dropdown nav-item">
-                    <a class="btn btn-secondary dropdown-toggle"
-                      href="#"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                      <i class="fa-regular fa-user"></i>
-                      <?php echo $name; ?><!-- Hiển thị tên người dùng --></a>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="trangcanhan.php">Trang cá nhân</a>
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="/BANHOA/database/logout.php">Đăng xuất</a>
-                      </li>
-                    </ul>
-                  </div>
+                        class="dropdown-item"
+                        href="dangky.php">Đăng ký</a>
+                </li>
+                <li>
+                    <a
+                        class="dropdown-item"
+                        href="dangnhap.php">Đăng nhập</a>
+                </li>
+            </ul>
+        </div>
+    <?php else:
+        // Nếu người dùng đã đăng nhập
+        function shortenName($name, $maxLength)
+        {
+            if (strlen($name) > $maxLength) {
+                return substr($name, 0, $maxLength) . "...";
+            }
+            return $name;
+        }
+        $name = shortenName($_SESSION['fullname'], 10); // Rút gọn nếu dài hơn 10 ký tự
+    ?>
+        <div class="dropdown nav-item">
+            <a class="btn btn-secondary dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fa-regular fa-user"></i>
+                <?php echo $name; ?> <!-- Hiển thị tên người dùng -->
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a
+                        class="dropdown-item"
+                        href="trangcanhan.php">Trang cá nhân</a>
+                </li>
+                <li>
+                    <a
+                        class="dropdown-item"
+                        href="/BANHOA/database/logout.php">Đăng xuất</a>
+                </li>
+            </ul>
+        </div>
+    <?php endif; ?>
+</div>
 
-                <?php endif; ?>
-              </div>
             </div>
           </div>
         </div>

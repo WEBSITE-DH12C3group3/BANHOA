@@ -14,6 +14,7 @@ class ResetPassword {
         $this->db = new Database();
         $this->mailer = new Mailer();
     }
+
     // Kiểm tra mật khẩu cũ (dành cho trường hợp người dùng đã đăng nhập)
     public function checkOldPassword($userId, $oldPassword) {
         $query = "SELECT password FROM users WHERE id = ?";
@@ -30,7 +31,7 @@ class ResetPassword {
         return false;
     }
 
-    // Yêu cầu đặt lại mật khẩu
+    // Yêu cầu đặt lại mật khẩu (quên mật khẩu)
     public function requestReset($email) {
         $email = trim($email);
 
@@ -52,7 +53,6 @@ class ResetPassword {
             // Lưu ID người dùng vào session và gửi mã xác nhận
             $row = $result->fetch_assoc();
             $_SESSION['users_id'] = $row['id'];
-            $_SESSION['error'] = "Mã xác nhận đã được gửi đến email của bạn.";
 
             // Tạo mã xác nhận
             $code = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
@@ -63,6 +63,7 @@ class ResetPassword {
             $this->mailer->sendMail($title, $content, $email);
             $_SESSION["mail"] = $email;
             $_SESSION["code"] = $code;
+            $_SESSION['error'] = "Mã xác nhận đã được gửi đến email của bạn.";
             header('Location: /BANHOA/Front-end/Customer/forgotpassword.php');
         } else {
             $_SESSION['error'] = "Email chưa được đăng ký, hãy thử lại!";
@@ -83,18 +84,16 @@ class ResetPassword {
         exit();
     }
 
-
-    // Cập nhật mật khẩu mới
-    public function updatePassword($userId, $newPassword) {
-        // Lưu mật khẩu dưới dạng plaintext (không mã hóa)
+    // Cập nhật mật khẩu mới (dành cho người dùng đã đăng nhập)
+    public function updatePassword($newPassword, $userId) {
         $query = "UPDATE users SET password = ? WHERE id = ?";
         $stmt = $this->db->conn->prepare($query);
-        $stmt->bind_param("si", $newPassword, $userId);
+        $stmt->bind_param("si", $newPassword, $userId);  // Bỏ mã hóa mật khẩu
         return $stmt->execute();
     }
 }
 
-// Đoạn mã xử lý yêu cầu đặt lại mật khẩu (gửi mã xác nhận)
+// Đoạn mã xử lý yêu cầu đặt lại mật khẩu (quên mật khẩu)
 if (isset($_POST['resetpassword'])) {
     $resetPassword = new ResetPassword();
     $resetPassword->requestReset($_POST['email']);
@@ -106,37 +105,56 @@ if (isset($_POST['checkCode'])) {
     $resetPassword->checkCode($_POST['code']);
 }
 
-// Đoạn mã xử lý cập nhật mật khẩu
+// Đoạn mã xử lý cập nhật mật khẩu (đổi mật khẩu)
 if (isset($_POST['updatePassword'])) {
     $resetPassword = new ResetPassword();
-    $userId = $_SESSION['users_id']; // ID người dùng đã đăng nhập
+    
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) {
+        // Người dùng đã đăng nhập, kiểm tra mật khẩu cũ và cập nhật mật khẩu mới
+        $userId = $_SESSION['users_id']; // Lấy ID người dùng từ session
 
-    if (isset($_POST['old_password'])) {
-        $oldPassword = $_POST['old_password'];
-        if (!$resetPassword->checkOldPassword($userId, $oldPassword)) {
-            $_SESSION['error'] = "Mật khẩu cũ không chính xác!";
+        // Kiểm tra mật khẩu cũ
+        if (isset($_POST['old_password'])) {
+            $oldPassword = $_POST['old_password'];
+            if (!$resetPassword->checkOldPassword($userId, $oldPassword)) {
+                $_SESSION['error'] = "Mật khẩu cũ không chính xác!";
+                header("Location: /BANHOA/database/updatepassword.php");
+                exit();
+            }
+        }
+
+        // Kiểm tra mật khẩu mới và mật khẩu xác nhận có khớp không
+        $newPassword = $_POST['new_password'];
+        $confirmPassword = $_POST['confirm_password'];
+
+        if ($newPassword !== $confirmPassword) {
+            $_SESSION['error'] = "Mật khẩu không khớp. Vui lòng thử lại!";
             header("Location: /BANHOA/database/updatepassword.php");
             exit();
         }
-    }
 
-    $newPassword = $_POST['new_password'];
-    $confirmPassword = $_POST['confirm_password'];
-
-    // Kiểm tra mật khẩu mới và mật khẩu xác nhận có khớp không
-    if ($newPassword !== $confirmPassword) {
-        $_SESSION['error'] = "Mật khẩu không khớp. Vui lòng thử lại!";
-        header("Location: /BANHOA/database/updatepassword.php");
-        exit();
-    }
-
-    // Cập nhật mật khẩu mới
-    if ($resetPassword->updatePassword($userId, $newPassword)) {
-        header("Location: /BANHOA/Front-end/Customer/trangcanhan.php?status=success");  // Chuyển đến trang cá nhân
+        // Cập nhật mật khẩu mới
+        if ($resetPassword->updatePassword($newPassword,$userId)) {
+            header("Location: /BANHOA/Front-end/Customer/trangcanhan.php?status=success");  // Chuyển đến trang cá nhân
+        } else {
+            $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại!";
+            header("Location: /BANHOA/database/updatepassword.php");
+        }
     } else {
-        $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại!";
-        header("Location: /BANHOA/database/updatepassword.php");
+        
+        $_SESSION['error'] = "Đổi mật khẩu thành công, hãy đăng nhâp lại!";
+        if ($resetPassword->updatePassword($newPassword,$userId)) {
+            header("Location: /BANHOA/Front-end/Customer/dangnhap.php");
+        } 
+        //else {
+        //     $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại!";
+        //     header("Location: /BANHOA/database/updatepassword.php");
+        //}
+        // // Người dùng chưa đăng nhập, không thể đổi mật khẩu, thông báo lỗi
+        
+        
     }
     exit();
 }
-?>
+?> 
