@@ -204,7 +204,7 @@ if ($categories_result) {
                       </a>
                       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <?php foreach ($categories as $category): ?>
-                          <li><a class="dropdown-item" href="category.php?id=<?php echo $category['id']; ?>"><?php echo htmlspecialchars($category['category_name']); ?></a></li>
+                          <li><a class="dropdown-item" href="category.php?id=<?php echo $category['id']; ?>&category_name=<?php echo $category['category_name']; ?>"><?php echo htmlspecialchars($category['category_name']); ?></a></li>
                         <?php endforeach; ?>
                       </ul>
                     </li>
