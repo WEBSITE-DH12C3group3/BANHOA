@@ -102,7 +102,7 @@ $db = new Database();
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.sale, p.stock, p.remark, c.category_name
+                    $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.sale, p.stock, p.remark, c.category_name, p.category_id
                                 FROM products p
                                 JOIN categories c ON p.category_id = c.id
                                 ORDER BY p.id, p.product_name, c.category_name";
@@ -132,7 +132,7 @@ $db = new Database();
                                         data-sale="<?php echo $row['sale']; ?>"
                                         data-stock="<?php echo $row['stock']; ?>"
                                         data-remark="<?php echo $row['remark']; ?>"
-                                        data-category_name=" <?php echo $row['category_name']; ?>"
+                                        data-category_id="<?php echo $row['category_id']; ?>"
                                         style="color: white;"><i class="fa fa-edit"></i></a>
                                     <a onclick="return confirm('Bạn có muốn xóa?')" href="delpro.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                 </td>
@@ -199,8 +199,8 @@ $db = new Database();
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="category_name">Danh mục</label>
-                            <select class="form-control" id="category_name" name="category_id" required>
+                            <label for="category_id">Danh mục</label>
+                            <select class="form-control" id="category_id" name="category_id" required>
                                 <option value="">Chọn danh mục</option>
                                 <?php
                                 // Truy vấn để lấy các danh mục từ bảng categories
@@ -274,9 +274,8 @@ $db = new Database();
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="category_name">Danh mục</label>
-                            <select class="form-control" id="category_name" name="category_id" required>
-                                <option value="">Chọn danh mục</option>
+                            <label for="category_id">Danh mục</label>
+                            <select class="form-control" id="category_id" name="category_id" required>
                                 <?php
                                 // Truy vấn để lấy các danh mục từ bảng categories
                                 $sql = "SELECT id, category_name FROM categories";
@@ -321,7 +320,7 @@ $db = new Database();
             modal.find('#sale').val(sale);
             modal.find('#stock').val(stock);
             modal.find('#remark').val(remark); // Cập nhật giá trị nổi bật trong modal
-            modal.find('#category_id').val(category_name); // Cập nhật danh mục trong modal
+            modal.find('#category_id').val(category_id); // Cập nhật danh mục trong modal
         });
     </script>
     <script src="/BANHOA/Front-end/Adminn/css/pagination.js"></script>
