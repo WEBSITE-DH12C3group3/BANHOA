@@ -92,110 +92,78 @@ $db = new Database();
 
             </div>
         </div>
-        <div class="row">
-            <div class="col-2">
-                <div class="row">
-                    <div class="col">
-                        <div class="vertical-menu">
-                            <ul>
-                                <li><a href="#" class="active">Trang Chủ</a></li>
-                                <li class="dropdown"><a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Danh Mục</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/BANHOA/Front-end/Customer/hoasinhnhat.php">Hoa sinh nhật</a></li>
-                                        <li><a class="dropdown-item" href="#">Hoa khai chương</a></li>
-                                        <li><a class="dropdown-item" href="#">Hoa tang</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Dịch Vụ</a></li>
-                                <li><a href="#">Tin Tức</a></li>
-                                <li><a href="#">Liên Hệ</a></li>
-                                <li><a href="#">Về Chúng Tôi</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="row"><img src="/BANHOA/Front-end/public/thuonghieu.png" alt="thuonghieu"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-10">
+        <div class="container-fluid">
+
+            <div>
                 <div class="row">
                     <div class="col">
                         <div class="product-list mb-3">
                             <div class="row text-center">
-                            <div class="container my-5">
-    <?php
-    // Truy vấn tất cả các danh mục từ cơ sở dữ liệu
-    $category_sql = "SELECT * FROM categories";
-    $category_result = $db->select($category_sql);
-
-    if ($category_result) {
-        while ($category = $category_result->fetch_assoc()) {
-            $category_id = $category['id'];
-            $category_name = $category['category_name'];
-            ?>
-            <!-- Tiêu đề danh mục với tên danh mục -->
-            <div class="row text-center">
-                <div class="title-divider">
-                    <span class="title-text" style="color: #3f640b;"><?php echo strtoupper($category_name); ?></span>
-                </div>
-            </div>
-            
-            <!-- Sản phẩm trong danh mục -->
-            <div class="product_list-s py-3" style="background-color: #f7aaaa;">
-                <div class="row">
-                    <div class="container my-5">
-                        <div class="row">
-                            <?php
-                            // Truy vấn sản phẩm dựa trên danh mục hiện tại (đặt category_id trong dấu ngoặc đơn)
-                            $sql = "SELECT * FROM products WHERE category_id = '$category_id' ORDER BY id";
-                            $result = $db->select($sql);
-
-                            if ($result) {
-                                while ($row = $result->fetch_assoc()) {
-                                    $price = number_format($row['price'], 0, ',', '.') . ' VND';
-                                    $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
-                                    ?>
-                                    <div class="col-md-3 col-sm-6 mb-4">
-                                        <div class="card">
-                                            <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
-
-                                            <div class="card-body text-center">
-                                                <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
-
-                                                <!-- Hiển thị giá -->
-                                                <p class="text-muted">
-                                                    <?php if ($price_sale) {
-                                                        $discount_percentage = round((($row['price'] - $row['price_sale']) / $row['price']) * 100, 2);
-                                                        ?>
-                                                        <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
-                                                        <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
-                                                        <br>
-                                                        <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
-                                                    <?php } else { ?>
-                                                        <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
-                                                    <?php } ?>
-                                                </p>
-
-                                                <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="container my-5">
                                     <?php
-                                }
-                            }
-                            ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php
-        }
-    }
-    ?>
-</div>
+                                    // Truy vấn tất cả các danh mục từ cơ sở dữ liệu
+                                    $category_sql = "SELECT * FROM categories";
+                                    $category_result = $db->select($category_sql);
+
+                                    if ($category_result) {
+                                        while ($category = $category_result->fetch_assoc()) {
+                                            $category_id = $category['id'];
+                                            $category_name = $category['category_name'];
+                                    ?>
+                                            <!-- Tiêu đề danh mục với tên danh mục -->
+                                            <div class="row text-center">
+                                                <div class="title-divider">
+                                                    <span class="title-text" style="color: #3f640b;"><?php echo $category_name; ?></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Sản phẩm trong danh mục -->
+                                            <div class="product_list-s py-3" style="background-color: #f7aaaa;">
+                                                <div class="row">
+                                                    <div class="container my-5">
+                                                        <div class="row">
+                                                            <?php
+                                                            // Truy vấn sản phẩm dựa trên danh mục hiện tại (đặt category_id trong dấu ngoặc đơn)
+                                                            $sql = "SELECT * FROM products WHERE category_id = '$category_id' ORDER BY id";
+                                                            $result = $db->select($sql);
+
+                                                            if ($result) {
+                                                                while ($row = $result->fetch_assoc()) {
+                                                                    $price = number_format($row['price'], 0, ',', '.') . ' VND';
+                                                                    $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
+                                                            ?>
+                                                                    <div class="col-md-3 col-sm-6 mb-4">
+                                                                        <div class="card">
+                                                                            <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+
+                                                                            <div class="card-body text-center">
+                                                                                <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
+
+                                                                                <!-- Hiển thị giá -->
+                                                                                <p class="text-muted">
+                                                                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $row['price']; ?></span>
+                                                                                    <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $row['price_sale']; ?></span>
+                                                                                    <br>
+                                                                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>
+                                                                                </p>
+
+                                                                                <a href="#" class="btn btn-primary">Đặt hàng</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
 
                             </div>
                         </div>
