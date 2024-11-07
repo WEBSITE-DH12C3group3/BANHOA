@@ -1,13 +1,29 @@
 <?php
 include 'header.php';
+
+// Khởi tạo đối tượng Database
+$db = new Database();
+
+// Giả sử bạn đã đăng nhập và có user_id của người dùng
+$user_id = $_SESSION['users_id'];
+
+// Truy vấn thông tin người dùng từ bảng users
+$query = "SELECT fullname, email, phone, address FROM users WHERE id = $user_id";
+$result = $db->select($query);
+
+if ($result) {
+    $user = $result->fetch_assoc();
+} else {
+    echo "Không tìm thấy thông tin người dùng.";
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoa</title>
     <title>Thông tin tài khoản</title>
     <!-- Bootstrap CSS -->
     <style>
@@ -108,6 +124,17 @@ include 'header.php';
             background-color: #c71e34;
         }
     </style>
+    <script>
+        // Kiểm tra tham số 'status' từ URL để hiển thị thông báo
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('status') === 'success') {
+                alert("Cập nhật thông tin thành công!");
+                // Xóa 'status=success' khỏi URL để không hiện lại khi reload
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        };
+    </script>
 </head>
 
 <body>
@@ -126,127 +153,43 @@ include 'header.php';
                 </div>
             </div>
 
-            <!-- Account Update Section -->
-            <div class="col-md-9">
-                <div class="account-container">
-                    <h2 class="mb-4" style="color: #d8243c;">Cập nhật thông tin tài khoản</h2>
-                    <form>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">Email của bạn:</label>
-                                <input type="email" class="form-control" id="email" placeholder="Nhập email của bạn">
+           <!-- Form hiển thị thông tin người dùng -->
+                <!-- Form hiển thị thông tin người dùng -->
+                <div class="col-md-9">
+                    <div class="account-container">
+                        <h2 class="mb-4" style="color: #d8243c;">Cập nhật thông tin tài khoản</h2>
+                        <form action="/BANHOA/database/updateuser.php" method="post" onsubmit="return validateForm()">
+                            <!-- Fullname -->
+                            <div class="form-group">
+                                <label for="fullname">Họ và Tên</label>
+                                <input type="text" class="form-control" name="fullname" id="fullname" value="<?php echo htmlspecialchars($user['fullname']); ?>" placeholder="Nhập họ và tên" required>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="firstName" class="form-label">Tên:</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="Nhập tên của bạn">
+                
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" name="email" id="email" value="<?php echo htmlspecialchars($user['email']); ?>" placeholder="Nhập email" required>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="lastName" class="form-label">Họ:</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="Nhập họ của bạn">
-                                </div>
+                
+                            <!-- Phone Number -->
+                            <div class="form-group">
+                                <label for="phone">Số điện thoại</label>
+                                <input type="tel" class="form-control" name="phone" id="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" placeholder="Nhập số điện thoại" required>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="phone" class="form-label">Điện thoại:</label>
-                                    <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại của bạn">
-                                </div>
+                
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label for="address">Địa chỉ</label>
+                                <input type="text" class="form-control" name="address" id="address" value="<?php echo htmlspecialchars($user['address']); ?>" placeholder="Tỉnh thành/quận huyện/thị xã/số nhà" required>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="address" class="form-label">Địa chỉ:</label>
-                                    <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ của bạn">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="province" class="form-label">Tỉnh/Thành phố:</label>
-                                        <select class="form-select" id="province">
-                                            <option value="">Chọn tỉnh thành phố</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="district" class="form-label">Quận/Huyện:</label>
-                                        <select class="form-select" id="district">
-                                            <option value="">Chọn quận huyện</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="ward" class="form-label">Phường/Xã:</label>
-                                        <select class="form-select" id="ward">
-                                            <option value="" selected>Chọn phường xã</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-save mt-3">
+                
+                            <button type="submit" name="updateuser" class="btn btn-save mt-3">
                                 <i class="bi bi-save"></i> Lưu
                             </button>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-            <!-- Script để load dữ liệu tỉnh thành phố, quận huyện, phường xã -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-            <script>
-                var citis = document.getElementById("province");
-                var districts = document.getElementById("district");
-                var wards = document.getElementById("ward");
-
-                var Parameter = {
-                    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-                    method: "GET",
-                    responseType: "application/json",
-                };
-
-                var promise = axios(Parameter);
-                promise.then(function(result) {
-                    renderCity(result.data);
-                });
-
-                function renderCity(data) {
-                    for (const x of data) {
-                        citis.options[citis.options.length] = new Option(x.Name, x.Id);
-                    }
-
-                    citis.onchange = function() {
-                        districts.length = 1; // reset district list
-                        wards.length = 1; // reset ward list
-
-                        if (this.value != "") {
-                            const result = data.filter(n => n.Id === this.value);
-
-                            for (const k of result[0].Districts) {
-                                districts.options[districts.options.length] = new Option(k.Name, k.Id);
-                            }
-                        }
-                    };
-
-                    districts.onchange = function() {
-                        wards.length = 1; // reset ward list
-
-                        const dataCity = data.filter(n => n.Id === citis.value);
-                        if (this.value != "") {
-                            const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
-                            for (const w of dataWards) {
-                                wards.options[wards.options.length] = new Option(w.Name, w.Id);
-                            }
-                        }
-                    };
-                }
-            </script>
         </div>
     </div>
 </body>
