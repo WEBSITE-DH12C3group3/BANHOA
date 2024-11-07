@@ -84,68 +84,112 @@ include '/xampp/htdocs/BANHOA/database/connect.php';
 
               <!-- Account -->
               <div class="col-6">
-    <div class="fs-3"></div>
-    <?php if (empty($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] === false): ?>
-        <!-- Nếu chưa đăng nhập -->
-        <div class="dropdown nav-item">
-            <a
-                class="btn btn-secondary dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Xin chào! <i class="fa-regular fa-user"></i>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
+                <div class="fs-3"></div>
+                <?php if (empty($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] === false): ?>
+                  <!-- Nếu chưa đăng nhập -->
+                  <div class="dropdown nav-item">
                     <a
-                        class="dropdown-item"
-                        href="dangky.php">Đăng ký</a>
-                </li>
-                <li>
-                    <a
-                        class="dropdown-item"
-                        href="dangnhap.php">Đăng nhập</a>
-                </li>
-            </ul>
-        </div>
-    <?php else:
-        // Nếu người dùng đã đăng nhập
-        function shortenName($name, $maxLength)
-        {
-            if (strlen($name) > $maxLength) {
-                return substr($name, 0, $maxLength) . "...";
-            }
-            return $name;
-        }
-        $name = shortenName($_SESSION['fullname'], 10); // Rút gọn nếu dài hơn 10 ký tự
-    ?>
-        <div class="dropdown nav-item">
-            <a class="btn btn-secondary dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <i class="fa-regular fa-user"></i>
-                <?php echo $name; ?> <!-- Hiển thị tên người dùng -->
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a
-                        class="dropdown-item"
-                        href="trangcanhan.php">Trang cá nhân</a>
-                </li>
-                <li>
-                    <a
-                        class="dropdown-item"
-                        href="/BANHOA/database/logout.php">Đăng xuất</a>
-                </li>
-            </ul>
-        </div>
-    <?php endif; ?>
-</div>
-
+                      class="btn btn-secondary dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Xin chào! <i class="fa-regular fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="dangky.php">Đăng ký</a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="dangnhap.php">Đăng nhập</a>
+                      </li>
+                    </ul>
+                  </div>
+                <?php else:
+                  // Nếu người dùng đã đăng nhập
+                  function shortenName($name, $maxLength)
+                  {
+                    if (strlen($name) > $maxLength) {
+                      return substr($name, 0, $maxLength) . "...";
+                    }
+                    return $name;
+                  }
+                  $name = shortenName($_SESSION['fullname'], 10); // Rút gọn nếu dài hơn 10 ký tự
+                ?>
+                  <div class="dropdown nav-item">
+                    <a class="btn btn-secondary dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="fa-regular fa-user"></i>
+                      <?php echo $name; ?> <!-- Hiển thị tên người dùng -->
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="trangcanhan.php">Trang cá nhân</a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="/BANHOA/database/logout.php">Đăng xuất</a>
+                      </li>
+                    </ul>
+                  </div>
+                <?php endif; ?>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="mymainmenu" style="background-color: #f7aaaa;">
+      <div class="container">
+        <div class="row" style="color:#3f640b;">
+          <div class="col-9">
+            <nav class="navbar navbar-expand-lg" style="background-color: #f7aaaa;">
+              <div class="container-fluid">
+                <a class="navbar-brand" style="color: #3f640b;" href="#"><b>Eden shop</b></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#" style="color: #3f640b;"><b>Trang Chủ</b></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" style="color: #3f640b;"><b>Chủ Đề</b></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" style="color: #3f640b;"><b>Kiểu Dáng</b></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" style="color: #3f640b;"><b>Tin Tức</b></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" style="color: #3f640b;"><b>Mới Nhất</b></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #3f640b;">
+                        <b>Màu Sắc</b>
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" style="color: #3f640b;">Trắng</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: #3f640b;">Đỏ</a></li>
+                        <li><a class="dropdown-item" href="#" style="color: #3f640b;">cam</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
           </div>
         </div>
       </div>
