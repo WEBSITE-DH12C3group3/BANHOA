@@ -19,7 +19,7 @@ if (isset($_POST['btn-login'])) {
         // Kiểm tra mật khẩu
         if ($password == $row['password']) {
             // Lưu thông tin người dùng vào session
-            $_SESSION['user_logged_in'];
+            $_SESSION['user_logged_in'] = true;
             $_SESSION['users_id'] = $row['id'];
             $_SESSION['role'] = $row['role'];
             $_SESSION['fullname'] = $row['fullname'];

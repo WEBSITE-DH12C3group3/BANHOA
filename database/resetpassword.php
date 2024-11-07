@@ -85,10 +85,11 @@ class ResetPassword {
     }
 
     // Cập nhật mật khẩu mới (dành cho người dùng đã đăng nhập)
-    public function updatePassword($newPassword, $userId) {
+    public function updatePassword($userId, $newPassword) {
+        // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu (tốt cho bảo mật)
         $query = "UPDATE users SET password = ? WHERE id = ?";
         $stmt = $this->db->conn->prepare($query);
-        $stmt->bind_param("si", $newPassword, $userId);  // Bỏ mã hóa mật khẩu
+        $stmt->bind_param("si", $newPassword, $userId);
         return $stmt->execute();
     }
 }
@@ -135,18 +136,41 @@ if (isset($_POST['updatePassword'])) {
         }
 
         // Cập nhật mật khẩu mới
-        if ($resetPassword->updatePassword($newPassword,$userId)) {
+        if ($resetPassword->updatePassword($userId, $newPassword)) {
             header("Location: /BANHOA/Front-end/Customer/trangcanhan.php?status=success");  // Chuyển đến trang cá nhân
         } else {
             $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại!";
             header("Location: /BANHOA/database/updatepassword.php");
         }
+        exit();
     } else {
+        // Kiểm tra mật khẩu mới và mật khẩu xác nhận có khớp không
+        $userId = $_SESSION['users_id']; // Lấy ID người dùng từ session
         
-        $_SESSION['error'] = "Đổi mật khẩu thành công, hãy đăng nhâp lại!";
-        if ($resetPassword->updatePassword($newPassword,$userId)) {
-            header("Location: /BANHOA/Front-end/Customer/dangnhap.php");
-        } 
+        $newPassword = $_POST['new_password'];
+        $confirmPassword = $_POST['confirm_password'];
+
+        if ($newPassword !== $confirmPassword) {
+            $_SESSION['error'] = "Mật khẩu không khớp. Vui lòng thử lại!";
+            header("Location: /BANHOA/database/updatepassword.php");
+            exit();
+        }
+
+        // Cập nhật mật khẩu mới
+        if ($resetPassword->updatePassword($userId, $newPassword)) {
+            $_SESSION['error'] = "Đổi mật khẩu thành công, hãy đăng nhâp lại!";
+            header("Location: /BANHOA/Front-end/Customer/dangnhap.php");  // Chuyển đến trang cá nhân
+        } else {
+            $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại!";
+            header("Location: /BANHOA/database/updatepassword.php");
+        }
+        exit();
+        // $userId = $_SESSION['users_id'];
+        // $_SESSION['error'] = "Đổi mật khẩu thành công, hãy đăng nhâp lại!";
+        // $resetPassword->updatePassword($userId, $newPassword);
+        // header("Location: /BANHOA/Front-end/Customer/dangnhap.php");
+        // exit();
+        
         //else {
         //     $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại!";
         //     header("Location: /BANHOA/database/updatepassword.php");
@@ -155,6 +179,5 @@ if (isset($_POST['updatePassword'])) {
         
         
     }
-    exit();
 }
-?> 
+?>
