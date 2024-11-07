@@ -184,7 +184,7 @@ $db = new Database();
                         </div>
                         <div class="form-group">
                             <label for="sale">Sale (%)</label>
-                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" required min="0" max="99" step="1" value="0" />
+                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" required min="0" max="99" step="1" />
                         </div>
                         <div class="form-group">
                             <label for="stock">Số lượng</label>
@@ -193,6 +193,7 @@ $db = new Database();
                         <div class="form-group">
                             <label for="remark">Nổi bật</label>
                             <select class="form-control" name="remark" id="remark" required>
+                                <option value="">Chọn kiểu</option>
                                 <option value="0">Không nổi bật</option>
                                 <option value="1">Nổi bật</option>
                             </select>

@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sale = isset($_POST['sale']) ? mysqli_real_escape_string($db->conn, $_POST['sale']) : '';
             $remark = isset($_POST['remark']) ? mysqli_real_escape_string($db->conn, $_POST['remark']) : '';
 
-            if (empty($name) || empty($price) || empty($sale) || empty($stock) || empty($category_id) || empty($remark)) {
+            if (empty($name) || empty($price)  || empty($stock) || empty($category_id)) {
                 echo "<script>alert('Vui lòng điền đầy đủ thông tin cần thiết!'); window.location.href = 'product.php';</script>";
                 exit();
             }
