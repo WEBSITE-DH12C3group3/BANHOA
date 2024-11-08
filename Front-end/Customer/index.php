@@ -133,10 +133,9 @@ $db = new Database();
                                                                     $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
                                                             ?>
                                                                     <div class="col-md-3 col-sm-6 mb-4">
-                                                                        <div class="card">
+                                                                        <a class="card" href="hoa.php?id=<?php echo $row['id']; ?>">
                                                                             <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
-
-                                                                            <div class="card-body text-center">
+                                                                            <d class="card-body text-center">
                                                                                 <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
 
                                                                                 <!-- Hiển thị giá -->
@@ -146,10 +145,8 @@ $db = new Database();
                                                                                     <br>
                                                                                     <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>
                                                                                 </p>
-
-                                                                                <a href="#" class="btn btn-primary">Đặt hàng</a>
-                                                                            </div>
-                                                                        </div>
+                                                                            </d>
+                                                                        </a>
                                                                     </div>
                                                             <?php
                                                                 }
