@@ -117,7 +117,7 @@ if ($categories_result) {
                     <span class="fs-2"><i class="fa-solid fa-bag-shopping"></i></span>
                     <span
                       class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                      0
+                      <?php echo count($_SESSION['cart']); ?>
                     </span>
                   </a>
                   <div class="text-muted" style="color: #3f640b">
