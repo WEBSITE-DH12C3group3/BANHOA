@@ -14,9 +14,9 @@ $categories = [];
 
 // Kiểm tra nếu có kết quả và đưa vào mảng $categories
 if ($categories_result) {
-    while ($row = $categories_result->fetch_assoc()) {
-        $categories[] = $row;
-    }
+  while ($row = $categories_result->fetch_assoc()) {
+    $categories[] = $row;
+  }
 }
 ?>
 
@@ -37,12 +37,14 @@ if ($categories_result) {
   <style>
     /* Style for the dropdown */
     .dropdown-menu {
-      display: none; /* Initially hide dropdown */
+      display: none;
+      /* Initially hide dropdown */
       background-color: #f7aaaa;
     }
 
     .dropdown:hover .dropdown-menu {
-      display: block; /* Show dropdown when hovering */
+      display: block;
+      /* Show dropdown when hovering */
     }
 
     .dropdown-item {
@@ -52,12 +54,23 @@ if ($categories_result) {
     .dropdown-item:hover {
       background-color: #ddd;
     }
+
+    /* Other styles... */
+    .sticky {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      /* Add any other necessary styles to position the header correctly */
+    }
   </style>
 </head>
 
 <body>
   <header>
-    <section class="myheader">
+    <section class="myheader" id="myHeader">
       <div class="container py-3">
         <div class="row align-items-center">
           <!-- Logo -->
@@ -71,8 +84,8 @@ if ($categories_result) {
                 alt="Logo" />
             </a>
           </div>
-                    <!-- Search Bar -->
-                    <div class="col-md-5 col-4 mb-3 mb-md-0">
+          <!-- Search Bar -->
+          <div class="col-md-5 col-4 mb-3 mb-md-0">
             <form method="get" action="search.php" class="input-group">
               <input
                 type="text"
@@ -125,7 +138,7 @@ if ($categories_result) {
                       role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      Xin chào! <i class="fa-regular fa-user"></i>
+                      Tài khoản <i class="fa-regular fa-user"></i>
                     </a>
                     <ul class="dropdown-menu">
                       <li>
@@ -188,7 +201,7 @@ if ($categories_result) {
           <div class="col-9">
             <nav class="navbar navbar-expand-lg" style="background-color: #f7aaaa;">
               <div class="container-fluid">
-                <a class="navbar-brand" style="color: #3f640b;" href="#"><b>Eden shop</b></a>
+                <a class="navbar-brand" style="color: #3f640b;" href="index.php"><b>Trang chủ</b></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -222,14 +235,14 @@ if ($categories_result) {
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     // Click-based dropdown toggle using jQuery (optional)
-    $(document).ready(function () {
-      $('.dropdown-toggle').click(function (e) {
+    $(document).ready(function() {
+      $('.dropdown-toggle').click(function(e) {
         var $el = $(this).next('.dropdown-menu');
         var isVisible = $el.is(':visible');
-        
+
         // Hide all dropdown menus
         $('.dropdown-menu').slideUp();
-        
+
         // Toggle the visibility of the current dropdown
         if (!isVisible) {
           $el.stop(true, true).slideDown();
@@ -237,12 +250,22 @@ if ($categories_result) {
       });
 
       // Close the dropdown if clicked outside
-      $(document).click(function (e) {
+      $(document).click(function(e) {
         if (!$(e.target).closest('.dropdown').length) {
           $('.dropdown-menu').slideUp();
         }
       });
     });
+  </script>
+  <script>
+    window.onscroll = function() {
+      var header = document.getElementById("myHeader");
+      if (window.pageYOffset > 0) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    };
   </script>
 
 </body>
