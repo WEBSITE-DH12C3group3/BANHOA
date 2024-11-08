@@ -2,7 +2,7 @@
 include 'header.php';
 $db = new Database();
 $product_id = $_GET['id'];
-$sql = "SELECT * FROM products WHERE id = '$product_id'";
+$sql = "SELECT * FROM products WHERE id = '$product_id' LIMIT 1";
 $result = $db->select($sql);
 $row = $result->fetch_assoc();
 ?>
@@ -152,7 +152,7 @@ $row = $result->fetch_assoc();
 <body>
 
     <div class="container mt-5">
-        <form class="row">
+        <form class="row" action="modelcart.php?product_id=<?php echo $row['id'] ?>" method="post">
             <!-- Product Image -->
             <div class="col-md-6">
                 <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="product-image" width="400px" height="auto" alt="img">
@@ -172,13 +172,13 @@ $row = $result->fetch_assoc();
 
                 <!-- Buttons -->
                 <div class="product-buttons">
-                    <button class="btn btn-outline-secondary" name="addcart" type="submit"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ</button>
-                    <button class="btn btn-danger">Mua ngay</button>
+                    <button class="btn btn-outline-secondary" name="addcart" type="submit"><i class="fas fa-cart-plus"></i> Thêm vào giỏ</button>
+                    <button class="btn btn-danger" name="buy" type="submit"><i class="fas fa-shopping-cart"></i> Mua ngay</button>
                 </div>
 
                 <!-- Customer Service -->
                 <div class="mt-3">
-                    <button class="btn btn-success">Gọi ngay: 1800 6353</button>
+                    <button class="btn btn-success"><i class="fas fa-phone"></i> Gọi ngay: 1800 6353</button>
                 </div>
 
                 <!-- Offers Section -->

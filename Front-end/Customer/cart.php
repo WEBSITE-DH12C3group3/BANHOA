@@ -27,6 +27,23 @@ $result = $db->select($sql);
       font-weight: bold;
       font-size: 1.2rem;
     }
+
+    .input-group button {
+      height: 40px;
+      width: 40px;
+    }
+
+    .input-group .item-quantity {
+      max-width: 60px;
+      text-align: center;
+      height: 40px;
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
 </head>
 
@@ -54,7 +71,7 @@ $result = $db->select($sql);
             foreach ($_SESSION['cart'] as $key => $item) {
               $i++;
               $id = isset($item['id']) ? $item['id'] : 0;
-              $price = isset($item['price']) ? $item['price'] : 0;
+              $price = isset($item['price_sale']) ? $item['price_sale'] : 0;
               $quantity = isset($item['quantity']) ? $item['quantity'] : 1;
               $name = isset($item['name']) ? $item['name'] : 'Sản phẩm không có tên';
               $image = isset($item['image']) ? $item['image'] : 'default_image.jpg';
@@ -67,7 +84,6 @@ $result = $db->select($sql);
                 <td><?php echo $i; ?></td>
                 <td><img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $image; ?>" /></td>
                 <td><?php echo $name; ?></td>
-                <td class="item-price" data-price="<?php echo $price; ?>"><?php echo number_format($price, 0, ',', '.') ?> VND</td>
                 <td>
                   <div class="input-group">
                     <button
@@ -88,7 +104,9 @@ $result = $db->select($sql);
                     </button>
                   </div>
                 </td>
-                <td class="item-total"><?php echo number_format($thanhtien, 0, ',', '.'); ?> VND</td>
+                <td class="item-price" data-price="<?php echo $price; ?>"><?php echo number_format($price, 0, ',', '.') ?> VND</td>
+
+                <!-- <td class="item-total"><?php echo number_format($thanhtien, 0, ',', '.'); ?> VND</td> -->
                 <td>
                   <button
                     class="btn btn-danger btn-sm"
@@ -110,10 +128,15 @@ $result = $db->select($sql);
         <div class="cart-total py-4">
           Tổng cộng: <span id="cart-total"><?php echo number_format($total, 0, ',', '.'); ?> VND</span>
         </div>
-        <a href="thanhtoan.php">
-          <button class="btn btn-primary">Mua Ngay</button>
-        </a>
+        <div>
+          <?php if (isset($_SESSION['user_logged_in'])): ?>
+            <button><a href="thanhtoan.php">Thanh toán</a></button>
+          <?php else: ?>
+            <button><a href="dangky.php">Đăng ký để thanh toán</a></button>
+          <?php endif; ?>
+        </div>
       </div>
+
     </div>
   </section>
   <?php include 'footer.php'; ?>

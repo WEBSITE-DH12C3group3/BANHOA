@@ -1,5 +1,6 @@
 <?php
 include 'header.php';
+$db = new Database();
 ?>
 <!DOCTYPE html>
 <html lang="en">

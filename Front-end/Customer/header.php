@@ -93,7 +93,8 @@ if ($categories_result) {
                 placeholder="Tìm Kiếm"
                 aria-label="Tìm Kiếm"
                 aria-describedby="basic-addon2"
-                name="q" />
+                name="q"
+                required />
               <button
                 class="btn btn-outline-secondary"
                 type="submit"

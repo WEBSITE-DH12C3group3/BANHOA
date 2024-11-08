@@ -111,7 +111,7 @@ if ($result) {
         }
 
         .btn-save {
-            background-color: #d8243c;
+            background-color: #d8242c;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -121,7 +121,12 @@ if ($result) {
         }
 
         .btn-save:hover {
-            background-color: #c71e34;
+            background-color: red;
+            color: white;
+        }
+
+        .form-group label {
+            margin: 5px;
         }
     </style>
     <script>
@@ -153,44 +158,44 @@ if ($result) {
                 </div>
             </div>
 
-           <!-- Form hiển thị thông tin người dùng -->
-                <!-- Form hiển thị thông tin người dùng -->
-                <div class="col-md-9">
-                    <div class="account-container">
-                        <h2 class="mb-4" style="color: #d8243c;">Cập nhật thông tin tài khoản</h2>
-                        <form action="/BANHOA/database/updateuser.php" method="post" onsubmit="return validateForm()">
-                            <!-- Fullname -->
-                            <div class="form-group">
-                                <label for="fullname">Họ và Tên</label>
-                                <input type="text" class="form-control" name="fullname" id="fullname" value="<?php echo htmlspecialchars($user['fullname']); ?>" placeholder="Nhập họ và tên" required>
-                            </div>
-                
-                            <!-- Email -->
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" name="email" id="email" value="<?php echo htmlspecialchars($user['email']); ?>" placeholder="Nhập email" required>
-                            </div>
-                
-                            <!-- Phone Number -->
-                            <div class="form-group">
-                                <label for="phone">Số điện thoại</label>
-                                <input type="tel" class="form-control" name="phone" id="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" placeholder="Nhập số điện thoại" required>
-                            </div>
-                
-                            <!-- Address -->
-                            <div class="form-group">
-                                <label for="address">Địa chỉ</label>
-                                <input type="text" class="form-control" name="address" id="address" value="<?php echo htmlspecialchars($user['address']); ?>" placeholder="Tỉnh thành/quận huyện/thị xã/số nhà" required>
-                            </div>
-                
-                            <button type="submit" name="updateuser" class="btn btn-save mt-3">
-                                <i class="bi bi-save"></i> Lưu
-                            </button>
-                        </form>
-                    </div>
+            <!-- Form hiển thị thông tin người dùng -->
+            <!-- Form hiển thị thông tin người dùng -->
+            <div class="col-md-9">
+                <div class="account-container">
+                    <h2 class="mb-4" style="color: #d8243c;">Cập nhật thông tin tài khoản</h2>
+                    <form action="/BANHOA/database/updateuser.php" method="post" onsubmit="return validateForm()">
+                        <!-- Fullname -->
+                        <div class="form-group">
+                            <label for="fullname">Họ và Tên</label>
+                            <input type="text" class="form-control" name="fullname" id="fullname" value="<?php echo htmlspecialchars($user['fullname']); ?>" placeholder="Nhập họ và tên" required>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" value="<?php echo htmlspecialchars($user['email']); ?>" placeholder="Nhập email" required>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại</label>
+                            <input type="tel" class="form-control" name="phone" id="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" placeholder="Nhập số điện thoại" required>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="form-group">
+                            <label for="address">Địa chỉ</label>
+                            <input type="text" class="form-control" name="address" id="address" value="<?php echo htmlspecialchars($user['address']); ?>" placeholder="Tỉnh thành/quận huyện/thị xã/số nhà" required>
+                        </div>
+
+                        <button type="submit" name="updateuser" class="btn btn-save mt-3">
+                            <i class="bi bi-save"></i> Lưu
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 <?php include 'footer.php'; ?>

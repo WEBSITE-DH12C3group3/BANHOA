@@ -1,5 +1,5 @@
 <?php
-include "/xampp/htdocs/BANHOA/connect.php";
+include "/xampp/htdocs/BANHOA/database/connect.php";
 session_start();
 $db = new Database();
 
@@ -61,13 +61,13 @@ if (isset($_GET['deleteall']) && $_GET['deleteall'] == 1) {
     header("Location: cart.php");
 }
 
+//add cart 
 if (isset($_POST['addcart'])) {
     $product_id = $_GET['product_id'];
     $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1; // Lấy số lượng từ form
-    $size = isset($_POST['selected_size']) ? $_POST['selected_size'] : '';
 
     // Truy vấn sản phẩm từ CSDL
-    $sql = "SELECT * FROM products WHERE id = '$product_id' LIMIT 1";
+    $sql = "SELECT * FROM products WHERE id = '" . $product_id . "' LIMIT 1";
     $query = $db->select($sql);
 
     if ($query->num_rows > 0) {
@@ -76,11 +76,10 @@ if (isset($_POST['addcart'])) {
 
         // Tạo mảng sản phẩm mới
         $new_product = array(
-            'id' => $row['product_id'],
+            'id' => $product_id,
             'name' => $row['product_name'],
-            'image' => $row['product_image'],
-            'price' => $row['product_price'],
-            'size' => $size,
+            'image' => $row['image'],
+            'price_sale' => $row['price_sale'],
             'quantity' => $quantity
         );
 
