@@ -111,7 +111,7 @@ if ($categories_result) {
               <div class="col-6">
                 <div class="me-4 position-relative text-center">
                   <a
-                    href="giohang.php"
+                    href="cart.php"
                     class="position-relative text-dark">
                     <span class="fs-2"><i class="fa-solid fa-bag-shopping"></i></span>
                     <span

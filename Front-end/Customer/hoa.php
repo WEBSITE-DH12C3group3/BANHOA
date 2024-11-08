@@ -152,7 +152,7 @@ $row = $result->fetch_assoc();
 <body>
 
     <div class="container mt-5">
-        <div class="row">
+        <form class="row">
             <!-- Product Image -->
             <div class="col-md-6">
                 <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="product-image" width="400px" height="auto" alt="img">
@@ -165,14 +165,14 @@ $row = $result->fetch_assoc();
 
                 <!-- Product Components -->
                 <ul class="list-unstyled">
-                    <li?><?php echo $row['description']; ?></li>
+                    <li><?php echo $row['description']; ?></li>
                 </ul>
 
                 <p class="text-muted"><small>Sản phẩm thực nhận có thể khác với hình đại diện trên website.</small></p>
 
                 <!-- Buttons -->
                 <div class="product-buttons">
-                    <button class="btn btn-outline-secondary">Thêm vào giỏ</button>
+                    <button class="btn btn-outline-secondary" name="addcart" type="submit"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ</button>
                     <button class="btn btn-danger">Mua ngay</button>
                 </div>
 
@@ -197,7 +197,8 @@ $row = $result->fetch_assoc();
                     <p>Lưu ý: Sản phẩm bạn đang chọn là sản phẩm thiết kế đặc biệt. Hiện nay chỉ thử nghiệm cung cấp cho Tp. Hồ Chí Minh và Hà Nội.</p>
                 </div>
             </div>
-        </div>
+        </form>
+    </div>
     </div>
 
     <div class="container">
@@ -308,7 +309,7 @@ $row = $result->fetch_assoc();
                     <!-- Product 1 -->
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                         <a class="card h-100 text-center" href="hoa.php?id=<?php echo $row['id']; ?>">
-                            <div class="badge bg-danger text-white position-absolute sale-badge">Sale</div>
+                            <div class="badge bg-danger text-white position-absolute sale-badge">Sale <?php echo $row['sale']; ?>%</div>
                             <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $row['product_name']; ?></h5>

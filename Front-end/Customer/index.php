@@ -72,14 +72,16 @@ $db = new Database();
                     <div class="large-12 columns">
                         <div class="product-list owl-carousel owl-theme"> <!-- Đặt div này chứa toàn bộ sản phẩm -->
                             <?php
-                            $sql = "SELECT * FROM products WHERE remark = 1 ORDER BY id";
+                            $sql = "SELECT id, product_name, image FROM products WHERE remark = 1 ORDER BY id";
                             $result = $db->select($sql);
                             if ($result) {
                                 while ($row = $result->fetch_assoc()) { ?>
                                     <div class="item hover-effect">
                                         <div class="category-icon text-center"> <!-- Thêm class 'text-center' để căn giữa -->
-                                            <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" alt="hoaxinh" class="img-fluid rounded-circle">
-                                            <h6 class="mt-2"><?php echo $row['product_name']; ?></h6> <!-- Thêm margin-top để tạo khoảng cách giữa ảnh và chữ -->
+                                            <a href="hoa.php?id=<?php echo $row['id']; ?>" class="product-link">
+                                                <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" alt="hoaxinh" class="img-fluid rounded-circle">
+                                                <h6 class="mt-2" style="color: black;"><?php echo $row['product_name']; ?></h6> <!-- Thêm margin-top để tạo khoảng cách giữa ảnh và chữ -->
+                                            </a>
                                         </div>
                                     </div>
                             <?php
