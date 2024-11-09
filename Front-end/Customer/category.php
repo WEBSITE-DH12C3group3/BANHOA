@@ -5,11 +5,22 @@ $db = new Database();
 // Nhận category_id và category_name từ URL hoặc trang con
 $category_id = $_GET['id'];
 $category_name = $_GET['category_name'];
+
+// Nhận trang hiện tại từ URL, mặc định là trang 1 nếu không có
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$products_per_page = 4; // Số sản phẩm mỗi trang
+$offset = ($page - 1) * $products_per_page; // Tính OFFSET
+
+// Lấy tổng số sản phẩm trong danh mục để tính tổng số trang
+$total_products_query = "SELECT COUNT(*) AS total FROM products WHERE category_id = '$category_id'";
+$total_result = $db->select($total_products_query);
+$total_row = $total_result->fetch_assoc();
+$total_products = $total_row['total'];
+$total_pages = ceil($total_products / $products_per_page); // Tổng số trang
 ?>
 
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +34,6 @@ $category_name = $_GET['category_name'];
         }
     </style>
 </head>
-
 <body>
     <section>
         <header class="bg-light p-3 text-center">
@@ -35,7 +45,7 @@ $category_name = $_GET['category_name'];
                 <div class="container my-5">
                     <div class="row">
                         <?php
-                        $sql = "SELECT * FROM products WHERE category_id = '$category_id' ORDER BY id";
+                        $sql = "SELECT * FROM products WHERE category_id = '$category_id' ORDER BY id LIMIT $products_per_page OFFSET $offset";
                         $result = $db->select($sql);
 
                         if ($result) {
@@ -46,10 +56,8 @@ $category_name = $_GET['category_name'];
                                 <div class="col-md-3 col-sm-6 mb-4">
                                     <a href="hoa.php?id=<?php echo $row['id']; ?>" class="card">
                                         <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
-
                                         <div class="card-body text-center">
                                             <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
-
                                             <p class="text-muted">
                                                 <?php if ($price_sale) {
                                                     $discount_percentage = round((($row['price'] - $row['price_sale']) / $row['price']) * 100, 2);
@@ -62,7 +70,6 @@ $category_name = $_GET['category_name'];
                                                     <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
                                                 <?php } ?>
                                             </p>
-
                                             <button class="btn btn-primary">Đặt hàng</button>
                                         </div>
                                     </a>
@@ -73,6 +80,17 @@ $category_name = $_GET['category_name'];
                         ?>
                     </div>
                 </div>
+
+                <!-- Pagination (only page numbers) -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                <a class="page-link" href="?id=<?php echo $category_id; ?>&category_name=<?php echo urlencode($category_name); ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
             </div>
         </div>
     </section>
@@ -80,5 +98,4 @@ $category_name = $_GET['category_name'];
     <?php include 'footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
