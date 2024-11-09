@@ -32,12 +32,30 @@ $total_pages = ceil($total_products / $products_per_page); // Tổng số trang
             max-height: 300px;
             object-fit: cover;
         }
+        /* Style for the product count box */
+        .product-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f2231d;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .category-header {
+            position: relative;
+        }
     </style>
 </head>
 <body>
     <section>
-        <header class="bg-light p-3 text-center">
+        <header class="bg-light p-3 text-center category-header">
             <h1><?php echo htmlspecialchars($category_name); ?></h1>
+            <div class="product-count">
+                <?php echo $total_products; ?> sản phẩm
+            </div>
         </header>
 
         <div class="container my-5">
