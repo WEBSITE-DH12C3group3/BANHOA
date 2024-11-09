@@ -32,7 +32,6 @@ include '/xampp/htdocs/BANHOA/Front-end/Adminn/exit.php';
 </head>
 
 <body>
-
 </body>
 
 </html>

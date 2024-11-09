@@ -1,301 +1,10 @@
-body {
-  font-family: "Roboto", sans-serif;
-  background-color: #f8f9fa;
-  margin: 0;
-  line-height: 1.8;
-  color: #555e58;
-  text-transform: capitalize;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4 {
-  font-weight: 400;
-  line-height: 1.5em;
-}
-
-p {
-  font-size: 15px;
-  margin: 12px 0 0;
-  line-height: 24px;
-}
-
-a {
-  color: #333;
-  font-weight: 400;
-  text-decoration: none;
-}
-
-ul,
-ol {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-a:hover,
-a:focus {
-  text-decoration: none;
-}
-
-/* Sidebar */
-#sidebar {
-  width: 260px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  z-index: 11;
-  overflow: auto;
-  transition: all 0.3s;
-  background: #fff;
-  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42),
-    0 4px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
-}
-
-#sidebar::-webkit-scrollbar {
-  width: 5px;
-  border-radius: 10px;
-  background-color: #eee;
-}
-
-#sidebar::-webkit-scrollbar-thumb {
-  width: 5px;
-  border-radius: 10px;
-  background-color: #333;
-}
-
-#sidebar .sidebar-header {
-  padding: 20px;
-  background-color: #fff;
-  border-bottom: 1px solid #eee;
-}
-
-.sidebar-header h3 {
-  color: #333;
-  font-size: 17px;
-  margin: 0;
-  text-transform: uppercase;
-  transition: all 0.5s ease;
-  font-weight: 600;
-}
-
-#sidebar ul li {
-  padding: 2px 7px;
-}
-
-#sidebar ul li.active > a,
-#sidebar ul li a:hover {
-  color: #333;
-  background-color: rgba(200, 200, 200, 0.2);
-}
-
-#sidebar ul li a {
-  padding: 10px;
-  line-height: 30px;
-  border-radius: 5px;
-  font-size: 15px;
-  font-weight: 400;
-  display: block;
-}
-
-/* Navbar */
-.navbar {
-  background-color: #2196f3;
-  color: #fff;
-}
-
-.navbar-brand {
-  color: #fff;
-}
-
-.navbar button {
-  background-color: transparent;
-  border: none;
-}
-
-.navbar button span {
-  color: #fff;
-}
-
-.navbar-nav > li.active,
-.navbar-nav > .active > a:focus {
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
-.navbar-nav li a {
-  padding: 10px 15px;
-}
-
 /* Main Content */
 #content {
   position: relative;
   transition: all 0.3s;
   background-color: #eeeeee;
   margin-left: 260px; /* Adjust for sidebar width */
-  padding-top: 80px; /* Adjust for navbar height */
-}
-
-/* Responsive adjustments (media queries) - simplified */
-@media (max-width: 768px) {
-  #sidebar {
-    left: -100%;
-  }
-  #sidebar.act {
-    left: 0;
-  }
-  #content {
-    margin-left: 0;
-  }
-}
-
-/* Other styles (dashboard, charts, etc.) - removed for brevity */
-
-.dashboard .item {
-  background-color: #fff;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  text-align: center;
-}
-
-.chart-section {
-  margin-top: 40px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.chart,
-.category-statistics {
-  width: 48%;
-}
-
-.chart canvas,
-.category-statistics canvas {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 10px;
-}
-
-/* Responsive */
-/* CSS thêm vào style.css */
-
-@media (max-width: 768px) {
-  #sidebar {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: -100%;
-    height: 100%;
-    z-index: 9999;
-    transition: all 0.3s;
-  }
-
-  #sidebar.act {
-    left: 0;
-  }
-
-  #sidebarCollapse {
-    right: 10px;
-    top: 10px;
-  }
-
-  .body-overlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 998;
-    display: none;
-  }
-
-  .body-overlay.show-nav {
-    display: block;
-  }
-
-  #content.active {
-    margin-left: 0;
-  }
-
-  #content {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .chart,
-  .category-statistics {
-    width: 100%;
-  }
-
-  .navbar {
-    padding: 10px 20px;
-    height: 60px; /* Reduce navbar height for mobile */
-    justify-content: space-between;
-    left: 0;
-  }
-
-  .navbar .fas {
-    font-size: 1.2rem; /* Reduce icon size on mobile */
-  }
-
-  .navbar-brand {
-    font-size: 1.2rem; /* Adjust branding font size */
-  }
-}
-
-body,
-html {
-  line-height: 1.8;
-  font-family: "Roboto", sans-serif;
-  color: #555e58;
-  text-transform: capitalize;
-  text-rendering: optimizeLegibility !important;
-  -webkit-font-smoothing: antialiased !important;
-  font-weight: 400;
-  margin: 0px;
-  padding: 0px;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4 {
-  font-weight: 400;
-  line-height: 1.5em;
-}
-
-p {
-  font-size: 15px;
-  margin: 12px 0 0;
-  line-height: 24px;
-}
-
-a {
-  color: #333;
-  font-weight: 400;
-}
-
-ul,
-ol {
-  padding: 0;
-  margin: 0px;
-  list-style: none;
+  padding-top: 50px; /* Adjust for navbar height */
 }
 
 a,
@@ -316,37 +25,20 @@ a:focus {
   width: 260px;
   overflow: auto;
   transition: all 0.3s;
-  background: #ffffff;
   box-shadow: 0 10px 30px -12px rgb(0 0 0 / 42%),
     0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%);
-}
-
-#sidebar::-webkit-scrollbar {
-  width: 5px;
-  border-radius: 10px;
-  background-color: #eee;
-  display: none;
-}
-
-#sidebar::-webkit-scrollbar-thumbs {
-  width: 5px;
-  border-radius: 10px;
-  background-color: #333;
-  display: none;
-}
-
-#sidebar:hover::-webkit-scrollbar {
-  display: block;
-}
-
-#sidebar:hover::-webkit-scrollbar-thumbs {
-  display: block;
+  background-color: #f8f9fa;
+  /* màu nền sidebar */
+  padding-top: 20px;
 }
 
 #sidebar .sidebar-header {
   padding: 20px;
   background-color: #ffffff;
   border-bottom: 1px solid #eee;
+  color: #093608;
+  /* màu chữ logo và user info */
+  font-weight: bold;
 }
 
 .sidebar-header h3 {
@@ -361,6 +53,7 @@ a:focus {
 .sidebar-header h3 img {
   width: 45px;
   margin-right: 10px;
+  border-radius: 25px;
 }
 
 #sidebar ul li {
@@ -368,11 +61,6 @@ a:focus {
 }
 
 #sidebar ul li.active > a {
-  color: #333;
-  background-color: rgba(200, 200, 200, 0.2);
-}
-
-#sidebar ul li a:hover {
   color: #333;
   background-color: rgba(200, 200, 200, 0.2);
 }
@@ -401,24 +89,36 @@ a:focus {
   display: block;
 }
 
+#sidebar ul li a:hover {
+  color: #333;
+  background-color: rgba(200, 200, 200, 0.2);
+}
+
 #sidebar ul li a i {
   position: relative;
   margin-right: 10px;
-  top: 5px;
   color: #555555;
   margin-left: 10px;
 }
 
-#content {
-  position: relative;
-  transition: all 0.3s;
-  background-color: #eeeeee;
+#sidebar .components li a {
+  color: #093608;
+  /* màu chữ menu */
+  font-weight: bold;
 }
 
-.top-navbar {
-  width: 100%;
-  z-index: 9;
-  position: relative;
+#sidebar .components li a:hover {
+  color: #5a945a;
+  /* màu chữ khi hover */
+  background-color: #e9ecef;
+  /* nền khi hover */
+}
+
+#sidebar .components li.active a {
+  color: #5a945a;
+  /* màu chữ menu active */
+  background-color: #d4edda;
+  /* nền menu active */
 }
 
 .main-content {
@@ -427,49 +127,30 @@ a:focus {
   width: 100%;
 }
 
-.navbar {
-  background-color: #2196f3;
-  color: #ffffff;
+.search-bar {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
 }
 
-.navbar-brand {
-  color: #ffffff;
+.search-bar input {
+  border-radius: 5px;
+  width: 70%;
+  padding: 10px;
 }
 
-.navbar button {
-  background-color: transparent;
+.search-bar button {
+  padding: 10px 15px;
+  background: #35424a;
+  color: white;
   border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-.navbar button span {
-  color: #fff;
-}
-
-.navbar-nav > li.active {
-  color: #ffffff;
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
-.navbar-nav > li > a {
-  color: #ffffff;
-}
-
-.navbar-nav > li.show .dropdown-menu {
-  transform: translate3d(0, 0, 0);
-  opacity: 1;
-  visibility: visible;
-}
-
-.navbar-nav > .active > a:focus {
-  color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
-.navbar-nav li a {
-  position: relative;
-  display: block;
-  padding: 10px 15px !important;
+th {
+  background: #35424a;
+  color: white;
 }
 
 @media only screen and (min-width: 992px) {
@@ -532,29 +213,6 @@ a:focus {
     width: 90%;
   }
 
-  .chart-section {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 40px;
-    width: 90%;
-  }
-
-  .chart,
-  .category-statistics {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 48%;
-    /* Chia đều mỗi bên */
-  }
-
-  .chart canvas,
-  .category-statistics canvas {
-    max-width: 100%;
-    height: 300px;
-  }
-
   .dropdown-content {
     display: none;
     position: absolute;
@@ -604,204 +262,18 @@ a:focus {
     font-weight: bold;
     color: #333;
   }
+}
 
-  .total-revenue {
-    border-left: 5px solid blue;
+@media only screen and (max-width: 460px) {
+  /* CSS rules for screens less than or equal to 480px go here */
+  #sidebar {
+    width: 150px;
   }
-
-  .total-revenue-week {
-    border-left: 5px solid orange;
+  #sidebar ul li a {
+    font-size: 12px;
   }
-
-  .total-revenue-month {
-    border-left: 5px solid green;
+  .main-content {
+    margin-left: 0px;
+    width: 100%;
   }
-
-  .total-orders {
-    border-left: 5px solid purple;
-  }
-
-  .total-customers {
-    border-left: 5px solid yellow;
-  }
-
-  .total-products {
-    border-left: 5px solid pink;
-  }
-
-  .total-product-types {
-    border-left: 5px solid teal;
-  }
-}
-
-.search-bar {
-  margin: 20px 0;
-  display: flex;
-  justify-content: space-between;
-}
-
-.search-bar input {
-  border-radius: 5px;
-  width: 70%;
-  padding: 10px;
-}
-
-.search-bar button {
-  padding: 10px 15px;
-  background: #35424a;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.info-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px 0;
-}
-
-.total-posts {
-  margin: 0;
-}
-
-.total-posts p {
-  margin: 0;
-}
-
-.add-post {
-  padding: 10px 15px;
-  background: #5cb85c;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-}
-
-table,
-th,
-td {
-  border: 1px solid #dddddd;
-}
-
-th,
-td {
-  padding: 10px;
-  text-align: left;
-}
-
-th {
-  background: #35424a;
-  color: white;
-}
-
-.status {
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-.status.active {
-  background: #5cb85c;
-  color: white;
-}
-
-.status.unactive {
-  background: #d9534f;
-  color: white;
-}
-
-.edit,
-.delete {
-  display: flex;
-  border-radius: 5px;
-  padding: 5px 10px;
-  margin: 2px 5px;
-  border: none;
-  cursor: pointer;
-}
-
-.edit {
-  background: #5bc0de;
-  color: white;
-}
-
-.delete {
-  background: #d9534f;
-  color: white;
-}
-
-.img-tb tr td img {
-  width: 100px;
-  height: 100px;
-}
-
-/* Định nghĩa kiểu cho dropdown */
-.dropdown {
-  position: relative;
-}
-
-/* Kiểu cho liên kết trong dropdown */
-.dropdown-toggle {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  color: #333;
-  text-decoration: none;
-}
-
-/* Kiểu cho icon */
-.dropdown-toggle i {
-  margin-right: 8px; /* Khoảng cách giữa icon và text */
-}
-
-/* Kiểu cho submenu */
-.menu {
-  list-style: none; /* Xóa dấu chấm */
-  padding: 0;
-  margin: 0;
-}
-
-/* Mặc định ẩn submenu */
-.collapse {
-  display: none; /* Ẩn bất cứ khi nào không có class 'show' */
-}
-
-/* Hiển thị submenu khi hover */
-.dropdown:hover .collapse,
-.collapse.show {
-  display: block; /* Hiển thị submenu khi hover hoặc khi có class 'show' */
-  background-color: #f8f9fa; /* Màu nền cho submenu */
-  position: absolute; /* Đặt submenu trên các mục khác */
-  left: 0; /* Đặt submenu vào bên trái */
-  top: 100%; /* Đặt submenu cách mục dropdown 100% (đúng ngay dưới nó) */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho submenu */
-  z-index: 1000; /* Đảm bảo submenu xuất hiện trên các phần tử khác */
-}
-
-/* Kiểu cho các mục trong submenu */
-.menu li {
-  padding: 10px 15px; /* Khoảng cách cho từng mục */
-}
-
-/* Định nghĩa kiểu khi hover vào các mục trong submenu */
-.menu li a {
-  color: #333;
-  text-decoration: none;
-}
-
-.menu li a:hover {
-  background-color: #e9ecef; /* Màu nền khi hover */
-}
-
-/* Định nghĩa kiểu khi submenu có hover */
-.menu li:hover {
-  background-color: #e9ecef; /* Màu nền cho tất cả dòng khi hover */
 }

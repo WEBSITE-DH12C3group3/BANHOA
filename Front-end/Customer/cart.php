@@ -67,9 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td><img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $image; ?>" alt="Product Image" /></td>
                                 <td><?php echo $name; ?></td>
                                 <td>
-                                    <a href="modelcart.php?minus=<?php echo $id; ?>" class="btn btn-light nuts"><i class="fa fa-plus"></i></a>
+                                    <a href="modelcart.php?minus=<?php echo $id; ?>" class="btn btn-light nuts"><i class="fa fa-minus"></i></a>
                                     <span class="item-quantity btn"><?php echo $quantity; ?></span>
-                                    <a href="modelcart.php?plus=<?php echo $id; ?>" class="btn btn-light nuts"><i class="fa fa-minus"></i></a>
+                                    <a href="modelcart.php?plus=<?php echo $id; ?>" class="btn btn-light nuts"><i class="fa fa-plus"></i></a>
                                 </td>
                                 <td><?php echo number_format($thanhtien, 0, ',', '.'); ?> VND</td>
                                 <td>

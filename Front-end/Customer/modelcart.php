@@ -112,3 +112,54 @@ if (isset($_POST['addcart'])) {
     header('Location: cart.php');
     exit();
 }
+
+if (isset($_POST['add'])) {
+    $product_id = $_GET['product_id'];
+    $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1; // Lấy số lượng từ form
+
+    // Truy vấn sản phẩm từ CSDL
+    $sql = "SELECT * FROM products WHERE id = '" . $product_id . "' LIMIT 1";
+    $query = $db->select($sql);
+
+    if ($query->num_rows > 0) {
+        // Lấy dữ liệu sản phẩm
+        $row = $query->fetch_assoc();
+
+        // Tạo mảng sản phẩm mới
+        $new_product = array(
+            'id' => $product_id,
+            'name' => $row['product_name'],
+            'image' => $row['image'],
+            'price_sale' => $row['price_sale'],
+            'quantity' => $quantity
+        );
+
+        // Kiểm tra xem giỏ hàng đã tồn tại hay chưa
+        if (isset($_SESSION['cart'])) {
+            $found = false;
+
+            // Duyệt qua các sản phẩm trong giỏ hàng bằng tham chiếu
+            foreach ($_SESSION['cart'] as &$item) {
+                // Nếu sản phẩm đã tồn tại cùng size, tăng số lượng
+                if ($item['id'] == $product_id) {
+                    $item['quantity'] += $quantity; // Cộng thêm số lượng
+                    $found = true;
+                    break;
+                }
+            }
+            unset($item); // Hủy tham chiếu để tránh lỗi
+
+            // Nếu sản phẩm chưa có trong giỏ hàng, thêm sản phẩm mới
+            if (!$found) {
+                $_SESSION['cart'][] = $new_product;
+            }
+        } else {
+            // Nếu giỏ hàng chưa tồn tại, khởi tạo giỏ hàng và thêm sản phẩm
+            $_SESSION['cart'] = array($new_product);
+        }
+    }
+
+    // Chuyển hướng đến trang giỏ hàng
+    header('Location: hoa.php?id=' . $product_id);
+    exit();
+}

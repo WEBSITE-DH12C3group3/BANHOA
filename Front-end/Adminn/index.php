@@ -34,52 +34,73 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
 <body>
     <div class="wrapper">
         <div class="body-overlay"></div>
-        <!-- Sidebar  -->
-        <nav id="sidebar" class="act">
-            <div class="sidebar-header">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="bg-light border-right">
+            <!-- Logo and Title -->
+            <div class="sidebar-header text-center py-4">
                 <a href="index.php">
                     <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
             </div>
-            <div class="sidebar-header">
-                <a href=""> <i class="fas fa-user"></i><span>
-                        <?php
-                        echo $_SESSION["fullname"];
-                        ?>
-                    </span></a>
+
+            <!-- User Info -->
+            <div class="sidebar-header text-center py-2">
+                <i class="fas fa-user"></i>
+                <span>
+                    <?php echo $_SESSION["fullname"]; ?>
+                </span>
             </div>
+
+            <!-- Menu Items -->
             <ul class="list-unstyled components">
+                <!-- Dashboard -->
                 <li class="active">
-                    <a href="/BANHOA/Front-end/Adminn/index.php">
-                        <i class="fas fa-chart-bar"></i><span>Thống kê</span></a>
+                    <a href="/BANHOA/Front-end/Adminn/index.php"><i class="fas fa-chart-bar"></i><span>Thống kê</span></a>
                 </li>
+
+                <!-- Management Dropdown -->
                 <li class="dropdown">
-                    <a href="#subm" class="dropdown-toggle">
-                        <i class="fas fa-th-large"></i><span>Quản Lí</span></a>
+                    <a href="#subm" class="dropdown-toggle" data-toggle="collapse" aria-expanded="false"><i class="fas fa-th-large"></i><span>Quản Lí</span>
+                    </a>
                     <ul class="collapse list-unstyled menu" id="subm">
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/category/category.php"><i class="fas fa-list"></i>
-                                Quản Lí Danh Mục</a>
+                            <a href="/BANHOA/Front-end/Adminn/category/category.php">
+                                <i class="fas fa-list"></i>
+                                Quản Lí Danh Mục
+                            </a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/product/product.php"><i class="fas fa-box"></i>
-                                Quản Lí Sản Phẩm</a>
+                            <a href="/BANHOA/Front-end/Adminn/product/product.php">
+                                <i class="fas fa-box"></i>
+                                Quản Lí Sản Phẩm
+                            </a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/order/order.php"><i class="fas fa-shopping-cart"></i>
-                                Quản Lí Đơn Hàng</a>
+                            <a href="/BANHOA/Front-end/Adminn/order/order.php">
+                                <i class="fas fa-shopping-cart"></i>
+                                Quản Lí Đơn Hàng
+                            </a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/customer/ctm.php"><i class="fas fa-user"></i>Quản Lí Khách Hàng</a>
+                            <a href="/BANHOA/Front-end/Adminn/customer/ctm.php">
+                                <i class="fas fa-user"></i>
+                                Quản Lí Khách Hàng
+                            </a>
                         </li>
                     </ul>
                 </li>
-                <li class="">
+
+                <!-- Feedback -->
+                <li>
                     <a href="#"><i class="fas fa-comments"></i><span>Phản Hồi</span></a>
                 </li>
-                <li class="">
-                    <a href="index.php?act=logout" onclick="return confirm('ả diu sua?')"><i class="fas fa-sign-out-alt"></i>
-                        <span>Đăng xuất</span></a>
+
+                <!-- Logout -->
+                <li>
+                    <a href="index.php?act=logout" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?')">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Đăng xuất</span>
+                    </a>
                 </li>
             </ul>
         </nav>

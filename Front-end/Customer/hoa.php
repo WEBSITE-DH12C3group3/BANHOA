@@ -150,7 +150,6 @@ $row = $result->fetch_assoc();
 </head>
 
 <body>
-
     <div class="container mt-5">
         <form class="row" action="modelcart.php?product_id=<?php echo $row['id'] ?>" method="post">
             <!-- Product Image -->
@@ -172,13 +171,13 @@ $row = $result->fetch_assoc();
 
                 <!-- Buttons -->
                 <div class="product-buttons">
-                    <button class="btn btn-outline-secondary" name="addcart" type="submit"><i class="fas fa-cart-plus"></i> Thêm vào giỏ</button>
-                    <button class="btn btn-danger" name="buy" type="submit"><i class="fas fa-shopping-cart"></i> Mua ngay</button>
+                    <button class="btn btn-outline-secondary" name="add" type="submit"><i class="fas fa-cart-plus"></i> Thêm vào giỏ</button>
+                    <button class="btn btn-danger" name="addcart" type="submit"><i class="fas fa-shopping-cart"></i> Mua ngay</button>
                 </div>
 
                 <!-- Customer Service -->
                 <div class="mt-3">
-                    <button class="btn btn-success"><i class="fas fa-phone"></i> Gọi ngay: 1800 6353</button>
+                    <button class="btn btn-success"><i class="fas fa-phone"></i> <a href="tel:+84333268135" style="text-decoration: none; color: white;">0333268135</a></button>
                 </div>
 
                 <!-- Offers Section -->
