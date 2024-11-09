@@ -125,8 +125,7 @@ if ($categories_result) {
                     </span>
                   </a>
                   <div class="text-muted" style="color: #3f640b">
-                    Giỏ Hàng <br />
-                    Của Bạn
+                    Giỏ Hàng
                   </div>
                 </div>
               </div>

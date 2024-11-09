@@ -63,7 +63,7 @@ $db = new Database();
                 </div>
             </div>
             <br>
-            <div class="cate-list mb-3 py-5">
+            <div class="cate-list mb-3">
                 <span>
                     <h3 style="color: #3f640b;">Sản Phẩm Nổi Bật</h3>
                 </span>
@@ -95,82 +95,80 @@ $db = new Database();
             </div>
         </div>
         <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="product-list mb-3">
+                        <div class="row text-center">
+                            <div class="container">
+                                <?php
+                                // Truy vấn tất cả các danh mục từ cơ sở dữ liệu
+                                $category_sql = "SELECT * FROM categories";
+                                $category_result = $db->select($category_sql);
 
-            <div>
-                <div class="row">
-                    <div class="col">
-                        <div class="product-list mb-3">
-                            <div class="row text-center">
-                                <div class="container my-5">
-                                    <?php
-                                    // Truy vấn tất cả các danh mục từ cơ sở dữ liệu
-                                    $category_sql = "SELECT * FROM categories";
-                                    $category_result = $db->select($category_sql);
-
-                                    if ($category_result) {
-                                        while ($category = $category_result->fetch_assoc()) {
-                                            $category_id = $category['id'];
-                                            $category_name = $category['category_name'];
-                                    ?>
-                                            <!-- Tiêu đề danh mục với tên danh mục -->
-                                            <div class="row text-center">
-                                                <div class="title-divider">
-                                                    <span class="title-text" style="color: #3f640b;"><?php echo $category_name; ?></span>
-                                                </div>
+                                if ($category_result) {
+                                    while ($category = $category_result->fetch_assoc()) {
+                                        $category_id = $category['id'];
+                                        $category_name = $category['category_name'];
+                                ?>
+                                        <!-- Tiêu đề danh mục với tên danh mục -->
+                                        <div class="row text-center">
+                                            <div class="title-divider">
+                                                <span class="title-text" style="color: #3f640b;"><?php echo $category_name; ?></span>
                                             </div>
+                                        </div>
 
-                                            <!-- Sản phẩm trong danh mục -->
-                                            <div class="product_list-s py-3" style="background-color: #f7aaaa;">
-                                                <div class="row">
-                                                    <div class="container my-5">
-                                                        <div class="row">
-                                                            <?php
-                                                            // Truy vấn sản phẩm dựa trên danh mục hiện tại (đặt category_id trong dấu ngoặc đơn)
-                                                            $sql = "SELECT * FROM products WHERE category_id = '$category_id' ORDER BY id";
-                                                            $result = $db->select($sql);
+                                        <!-- Sản phẩm trong danh mục -->
+                                        <div class="product_list-s">
+                                            <div class="row" style="background-color: #f7aaaa;">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <?php
+                                                        // Truy vấn sản phẩm dựa trên danh mục hiện tại (đặt category_id trong dấu ngoặc đơn)
+                                                        $sql = "SELECT * FROM products WHERE category_id = '$category_id' ORDER BY id";
+                                                        $result = $db->select($sql);
 
-                                                            if ($result) {
-                                                                while ($row = $result->fetch_assoc()) {
-                                                                    $price = number_format($row['price'], 0, ',', '.') . ' VND';
-                                                                    $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
-                                                            ?>
-                                                                    <div class="col-md-3 col-sm-6 mb-4">
-                                                                        <a class="card" href="hoa.php?id=<?php echo $row['id']; ?>">
-                                                                            <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
-                                                                            <d class="card-body text-center">
-                                                                                <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
+                                                        if ($result) {
+                                                            while ($row = $result->fetch_assoc()) {
+                                                                $price = number_format($row['price'], 0, ',', '.') . ' VND';
+                                                                $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
+                                                        ?>
+                                                                <div class="col-md-3 col-sm-6 mb-4">
+                                                                    <a class="card" href="hoa.php?id=<?php echo $row['id']; ?>">
+                                                                        <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+                                                                        <d class="card-body text-center">
+                                                                            <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
 
-                                                                                <!-- Hiển thị giá -->
-                                                                                <p class="text-muted">
-                                                                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $row['price']; ?></span>
-                                                                                    <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $row['price_sale']; ?></span>
-                                                                                    <br>
-                                                                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>
-                                                                                </p>
-                                                                                <button class="btn btn-primary">Đặt hàng</button>
+                                                                            <!-- Hiển thị giá -->
+                                                                            <p class="text-muted">
+                                                                                <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $row['price']; ?></span>
+                                                                                <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $row['price_sale']; ?></span>
+                                                                                <br>
+                                                                                <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>
+                                                                            </p>
+                                                                            <button class="btn btn-primary">Đặt hàng</button>
 
-                                                                            </d>
-                                                                        </a>
-                                                                    </div>
-                                                            <?php
-                                                                }
+                                                                        </d>
+                                                                    </a>
+                                                                </div>
+                                                        <?php
                                                             }
-                                                            ?>
-                                                        </div>
+                                                        }
+                                                        ?>
                                                     </div>
                                                 </div>
                                             </div>
-                                    <?php
-                                        }
+                                        </div>
+                                <?php
                                     }
-                                    ?>
-                                </div>
-
+                                }
+                                ?>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="row">
                     <div class="col">
