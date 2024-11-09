@@ -314,9 +314,8 @@ $row = $result->fetch_assoc();
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
                                 <p class="card-text"><del><?php echo $row['price']; ?> đ</del> <span class="text-danger"><?php echo $row['price_sale']; ?> đ</span></p>
-                                <span class="badge bg-warning text-white">Freeship</span>
+                                <button class="btn btn-primary">Đặt hàng</button>
                             </div>
-
                         </a>
                     </div>
             <?php

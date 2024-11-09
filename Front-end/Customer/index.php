@@ -147,6 +147,8 @@ $db = new Database();
                                                                                     <br>
                                                                                     <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>
                                                                                 </p>
+                                                                                <button class="btn btn-primary">Đặt hàng</button>
+
                                                                             </d>
                                                                         </a>
                                                                     </div>

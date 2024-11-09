@@ -1,5 +1,9 @@
 <?php
 session_start(); // Đảm bảo session đã được start
+// Initialize the cart session if it's not set
+if (!isset($_SESSION['cart'])) {
+  $_SESSION['cart'] = [];
+}
 include '/xampp/htdocs/BANHOA/database/connect.php';
 
 // Tạo đối tượng Database
