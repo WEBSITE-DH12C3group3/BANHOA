@@ -52,7 +52,7 @@ if ($categories_result) {
     }
 
     .dropdown-item {
-      color: #3f640b !important;
+      color: #093608 !important;
     }
 
     .dropdown-item:hover {
@@ -124,8 +124,8 @@ if ($categories_result) {
                       <?php echo count($_SESSION['cart']); ?>
                     </span>
                   </a>
-                  <div class="text-muted" style="color: #3f640b">
-                    Giỏ Hàng
+                  <div class="text-muted">
+                    <b>Giỏ Hàng</b>
                   </div>
                 </div>
               </div>
@@ -201,36 +201,40 @@ if ($categories_result) {
 
     <section class="mymainmenu" style="background-color: #f7aaaa;">
       <div class="container">
-        <div class="row" style="color:#3f640b;">
-          <div class="col-9">
-            <nav class="navbar navbar-expand-lg" style="background-color: #f7aaaa;">
-              <div class="container-fluid">
-                <a class="navbar-brand" style="color: #3f640b;" href="index.php"><b>Trang chủ</b></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#" style="color: #3f640b;"><b>Trang Chủ</b></a>
-                    </li>
-                    <!-- Other menu items -->
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #3f640b;">
-                        <b>Danh mục</b>
-                      </a>
-                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <?php foreach ($categories as $category): ?>
-                          <li><a class="dropdown-item" href="category.php?id=<?php echo $category['id']; ?>&category_name=<?php echo $category['category_name']; ?>"><?php echo htmlspecialchars($category['category_name']); ?></a></li>
-                        <?php endforeach; ?>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
+        <nav class="navbar navbar-expand-lg" style="background-color: #f7aaaa;">
+          <span class="navbar-brand" style="color: #093608;" href="#"><b>EDEN</b></span>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav d-flex justify-content-around w-100">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.php" style="color: #093608;"><b>Trang Chủ</b></a>
+              </li>
+              <!-- Other menu items -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #093608;">
+                  <b>Danh mục</b>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <?php foreach ($categories as $category): ?>
+                    <li><a class="dropdown-item" href="category.php?id=<?php echo $category['id']; ?>&category_name=<?php echo $category['category_name']; ?>"><?php echo htmlspecialchars($category['category_name']); ?></a></li>
+                  <?php endforeach; ?>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="supasale.php" style="color: #093608;"><b>Siêu sale</b></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html" style="color: #093608;"><b>Liên hệ</b></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html" style="color: #093608;"><b>Về chúng tôi</b></a>
+              </li>
+              <li class="nav-item dropdown"></li> <!-- Empty dropdown item -->
+            </ul>
           </div>
-        </div>
+        </nav>
       </div>
     </section>
   </header>
