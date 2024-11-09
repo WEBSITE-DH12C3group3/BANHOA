@@ -30,13 +30,3 @@ body {
   text-align: center;
   margin-right: 10px;
 }
-
-.log {
-  background-color: #28a228;
-  cursor: pointer;
-  color: #fff;
-}
-
-.log :hover {
-  background-color: #165816;
-}

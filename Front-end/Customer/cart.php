@@ -27,61 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDEN | Giỏ Hàng</title>
-    <style>
-        .cart-item img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-        }
-
-        .cart-total {
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .input-group button {
-            height: 40px;
-            width: 40px;
-        }
-
-        .input-group .item-quantity {
-            max-width: 60px;
-            text-align: center;
-            height: 40px;
-            font-size: 16px;
-        }
-
-        .input-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .bton {
-            background-color: #0d6efd;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .bton:hover {
-            background-color: #0a58ca;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-    </style>
+    <link rel="stylesheet" href="/BANHOA/mycss/cart.css">
 </head>
 
 <body>
@@ -97,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <th scope="col">Tên sản phẩm</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">Thành tiền</th>
-                        <th scope="col">Thao tác</th>
+                        <th scope="col" width="90px">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody id="cart-body">
@@ -121,22 +67,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td><img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $image; ?>" alt="Product Image" /></td>
                                 <td><?php echo $name; ?></td>
                                 <td>
-                                    <a href="modelcart.php?minus=<?php echo $id; ?>" class="btn btn-warning">-</a>
-                                    <span class="item-quantity"><?php echo $quantity; ?></span>
-                                    <a href="modelcart.php?plus=<?php echo $id; ?>" class="btn btn-success">+</a>
+                                    <a href="modelcart.php?minus=<?php echo $id; ?>" class="btn btn-light nuts">-</a>
+                                    <span class="item-quantity btn"><?php echo $quantity; ?></span>
+                                    <a href="modelcart.php?plus=<?php echo $id; ?>" class="btn btn-light nuts">+</a>
                                 </td>
                                 <td><?php echo number_format($thanhtien, 0, ',', '.'); ?> VND</td>
                                 <td>
-                                    <form method="POST" action="cart.php">
-                                        <input type="hidden" name="product_id" value="<?php echo $id; ?>" />
+                                    <a href="modelcart.php?delete=<?php echo $id; ?>" style="color: white; text-decoration: none;">
                                         <button name="action" value="remove" type="submit" class="btn btn-danger btn-sm">
-                                            <i class="fa fa-trash"></i> Xóa
+                                            <i class="fa fa-trash"></i>
                                         </button>
-                                    </form>
+                                    </a>
                                 </td>
                             </tr>
-                    <?php
+                        <?php
                         }
+                        ?>
+                        <tr style="border: 0px solid white;">
+                            <td colspan="6"><a href="modelcart.php?deleteall=1" class="btn btn-danger" style="float: right;">Xóa tất cả</a></td>
+                        </tr>
+                    <?php
                     } else {
                         echo "<tr style='height: 100px;'><td colspan='6'>Giỏ hàng trống!</td></tr>";
                     }
@@ -144,19 +94,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </tbody>
             </table>
 
-            <div class="d-flex justify-content-between py-4">
-                <div class="cart-total py-4">
-                    <?php if (count($_SESSION['cart']) > 0): ?>
+            <div class="d-flex justify-content-between">
+                <?php if (count($_SESSION['cart']) > 0): ?>
+                    <div class="cart-total py-2">
                         Tổng cộng: <span id="cart-total"><?php echo number_format($total, 0, ',', '.'); ?> VND</span>
-                    <?php endif; ?>
-                </div>
-                <div class="cart-total py-4">
-                    <?php if (isset($_SESSION['user_logged_in'])): ?>
-                        <button class="bton"><a href="thanhtoan.php" style="color: white; text-decoration: none;">Thanh toán</a></button>
-                    <?php else: ?>
-                        <button class="bton"><a href="dangky.php" style="color: white; text-decoration: none;">Đăng ký để thanh toán</a></button>
-                    <?php endif; ?>
-                </div>
+                    </div>
+                    <div class="cart-total py-2">
+                        <?php if (isset($_SESSION['user_logged_in'])): ?>
+                            <button class="bton"><a href="thanhtoan.php" style="color: white; text-decoration: none;">Thanh toán</a></button>
+                        <?php else: ?>
+                            <button class="bton"><a href="dangky.php" style="color: white; text-decoration: none;">Đăng ký để thanh toán</a></button>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>

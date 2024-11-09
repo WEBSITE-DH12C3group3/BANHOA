@@ -5,6 +5,18 @@
     <head>
         <title>EDEN | Đăng Ký</title>
         <link rel="stylesheet" href="/BANHOA/mycss/form.css">
+        <style>
+            .log {
+                background-color: #28a228;
+                cursor: pointer;
+                color: #fff;
+            }
+
+            .log:hover {
+                background-color: #196f38;
+                color: #fff;
+            }
+        </style>
     </head>
 
     <body>
@@ -55,6 +67,10 @@
                             <!-- Submit Button -->
                             <div class="d-flex py-3 form-group">
                                 <button type="submit" name="btn-reg" class="btn btn-block log">Đăng Ký</button>
+                            </div>
+                            <div>
+                                Đã có tài khoản?
+                                <a href="dangnhap.php">Đăng nhập ở đây.</a>
                             </div>
                         </form>
                     </div>
