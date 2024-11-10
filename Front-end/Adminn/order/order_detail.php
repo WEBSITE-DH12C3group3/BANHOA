@@ -107,7 +107,7 @@ $id = $_GET['id'];
                     <?php
                     $sql = "SELECT o.order_code, p.product_name, p.price_sale AS price, oi.quantity
                             FROM order_items oi
-                            JOIN orders o ON oi.order_id = o.id
+                            JOIN orders o ON oi.order_code = o.order_code
                             JOIN products p ON oi.product_id = p.id
                             WHERE o.order_code = '$code' AND o.id = '$id'";
                     $result = $db->select($sql);
@@ -119,9 +119,9 @@ $id = $_GET['id'];
                             <tr>
                                 <td><?php echo $row['order_code']; ?></td>
                                 <td><?php echo $row['product_name']; ?></td>
-                                <td><?php echo $row['price']; ?>₫</td>
+                                <td><?php echo number_format($row['price'], 0, ',', '.'); ?>₫</td>
                                 <td><?php echo $row['quantity']; ?></td>
-                                <td><?php echo $row['price'] * $row['quantity']; ?>₫</td>
+                                <td><?php echo number_format($row['price'] * $row['quantity'], 0, ',', '.'); ?>₫</td>
                             </tr>
                     <?php
                         }
@@ -132,7 +132,7 @@ $id = $_GET['id'];
                     <tr>
                         <td colspan="3"><a href="order.php" class="btn btn-success">Trở về đơn hàng</a></td>
                         <td>Tổng giá trị đơn hàng:</td>
-                        <td><?php echo $total; ?>₫</td>
+                        <td><?php echo number_format($total, 0, ',', '.'); ?>₫</td>
                     </tr>
                 </tbody>
             </table>

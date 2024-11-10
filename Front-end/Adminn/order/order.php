@@ -125,21 +125,21 @@ $db = new Database();
                             </tr>
                     <?php
                         }
-                        $order_query = "SELECT id FROM orders";
+                        $order_query = "SELECT order_code FROM orders";
                         $order_result = $db->select($order_query);
 
                         if ($order_result) {
                             while ($order = $order_result->fetch_assoc()) {
-                                $order_id = $order['id'];
+                                $order_code = $order['order_code'];
 
                                 // Tính tổng tiền cho mỗi đơn hàng dựa trên các sản phẩm trong order_items
                                 $item_query = "SELECT p.price_sale, oi.quantity 
                        FROM order_items oi
                        JOIN products p ON oi.product_id = p.id
-                       WHERE oi.order_id = ?";
+                       WHERE oi.order_code = ?";
 
                                 $stmt = $db->conn->prepare($item_query);
-                                $stmt->bind_param("i", $order_id);
+                                $stmt->bind_param("i", $order_code);
                                 $stmt->execute();
                                 $item_result = $stmt->get_result();
 

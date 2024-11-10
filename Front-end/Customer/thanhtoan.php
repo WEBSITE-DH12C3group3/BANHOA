@@ -1,4 +1,11 @@
-<?php include 'header.php'; ?>
+<?php include 'header.php';
+$db = new Database();
+$uid = $_SESSION["users_id"];
+$sql = "SELECT * FROM users WHERE id = '" . $uid . "'";
+$result = $db->select($sql);
+$row = $result->fetch_assoc();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,25 +68,27 @@
 </head>
 
 <body>
-
-    <body>
-
-        <div class="container mt-5">
-            <div class="row">
-                <!-- Product Summary on the Left -->
-                <div class="col-md-6">
-                    <div class="checkout-container summary-container">
-                        <h2 class="text-center mb-4" style="color: #d8243c;">Chi tiết đơn hàng</h2>
-                        <ul class="list-group mb-3">
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Product Summary on the Left -->
+            <div class="col-md-6">
+                <div class="checkout-container summary-container">
+                    <h2 class="text-center mb-4" style="color: #d8243c;">Chi tiết đơn hàng</h2>
+                    <ul class="list-group mb-3">
+                        <?php foreach ($_SESSION['cart'] as $key => $value) {
+                            $query = "SELECT price, sale FROM products WHERE id = '" . $value['id'] . "'";
+                            $rs = $db->select($query);
+                            $r = $rs->fetch_assoc();
+                        ?>
                             <li class="list-group-item d-flex justify-content-between lh-sm">
                                 <div class="d-flex align-items-center">
-                                    <img src="/BANHOA/Front-end/hoaicon/hoaicon4.jpg" alt="Nữ hoàng - 13075" class="product-img">
-                                    <div>
-                                        <h6 class="my-0">Nữ hoàng - 13075</h6>
+                                    <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $value['image']; ?>" class="product-img" style="border-radius: 5px; width: 80px; height: 80px; object-fit: cover;">
+                                    <div style="margin-left: 20px;">
+                                        <h6 class="my-0"><?php echo $value['name']; ?></h6>
                                         <small class="text-muted">Sản phẩm hoa</small>
                                     </div>
                                 </div>
-                                <span class="text-muted">600.000 ₫</span>
+                                <span class="text-muted"><?php echo number_format($r['price'], 0, ',', '.'); ?> ₫</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between lh-sm">
                                 <div>
@@ -91,132 +100,43 @@
                             <li class="list-group-item d-flex justify-content-between lh-sm">
                                 <div>
                                     <h6 class="my-0">Giảm giá</h6>
-                                    <small class="text-muted">Không</small>
                                 </div>
-                                <span class="text-muted">0 ₫</span>
+                                <span class="text-muted"><?php echo $r['sale']; ?>%</span>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>Tổng cộng (VND)</span>
-                                <strong class="total-price">600.000 ₫</strong>
-                            </li>
-                        </ul>
-                    </div>
+                        <?php } ?>
+                    </ul>
                 </div>
+            </div>
 
-                <!-- Customer Information on the Right -->
-                <div class="col-md-6">
-                    <div class="checkout-container">
-                        <h2 class="text-center mb-4" style="color: #d8243c;">Thông tin thanh toán</h2>
+            <!-- Customer Information on the Right -->
+            <div class="col-md-6">
+                <div class="checkout-container">
+                    <h2 class="text-center mb-4" style="color: #d8243c;">Thông tin thanh toán</h2>
+                    <div class="form-section">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">Họ tên</label>
+                                <input type="text" class="form-control" id="firstName" required value="<?php echo $row['fullname']; ?>">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required value="<?php echo $row['email']; ?>">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Số điện thoại</label>
+                                <input type="text" class="form-control" id="phone" required value="<?php echo $row['phone']; ?>">
+                            </div>
+                        </div>
+
                         <div class="form-section">
+                            <div class="section-title">Địa chỉ giao hàng</div>
                             <form>
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="firstName" class="form-label">Họ</label>
-                                        <input type="text" class="form-control" id="firstName" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="lastName" class="form-label">Tên</label>
-                                        <input type="text" class="form-control" id="lastName" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="phone" class="form-label">Số điện thoại</label>
-                                        <input type="text" class="form-control" id="phone" required>
+                                    <!-- Địa chỉ -->
+                                    <div class="col-md-12 mb-3">
+                                        <input type="text" class="form-control" id="address" value="<?php echo $row['address']; ?>">
                                     </div>
                                 </div>
-
-                                <div class="form-section">
-                                    <div class="section-title">Địa chỉ giao hàng</div>
-                                    <form>
-                                        <div class="row">
-                                            <!-- Địa chỉ -->
-                                            <div class="col-md-12 mb-3">
-                                                <label for="address" class="form-label">Địa chỉ</label>
-                                                <input type="text" class="form-control" id="address">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <!-- Tỉnh thành -->
-                                            <div class="col-md-6 mb-3">
-                                                <label for="city" class="form-label">Tỉnh/Thành phố</label>
-                                                <select class="form-select" id="city" aria-label="Chọn tỉnh thành">
-                                                    <option value="" selected>Chọn tỉnh thành</option>
-                                                </select>
-                                            </div>
-
-                                            <!-- Quận huyện -->
-                                            <div class="col-md-6 mb-3">
-                                                <label for="district" class="form-label">Quận/Huyện</label>
-                                                <select class="form-select" id="district" aria-label="Chọn quận huyện">
-                                                    <option value="" selected>Chọn quận huyện</option>
-                                                </select>
-                                            </div>
-
-                                            <!-- Phường xã -->
-                                            <div class="col-md-6 mb-3">
-                                                <label for="ward" class="form-label">Phường/Xã</label>
-                                                <select class="form-select" id="ward" aria-label="Chọn phường xã">
-                                                    <option value="" selected>Chọn phường xã</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <!-- Axios and script to load city, district, ward data -->
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-                                <script>
-                                    var citis = document.getElementById("city");
-                                    var districts = document.getElementById("district");
-                                    var wards = document.getElementById("ward");
-
-                                    var Parameter = {
-                                        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-                                        method: "GET",
-                                        responseType: "application/json",
-                                    };
-
-                                    var promise = axios(Parameter);
-                                    promise.then(function(result) {
-                                        renderCity(result.data);
-                                    });
-
-                                    function renderCity(data) {
-                                        for (const x of data) {
-                                            citis.options[citis.options.length] = new Option(x.Name, x.Id);
-                                        }
-
-                                        citis.onchange = function() {
-                                            districts.length = 1; // reset district list
-                                            wards.length = 1; // reset ward list
-
-                                            if (this.value != "") {
-                                                const result = data.filter(n => n.Id === this.value);
-
-                                                for (const k of result[0].Districts) {
-                                                    districts.options[districts.options.length] = new Option(k.Name, k.Id);
-                                                }
-                                            }
-                                        };
-
-                                        districts.onchange = function() {
-                                            wards.length = 1; // reset ward list
-
-                                            const dataCity = data.filter(n => n.Id === citis.value);
-                                            if (this.value != "") {
-                                                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
-                                                for (const w of dataWards) {
-                                                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
-                                                }
-                                            }
-                                        };
-                                    }
-                                </script>
 
                                 <div class="form-section">
                                     <div class="section-title">Phương thức thanh toán</div>
@@ -281,20 +201,16 @@
                                         </li>
                                     </ul>
                                 </div>
-
-                                <button class="w-100 btn btn-primary btn-lg" type="submit">Thanh toán</button>
-                            </form>
+                                <a class="w-100 btn btn-primary btn-lg" href="order.php">Thanh toán</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-    </body>
-    <?php include 'footer.php'; ?>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <?php include 'footer.php'; ?>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

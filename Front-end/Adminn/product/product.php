@@ -114,7 +114,7 @@ $db = new Database();
                                 <td><img src="../uploads/<?php echo $row['image']; ?>" alt="product image" width="100px" height="auto"></td>
                                 <td><?php echo $row['product_name']; ?></td>
                                 <td><?php echo $row['description']; ?></td>
-                                <td><?php echo $row['price']; ?>₫</td>
+                                <td><?php echo number_format($row['price'], 0, ',', '.'); ?>₫</td>
                                 <td><?php echo $row['sale']; ?>%</td>
                                 <td><?php echo $row['stock']; ?></td>
                                 <td><?php if ($row['remark'] == 1) echo "Có";
