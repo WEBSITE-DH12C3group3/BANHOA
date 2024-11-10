@@ -41,25 +41,26 @@ $db = new Database();
                     <ul class="collapse list-unstyled menu" id="subm">
                         <li class="active">
                             <a href="/BANHOA/Front-end/Adminn/category/category.php"><i class="fas fa-list"></i>
-                                Quản Lí Danh Mục</a>
+                                <span>Quản Lí Danh Mục</span></a>
                         </li>
                         <li>
                             <a href="/BANHOA/Front-end/Adminn/product/product.php"><i class="fas fa-box"></i>
-                                Quản Lí Sản Phẩm</a>
+                                <span>Quản Lí Sản Phẩm</span></a>
                         </li>
                         <li>
                             <a href="/BANHOA/Front-end/Adminn/order/order.php"><i class="fas fa-shopping-cart"></i>
-                                Quản Lí Đơn Hàng</a>
+                                <span>Quản Lí Đơn Hàng</span></a>
                         </li>
                         <li>
                             <a href="/BANHOA/Front-end/Adminn/customer/ctm.php"><i class="fas fa-user"></i>
-                                Quản Lí Khách Hàng</a>
+                                <span>Quản Lí Khách Hàng</span></a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="">
-                    <a href="#"><i class="fas fa-comments"></i><span>Phản Hồi</span></a>
+                    <a href="/BANHOA/Front-end/Adminn/customer/display_contact.php"><i class="fas fa-comments"></i>
+                        <span>Phản Hồi</span></a>
                 </li>
                 <li class="">
                     <a href="../index.php?act=logout" onclick="return confirm('Bạn có muốn đăng xuất?')"><i class="fas fa-sign-out-alt"></i>

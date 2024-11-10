@@ -64,28 +64,20 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
                     </a>
                     <ul class="collapse list-unstyled menu" id="subm">
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/category/category.php">
-                                <i class="fas fa-list"></i>
-                                Quản Lí Danh Mục
-                            </a>
+                            <a href="/BANHOA/Front-end/Adminn/category/category.php"><i class="fas fa-list"></i>
+                                Quản Lí Danh Mục</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/product/product.php">
-                                <i class="fas fa-box"></i>
-                                Quản Lí Sản Phẩm
-                            </a>
+                            <a href="/BANHOA/Front-end/Adminn/product/product.php"><i class="fas fa-box"></i>
+                                Quản Lí Sản Phẩm</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/order/order.php">
-                                <i class="fas fa-shopping-cart"></i>
-                                Quản Lí Đơn Hàng
-                            </a>
+                            <a href="/BANHOA/Front-end/Adminn/order/order.php"><i class="fas fa-shopping-cart"></i>
+                                Quản Lí Đơn Hàng</a>
                         </li>
                         <li>
-                            <a href="/BANHOA/Front-end/Adminn/customer/ctm.php">
-                                <i class="fas fa-user"></i>
-                                Quản Lí Khách Hàng
-                            </a>
+                            <a href="/BANHOA/Front-end/Adminn/customer/ctm.php"><i class="fas fa-user"></i>
+                                Quản Lí Khách Hàng</a>
                         </li>
                     </ul>
                 </li>
