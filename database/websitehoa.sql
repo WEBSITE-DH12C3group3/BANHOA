@@ -3,11 +3,12 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2024 at 06:34 PM
+-- Generation Time: Nov 10, 2024 at 06:49 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
-CREATE DATABASE IF NOT EXISTS `websitehoa`;
-USE `websitehoa`;
+-- PHP Version: 8.2.12
+
+CREATE DATABASE websitehoa;
+USE websitehoa;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -55,6 +56,13 @@ CREATE TABLE `contact_submissions` (
   `message` text NOT NULL,
   `submitted_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contact_submissions`
+--
+
+INSERT INTO `contact_submissions` (`id`, `name`, `email`, `message`, `submitted_at`) VALUES
+(1, 'namu', 'nam@1', '1', '2024-11-10 17:46:05');
 
 -- --------------------------------------------------------
 
@@ -181,7 +189,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `address`, `role`, `created_at`) VALUES
-(0, 'customer', 'test@1', '1', '0366379629', 'Việt Nam', 'customer', '2024-11-10 17:33:41'),
+(1, 'customer', 'test@1', '1', '0366379629', 'Việt Nam', 'customer', '2024-11-10 17:33:41'),
 (9999, 'admin', 'admin@1', '1', NULL, NULL, 'admin', '2024-11-10 17:32:49');
 
 --
@@ -233,6 +241,40 @@ ALTER TABLE `products`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `contact_submissions`
+--
+ALTER TABLE `contact_submissions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000;
 
 --
 -- Constraints for dumped tables

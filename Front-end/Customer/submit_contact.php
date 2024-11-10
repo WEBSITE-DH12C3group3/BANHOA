@@ -19,8 +19,8 @@ $email = $_POST['email'];
 $message = $_POST['message'];
 
 // Kiểm tra nếu có trường nào bị bỏ trống
-if(empty($name) || empty($email) || empty($message)) {
-    echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); window.location.href = 'contact.html';</script>";
+if (empty($name) || empty($email) || empty($message)) {
+    echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); window.location.href = 'contact.php';</script>";
     exit;
 }
 
@@ -36,13 +36,12 @@ $stmt->bind_param("sss", $name, $email, $message);
 
 // Thực hiện truy vấn
 if ($stmt->execute()) {
-    echo "<script>alert('Đã gửi thành công!'); window.location.href = 'contact.html';</script>";
+    echo "<script>alert('Đã gửi thành công!'); window.location.href = 'contact.php';</script>";
 } else {
-    echo "<script>alert('Gửi thất bại, vui lòng thử lại!'); window.location.href = 'contact.html';</script>";
+    echo "<script>alert('Gửi thất bại, vui lòng thử lại!'); window.location.href = 'contact.php';</script>";
     echo "Lỗi SQL: " . $stmt->error;
 }
 
 // Đóng kết nối
 $stmt->close();
 $conn->close();
-?>
