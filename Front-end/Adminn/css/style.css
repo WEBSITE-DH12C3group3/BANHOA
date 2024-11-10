@@ -39,6 +39,7 @@ a:focus {
   color: #093608;
   /* màu chữ logo và user info */
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 .sidebar-header h3 {
