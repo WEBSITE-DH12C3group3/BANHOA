@@ -92,7 +92,9 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
 
                 <!-- Feedback -->
                 <li>
-                    <a href="#"><i class="fas fa-comments"></i><span>Phản Hồi</span></a>
+                    <a href="/BANHOA/Front-end/Adminn/customer/display_contact.php">
+                        <i class="fas fa-comments"></i>
+                        <span>Phản Hồi</span></a>
                 </li>
 
                 <!-- Logout -->
