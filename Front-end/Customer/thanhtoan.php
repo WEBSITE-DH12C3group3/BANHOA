@@ -4,7 +4,7 @@ $uid = $_SESSION["users_id"];
 $sql = "SELECT * FROM users WHERE id = '" . $uid . "'";
 $result = $db->select($sql);
 $row = $result->fetch_assoc();
-
+$total = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +85,6 @@ $row = $result->fetch_assoc();
                                     <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $value['image']; ?>" class="product-img" style="border-radius: 5px; width: 80px; height: 80px; object-fit: cover;">
                                     <div style="margin-left: 20px;">
                                         <h6 class="my-0"><?php echo $value['name']; ?></h6>
-                                        <small class="text-muted">Sản phẩm hoa</small>
                                     </div>
                                 </div>
                                 <span class="text-muted"><?php echo number_format($r['price'], 0, ',', '.'); ?> ₫</span>
@@ -103,6 +102,7 @@ $row = $result->fetch_assoc();
                                 </div>
                                 <span class="text-muted"><?php echo $r['sale']; ?>%</span>
                             </li>
+                            <br>
                         <?php } ?>
                     </ul>
                 </div>
@@ -142,7 +142,7 @@ $row = $result->fetch_assoc();
                                     <div class="section-title">Phương thức thanh toán</div>
                                     <form>
                                         <div class="form-check mb-3">
-                                            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" checked>
+                                            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" disabled>
                                             <label class="form-check-label" for="creditCard">
                                                 Thẻ tín dụng / Thẻ ghi nợ
                                             </label>
@@ -169,14 +169,14 @@ $row = $result->fetch_assoc();
                                         </div>
 
                                         <div class="form-check mb-3">
-                                            <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer">
+                                            <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" disabled>
                                             <label class="form-check-label" for="bankTransfer">
                                                 Chuyển khoản ngân hàng
                                             </label>
                                         </div>
 
                                         <div class="form-check mb-3">
-                                            <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery">
+                                            <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" checked>
                                             <label class="form-check-label" for="cashOnDelivery">
                                                 Thanh toán khi nhận hàng
                                             </label>
@@ -188,16 +188,23 @@ $row = $result->fetch_assoc();
                                 <div class="form-section">
                                     <div class="section-title">Tóm tắt đơn hàng</div>
                                     <ul class="list-group mb-3">
-                                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                                            <div>
-                                                <h6 class="my-0">Nữ hoàng - 13075</h6>
-                                                <small class="text-muted">Sản phẩm hoa</small>
-                                            </div>
-                                            <span class="text-muted">600.000 ₫</span>
-                                        </li>
+                                        <?php foreach ($_SESSION['cart'] as $key => $value) {
+                                            $query = "SELECT price, sale FROM products WHERE id = '" . $value['id'] . "'";
+                                            $rs = $db->select($query);
+                                            $r = $rs->fetch_assoc();
+                                            $price = $r['price'] - ($r['price'] * $r['sale'] / 100);
+                                            $total += $price * $value['quantity'];
+                                        ?>
+                                            <li class="list-group-item d-flex justify-content-between lh-sm">
+                                                <div>
+                                                    <h6 class="my-0"><?php echo $value['name']; ?></h6>
+                                                </div>
+                                                <span class="text-muted"><?php echo number_format($price, 0, ',', '.'); ?> ₫</span>
+                                            </li>
+                                        <?php } ?>
                                         <li class="list-group-item d-flex justify-content-between">
                                             <span>Tổng (VND)</span>
-                                            <strong class="total-price">600.000 ₫</strong>
+                                            <strong class="total-price"><?php echo number_format($total, 0, ',', '.'); ?> ₫</strong>
                                         </li>
                                     </ul>
                                 </div>
