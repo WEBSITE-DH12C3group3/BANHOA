@@ -25,7 +25,7 @@ if ($categories_result) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-vn">
 
 <head>
   <meta charset="UTF-8">
