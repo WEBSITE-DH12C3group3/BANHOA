@@ -34,7 +34,7 @@ $db = new Database();
         <div class="container my-3">
             <div class="slider">
                 <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" style="border-radius: 5px;">
                         <div class="carousel-item active">
                             <img src="/BANHOA/Front-end/public/copyside.jpg" class="d-block w-100" alt="anhslide">
                         </div>
@@ -119,7 +119,7 @@ $db = new Database();
 
                                         <!-- Sản phẩm trong danh mục -->
                                         <div class="product_list-s">
-                                            <div class="row" style="background-color: #f7aaaa;">
+                                            <div class="row" style="background-color: #f7aaaa; border-radius: 5px;">
                                                 <div class="container">
                                                     <div class="row">
                                                         <?php

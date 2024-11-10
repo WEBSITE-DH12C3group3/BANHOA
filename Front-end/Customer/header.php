@@ -199,9 +199,9 @@ if ($categories_result) {
       </div>
     </section>
 
-    <section class="mymainmenu" style="background-color: #f7aaaa;">
+    <section class="mymainmenu" style="background-color: #f7aaaa; border-radius: 5px;">
       <div class="container">
-        <nav class="navbar navbar-expand-lg" style="background-color: #f7aaaa;">
+        <nav class="navbar navbar-expand-lg">
           <span class="navbar-brand" style="color: #093608;" href="#"><b>EDEN</b></span>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
