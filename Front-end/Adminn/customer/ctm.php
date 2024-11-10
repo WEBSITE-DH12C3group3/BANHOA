@@ -122,7 +122,8 @@ $db = new Database();
                                         data-email="<?php echo $row['email']; ?>"
                                         data-password="<?php echo $row['password']; ?>"
                                         data-phone="<?php echo $row['phone']; ?>"
-                                        data-address="<?php echo $row['address']; ?>" style="color: white;"><i class="fa fa-edit"></i></a>
+                                        data-address="<?php echo $row['address']; ?>"
+                                        data-role="<?php echo $row['role']; ?>" style="color: white;"><i class="fa fa-edit"></i></a>
 
                                     <a onclick="return confirm('Bạn có muốn xóa?')" href="deluser.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                 </td>
@@ -183,7 +184,7 @@ $db = new Database();
                         <div class="form-group">
                             <label for="role">Vai trò</label>
                             <select class="form-control" name="role" id="role" required>
-                                <option value="customer">Customer</option>
+                                <option value="customer">Khách Hàng</option>
                                 <option value="admin">Admin</option>
                             </select>
                         </div>
@@ -206,7 +207,7 @@ $db = new Database();
             var password = button.data('password');
             var phone = button.data('phone');
             var address = button.data('address');
-
+            var role = button.data('role');
             // Update the modal's content.
             var modal = $(this);
             modal.find('#customerID').val(id);
@@ -215,6 +216,7 @@ $db = new Database();
             modal.find('#customerPassword').val(password);
             modal.find('#customerPhone').val(phone);
             modal.find('#customerAddress').val(address);
+            modal.find('#role').val(role);
         });
     </script>
 
