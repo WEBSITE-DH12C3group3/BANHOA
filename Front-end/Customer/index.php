@@ -141,7 +141,7 @@ $db = new Database();
                                                                             <!-- Hiển thị giá -->
                                                                             <p class="text-muted">
                                                                                 <?php if ($price_sale) { ?>
-                                                                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
+                                                                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span><br>
                                                                                     <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
                                                                                     <br>
                                                                                     <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>

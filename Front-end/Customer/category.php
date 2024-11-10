@@ -213,7 +213,7 @@ $result = $db->select($sql);
                                                 <?php if ($price_sale) {
                                                     $discount_percentage = round((($row['price'] - $row['price_sale']) / $row['price']) * 100, 2);
                                                 ?>
-                                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
+                                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span><br>
                                                     <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
                                                     <br>
                                                     <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
