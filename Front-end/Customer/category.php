@@ -8,7 +8,7 @@ $category_name = $_GET['category_name'];
 
 // Nhận trang hiện tại từ URL, mặc định là trang 1 nếu không có
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$products_per_page = 4; // Số sản phẩm mỗi trang
+$products_per_page = 8; // Số sản phẩm mỗi trang
 $offset = ($page - 1) * $products_per_page; // Tính OFFSET
 
 // Lấy tổng số sản phẩm trong danh mục để tính tổng số trang
@@ -21,6 +21,7 @@ $total_pages = ceil($total_products / $products_per_page); // Tổng số trang
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,6 +33,7 @@ $total_pages = ceil($total_products / $products_per_page); // Tổng số trang
             max-height: 300px;
             object-fit: cover;
         }
+
         /* Style for the product count box */
         .product-count {
             position: absolute;
@@ -44,11 +46,13 @@ $total_pages = ceil($total_products / $products_per_page); // Tổng số trang
             font-weight: bold;
             font-size: 1.2em;
         }
+
         .category-header {
             position: relative;
         }
     </style>
 </head>
+
 <body>
     <section>
         <header class="bg-light p-3 text-center category-header">
@@ -116,4 +120,5 @@ $total_pages = ceil($total_products / $products_per_page); // Tổng số trang
     <?php include 'footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

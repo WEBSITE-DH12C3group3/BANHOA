@@ -4,7 +4,7 @@ $db = new Database();
 
 // Nhận trang hiện tại từ URL, mặc định là trang 1 nếu không có
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$products_per_page = 4; // Số sản phẩm mỗi trang
+$products_per_page = 8; // Số sản phẩm mỗi trang
 $offset = ($page - 1) * $products_per_page; // Tính OFFSET
 
 // Lấy tổng số sản phẩm trong danh sách "Siêu sale" để tính tổng số trang
@@ -29,12 +29,32 @@ $total_pages = ceil($total_products / $products_per_page); // Tổng số trang
             max-height: 300px;
             object-fit: cover;
         }
+
+        /* Style for the product count box */
+        .product-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f2231d;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .category-header {
+            position: relative;
+        }
     </style>
 </head>
 
 <body>
-    <header class="bg-light p-3 text-center">
+    <header class="bg-light p-3 text-center category-header">
         <h1>Siêu sale từ 50%</h1>
+        <div class="product-count">
+            <?php echo $total_products; ?> sản phẩm
+        </div>
     </header>
     <div class="container my-5">
         <div class="row">
