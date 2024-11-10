@@ -69,6 +69,10 @@ if ($categories_result) {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       /* Add any other necessary styles to position the header correctly */
     }
+
+    #cart:hover {
+      color: orangered;
+    }
   </style>
 </head>
 
@@ -118,7 +122,7 @@ if ($categories_result) {
                   <a
                     href="cart.php"
                     class="position-relative text-dark">
-                    <span class="fs-2"><i class="fa-solid fa-bag-shopping"></i></span>
+                    <span class="fs-2" id="cart"><i class="fa-solid fa-bag-shopping"></i></span>
                     <span
                       class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                       <?php echo count($_SESSION['cart']); ?>

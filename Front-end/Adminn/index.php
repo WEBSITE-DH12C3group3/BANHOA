@@ -91,7 +91,7 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
 
                 <!-- Logout -->
                 <li>
-                    <a href="index.php?act=logout" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?')">
+                    <a href="index.php?act=logout" onclick="return confirm('Bạn có muốn đăng xuất?')">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Đăng xuất</span>
                     </a>
