@@ -292,64 +292,46 @@ $row = $result->fetch_assoc();
         });
     </script>
 
-<div class="container mt-5">
-    <h2 class="text-danger">Những mẫu hoa tươi cùng loại khác</h2>
-    <div class="row">
-        <?php
-        // Định nghĩa số lượng sản phẩm trên mỗi trang và tính toán offset
-        $products_per_page = 8;
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $offset = ($page - 1) * $products_per_page;
+    <div class="container mt-5">
+        <h2 class="text-danger">Những mẫu hoa tươi cùng loại khác</h2>
+        <div class="row" id="Table">
+            <?php
 
-        // Đếm tổng số sản phẩm trong cùng danh mục (loại trừ sản phẩm hiện tại)
-        $count_sql = "SELECT COUNT(*) AS total FROM products WHERE category_id = '$row[category_id]' AND id != $product_id";
-        $count_result = $db->select($count_sql);
-        $total_products = $count_result->fetch_assoc()['total'];
-        $total_pages = ceil($total_products / $products_per_page);
+            // Truy vấn sản phẩm với phân trang
+            $sql = "SELECT * FROM products WHERE category_id = '$row[category_id]' AND id != $product_id ORDER BY id";
+            $result = $db->select($sql);
 
-        // Truy vấn sản phẩm với phân trang
-        $sql = "SELECT * FROM products WHERE category_id = '$row[category_id]' AND id != $product_id ORDER BY id LIMIT $products_per_page OFFSET $offset";
-        $result = $db->select($sql);
-
-        if ($result) {
-            while ($row = $result->fetch_assoc()) {
-                $price = number_format($row['price'], 0, ',', '.') . ' VND';
-                $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
-        ?>
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <a class="card h-100 text-center" href="hoa.php?id=<?php echo $row['id']; ?>">
-                        <div class="badge bg-danger text-white position-absolute sale-badge">Sale <?php echo $row['sale']; ?>%</div>
-                        <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
-                            <p class="card-text">
-                                <del><?php echo $price; ?></del> 
-                                <span class="text-danger"><?php echo $price_sale; ?></span>
-                            </p>
-                            <button class="btn btn-primary">Đặt hàng</button>
-                        </div>
-                    </a>
-                </div>
-        <?php
+            if ($result) {
+                while ($row = $result->fetch_assoc()) {
+                    $price = number_format($row['price'], 0, ',', '.') . ' VND';
+                    $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
+            ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <a class="card h-100 text-center" href="hoa.php?id=<?php echo $row['id']; ?>">
+                            <div class="badge bg-danger text-white position-absolute sale-badge">Sale <?php echo $row['sale']; ?>%</div>
+                            <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
+                                <p class="card-text">
+                                    <del><?php echo $price; ?></del>
+                                    <span class="text-danger"><?php echo $price_sale; ?></span>
+                                </p>
+                                <button class="btn btn-primary">Đặt hàng</button>
+                            </div>
+                        </a>
+                    </div>
+            <?php
+                }
             }
-        }
-        ?>
+            ?>
+        </div>
+
+        <div class="pagination-container" style="display: flex; justify-content: center;">
+            <div class="pagination" id="pagination" style="align-self: center;">
+            </div>
+        </div>
+
     </div>
-
-    <!-- Phần phân trang -->
-    <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-                <!-- Thêm tham số id vào URL để truyền category_id -->
-                <a class="page-link" href="?id=<?php echo $_GET['id']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a>
-            </li>
-        <?php endfor; ?>
-    </ul>
-</nav>
-
-</div>
-
 
     <?php include 'footer.php'; ?>
     <!-- Bootstrap JS and dependencies -->
@@ -357,10 +339,9 @@ $row = $result->fetch_assoc();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/BANHOA/mycss/pagination.js"></script>
 </body>
 
 </html>

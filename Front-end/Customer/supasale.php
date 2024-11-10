@@ -1,18 +1,6 @@
 <?php
 include "header.php";
 $db = new Database();
-
-// Nhận trang hiện tại từ URL, mặc định là trang 1 nếu không có
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$products_per_page = 8; // Số sản phẩm mỗi trang
-$offset = ($page - 1) * $products_per_page; // Tính OFFSET
-
-// Lấy tổng số sản phẩm trong danh sách "Siêu sale" để tính tổng số trang
-$total_products_query = "SELECT COUNT(*) AS total FROM products WHERE sale >= 50";
-$total_result = $db->select($total_products_query);
-$total_row = $total_result->fetch_assoc();
-$total_products = $total_row['total'];
-$total_pages = ceil($total_products / $products_per_page); // Tổng số trang
 ?>
 
 <!DOCTYPE html>
@@ -53,15 +41,18 @@ $total_pages = ceil($total_products / $products_per_page); // Tổng số trang
     <header class="bg-light p-3 text-center category-header">
         <h1>Siêu sale từ 50%</h1>
         <div class="product-count">
-            <?php echo $total_products; ?> sản phẩm
+            <?php
+            // Lấy tổng số sản phẩm trong danh sách "Siêu sale" để tính tổng số trang
+            echo $db->count("SELECT * FROM products WHERE sale >= 50");
+            ?> sản phẩm
         </div>
     </header>
     <div class="container my-5">
         <div class="row">
             <div class="container my-5">
-                <div class="row">
+                <div class="row" id="Table">
                     <?php
-                    $sql = "SELECT * FROM products WHERE sale >= 50 ORDER BY id LIMIT $products_per_page OFFSET $offset";
+                    $sql = "SELECT * FROM products WHERE sale >= 50 ORDER BY id";
                     $result = $db->select($sql);
 
                     if ($result) {
@@ -98,23 +89,17 @@ $total_pages = ceil($total_products / $products_per_page); // Tổng số trang
                     }
                     ?>
                 </div>
+                <div class="pagination-container" style="display: flex; justify-content: center;">
+                    <div class="pagination" id="pagination" style="align-self: center;">
+                    </div>
+                </div>
             </div>
-
-            <!-- Pagination (only page numbers) -->
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                        <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                        </li>
-                    <?php endfor; ?>
-                </ul>
-            </nav>
         </div>
     </div>
 
     <?php include 'footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/BANHOA/mycss/pagination2.js"></script>
 </body>
 
 </html>
