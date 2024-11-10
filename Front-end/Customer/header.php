@@ -226,7 +226,7 @@ if ($categories_result) {
                 <a class="nav-link" href="supasale.php" style="color: #093608;"><b>Siêu sale</b></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact.html" style="color: #093608;"><b>Liên hệ</b></a>
+                <a class="nav-link" href="contact.php" style="color: #093608;"><b>Liên hệ</b></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="about.html" style="color: #093608;"><b>Về chúng tôi</b></a>
