@@ -132,7 +132,7 @@ $db = new Database();
                     <?php
                         }
                     } else {
-                        echo "Không có đơn hàng nào để cập nhật.";
+                        echo "<tr><td colspan='10'>Không có đơn hàng để cập nhật.</td></tr>";
                     }
                     ?>
                 </tbody>
