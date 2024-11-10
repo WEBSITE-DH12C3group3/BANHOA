@@ -159,7 +159,7 @@ $row = $result->fetch_assoc();
             <!-- Product Details -->
             <div class="col-md-6">
                 <h3 class="product-title"><?php echo $row['product_name']; ?></h3>
-                <p><span class="old-price"><?php echo $row['price']; ?> VND</span> <span class="price"><?php echo $row['price_sale']; ?> VND</span></p>
+                <p><span class="old-price"><?php echo number_format($row['price'], 0, ',', '.'); ?> VND</span> <span class="price"><?php echo number_format($row['price_sale'], 0, ',', '.'); ?> VND</span></p>
                 <p><small>Giá đã bao gồm 8% VAT - Sản phẩm hỗ trợ giao miễn phí khu vực gần.</small></p>
 
                 <!-- Product Components -->
