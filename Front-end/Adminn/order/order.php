@@ -1,5 +1,6 @@
 <?php
-include '../baidautot.php';
+include_once '../baidautot.php';
+require_once './approve.php';
 $db = new Database();
 ?>
 <!Doctype html>

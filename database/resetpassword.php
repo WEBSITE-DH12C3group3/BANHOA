@@ -165,18 +165,6 @@ if (isset($_POST['updatePassword'])) {
             header("Location: /BANHOA/database/updatepassword.php");
         }
         exit();
-        // $userId = $_SESSION['users_id'];
-        // $_SESSION['error'] = "Đổi mật khẩu thành công, hãy đăng nhâp lại!";
-        // $resetPassword->updatePassword($userId, $newPassword);
-        // header("Location: /BANHOA/Front-end/Customer/dangnhap.php");
-        // exit();
-        
-        //else {
-        //     $_SESSION['error'] = "Có lỗi xảy ra. Vui lòng thử lại!";
-        //     header("Location: /BANHOA/database/updatepassword.php");
-        //}
-        // // Người dùng chưa đăng nhập, không thể đổi mật khẩu, thông báo lỗi
-        
         
     }
 }
