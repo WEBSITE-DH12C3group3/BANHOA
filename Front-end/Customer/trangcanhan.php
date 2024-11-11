@@ -151,7 +151,7 @@ if ($result) {
                     <ul>
                         <li><a href="#">Thông tin tài khoản</a></li>
                         <li><a href="/BANHOA/database/updatepassword.php">Đổi mật khẩu</a></li>
-                        <li><a href="#">Xem lại đơn hàng</a></li>
+                        <li><a href="/BANHOA/Front-end/Customer/order_management.php">Xem lại đơn hàng</a></li>
                         <li><a href="#">Giới thiệu Enden đến người thân</a></li>
                         <li><a href="/BANHOA/database/logout.php">Đăng xuất</a></li>
                     </ul>
