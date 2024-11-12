@@ -14,6 +14,11 @@ $db = new Database();
             max-height: 300px;
             object-fit: cover;
         }
+
+        .carousel-item {
+            transition: transform 1s ease;
+            /* 2 giây */
+        }
     </style>
     <title>EDEN</title>
 </head>
@@ -221,6 +226,8 @@ $db = new Database();
                 nav: false,
                 dots: false,
                 responsiveClass: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
                 responsive: {
                     0: {
                         items: 2,
@@ -236,6 +243,9 @@ $db = new Database();
                 }
             })
         })
+        var carousel = new bootstrap.Carousel(document.getElementById('carouselExampleRide'), {
+            interval: 2000 // 3000ms tương đương 3 giây
+        });
     </script>
 </body>
 
