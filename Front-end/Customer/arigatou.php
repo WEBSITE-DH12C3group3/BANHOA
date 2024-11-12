@@ -44,7 +44,7 @@
     </style>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
 
     <div class="thank-you-container">
         <h1>Cảm ơn bạn đã đặt hàng!</h1>

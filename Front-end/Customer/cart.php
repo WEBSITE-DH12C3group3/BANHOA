@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="/BANHOA/mycss/cart.css">
 </head>
 
-<body>
+<body style="margin-top: 200px;">
 
     <section class="py-5">
         <div class="container mt-5">

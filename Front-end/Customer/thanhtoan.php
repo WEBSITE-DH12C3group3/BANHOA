@@ -67,7 +67,7 @@ $total = 0;
     </style>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
     <div class="container mt-5">
         <div class="row">
             <!-- Product Summary on the Left -->

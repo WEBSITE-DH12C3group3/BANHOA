@@ -77,7 +77,7 @@ $total_products = $total_row['total'];
     </style>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
     <header class="bg-light p-3 text-center category-header">
         <h1>Siêu sale từ 50%</h1>
         <div class="product-count">
@@ -88,98 +88,100 @@ $total_products = $total_row['total'];
     <div class="container my-5">
         <!-- Filter form -->
         <div class="filter-container">
-    <form method="get" action="">
-        <input type="hidden" name="id" value="<?php echo $category_id; ?>">
-        <input type="hidden" name="category_name" value="<?php echo $category_name; ?>">
+            <form method="get" action="">
+                <input type="hidden" name="id" value="<?php echo $category_id; ?>">
+                <input type="hidden" name="category_name" value="<?php echo $category_name; ?>">
 
-        <div class="filter-group">
-            <label for="price_range">Mức giá: </label>
-            <select name="price_range" id="price_range">
-                <option value="all" <?php echo ($price_range == 'all') ? 'selected' : ''; ?>>Tất cả</option>
-                <option value="under100k" <?php echo ($price_range == 'under100k') ? 'selected' : ''; ?>>Dưới 100k</option>
-                <option value="100k-300k" <?php echo ($price_range == '100k-300k') ? 'selected' : ''; ?>>100k - 300k</option>
-                <option value="300k-500k" <?php echo ($price_range == '300k-500k') ? 'selected' : ''; ?>>300k - 500k</option>
-                <option value="over500k" <?php echo ($price_range == 'over500k') ? 'selected' : ''; ?>>Trên 500k</option>
-            </select>
+                <div class="filter-group">
+                    <label for="price_range">Mức giá: </label>
+                    <select name="price_range" id="price_range">
+                        <option value="all" <?php echo ($price_range == 'all') ? 'selected' : ''; ?>>Tất cả</option>
+                        <option value="under100k" <?php echo ($price_range == 'under100k') ? 'selected' : ''; ?>>Dưới 100k</option>
+                        <option value="100k-300k" <?php echo ($price_range == '100k-300k') ? 'selected' : ''; ?>>100k - 300k</option>
+                        <option value="300k-500k" <?php echo ($price_range == '300k-500k') ? 'selected' : ''; ?>>300k - 500k</option>
+                        <option value="over500k" <?php echo ($price_range == 'over500k') ? 'selected' : ''; ?>>Trên 500k</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="sort">Sắp xếp: </label>
+                    <select name="sort" id="sort">
+                        <option value="asc" <?php echo ($sort == 'asc') ? 'selected' : ''; ?>>Giá tăng dần</option>
+                        <option value="desc" <?php echo ($sort == 'desc') ? 'selected' : ''; ?>>Giá giảm dần</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Lọc</button>
+            </form>
         </div>
 
-        <div class="filter-group">
-            <label for="sort">Sắp xếp: </label>
-            <select name="sort" id="sort">
-                <option value="asc" <?php echo ($sort == 'asc') ? 'selected' : ''; ?>>Giá tăng dần</option>
-                <option value="desc" <?php echo ($sort == 'desc') ? 'selected' : ''; ?>>Giá giảm dần</option>
-            </select>
-        </div>
+        <style>
+            .filter-container {
+                background-color: #f9f9f9;
+                border-radius: 10px;
+                padding: 5px 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 800px;
+                margin: 20px auto;
+                display: flex;
+                justify-content: center;
+                /* Centers the content horizontally */
+            }
 
-        <button type="submit" class="btn btn-primary">Lọc</button>
-    </form>
-</div>
+            .filter-container form {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                /* Ensures form is centered horizontally */
+                flex-wrap: nowrap;
+            }
 
-<style>
-    .filter-container {
-        background-color: #f9f9f9;
-        border-radius: 10px;
-        padding: 5px 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 800px;
-        margin: 20px auto;
-        display: flex;
-        justify-content: center; /* Centers the content horizontally */
-    }
+            .filter-group {
+                display: flex;
+                align-items: center;
+                margin-right: 10px;
+            }
 
-    .filter-container form {
-        display: flex;
-        align-items: center;
-        justify-content: center; /* Ensures form is centered horizontally */
-        flex-wrap: nowrap;
-    }
+            .filter-group label {
+                font-weight: bold;
+                margin-right: 5px;
+                font-size: 14px;
+            }
 
-    .filter-group {
-        display: flex;
-        align-items: center;
-        margin-right: 10px;
-    }
+            .filter-group select {
+                padding: 5px;
+                font-size: 14px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: #fff;
+                transition: all 0.3s ease;
+            }
 
-    .filter-group label {
-        font-weight: bold;
-        margin-right: 5px;
-        font-size: 14px;
-    }
+            .filter-group select:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
 
-    .filter-group select {
-        padding: 5px;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #fff;
-        transition: all 0.3s ease;
-    }
+            button.btn-primary {
+                background-color: #007bff;
+                color: white;
+                padding: 6px 12px;
+                font-size: 14px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
 
-    .filter-group select:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    }
+            button.btn-primary:hover {
+                background-color: #0056b3;
+            }
 
-    button.btn-primary {
-        background-color: #007bff;
-        color: white;
-        padding: 6px 12px;
-        font-size: 14px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    button.btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-    button.btn-primary:active {
-        background-color: #003f7f;
-    }
-</style>
+            button.btn-primary:active {
+                background-color: #003f7f;
+            }
+        </style>
 
 
         <div class="row">

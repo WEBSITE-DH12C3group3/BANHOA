@@ -85,7 +85,7 @@ $result = $db->select($sql);
     </style>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
     <section>
         <header class="bg-light p-3 text-center category-header">
             <h1><?php echo htmlspecialchars($category_name); ?></h1>

@@ -13,7 +13,7 @@ $result = $db->select($sql);
     <title>Tìm Kiếm: <?php echo $q; ?></title>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
     <header class="bg-light p-3 text-center">
         <div class="product-count">
             <?php

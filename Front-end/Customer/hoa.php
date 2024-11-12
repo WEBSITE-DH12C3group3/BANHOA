@@ -149,7 +149,7 @@ $row = $result->fetch_assoc();
     </style>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
     <div class="container mt-5">
         <form class="row" action="modelcart.php?product_id=<?php echo $row['id'] ?>" method="post">
             <!-- Product Image -->
@@ -158,11 +158,11 @@ $row = $result->fetch_assoc();
             </div>
             <!-- Product Details -->
             <div class="col-md-6">
-            <h3 class="product-title"><?php echo $row['product_name']; ?></h3>
-            <p>
-            <span class="old-price" style="font-weight: bold;color: #000000 "><?php echo number_format($row['price'], 0, ',', '.'); ?> VND</span> 
-            <span class="price" style="font-weight: bold; color: #f2231d;"><?php echo number_format($row['price_sale'], 0, ',', '.'); ?> VND</span>
-            </p>
+                <h3 class="product-title"><?php echo $row['product_name']; ?></h3>
+                <p>
+                    <span class="old-price" style="font-weight: bold;color: #000000 "><?php echo number_format($row['price'], 0, ',', '.'); ?> VND</span>
+                    <span class="price" style="font-weight: bold; color: #f2231d;"><?php echo number_format($row['price_sale'], 0, ',', '.'); ?> VND</span>
+                </p>
 
                 <p><small>Giá đã bao gồm 8% VAT - Sản phẩm hỗ trợ giao miễn phí khu vực gần.</small></p>
 
@@ -314,14 +314,14 @@ $row = $result->fetch_assoc();
                         <a class="card h-100 text-center" href="hoa.php?id=<?php echo $row['id']; ?>">
                             <div class="badge bg-danger text-white position-absolute sale-badge">Sale <?php echo $row['sale']; ?>%</div>
                             <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
-                            
+
                             <div class="card-body">
-                            <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
-                            <p class="card-text">
-                            <del style="font-weight: bold;"><?php echo $price; ?></del>  <!-- Original price in bold -->
-                            <span class="text-danger" style="font-weight: bold;color: #f2231d;"><?php echo $price_sale; ?></span>  <!-- Sale price in bold -->
-                            </p>
-                            <button class="btn btn-primary">Đặt hàng</button>
+                                <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
+                                <p class="card-text">
+                                    <del style="font-weight: bold;"><?php echo $price; ?></del> <!-- Original price in bold -->
+                                    <span class="text-danger" style="font-weight: bold;color: #f2231d;"><?php echo $price_sale; ?></span> <!-- Sale price in bold -->
+                                </p>
+                                <button class="btn btn-primary">Đặt hàng</button>
                             </div>
 
                         </a>

@@ -25,14 +25,6 @@ $result = $db->select($query);
     <style>
         /* CSS cho trang Quản lý đơn hàng */
 
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            /* background: #fff; */
-            padding: 5px;
-            border-radius: 5px;
-        }
-
         h1 {
             text-align: center;
             color: #444;
@@ -103,7 +95,7 @@ $result = $db->select($query);
     </style>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
     <div class="container">
         <h1>Quản lý đơn hàng của tôi</h1>
         <table>

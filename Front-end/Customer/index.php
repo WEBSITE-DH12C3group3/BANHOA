@@ -23,7 +23,7 @@ $db = new Database();
     <title>EDEN</title>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
     <section class="mymaincontent my-3">
         <div class="container my-3">
             <div class="slider">
@@ -244,7 +244,7 @@ $db = new Database();
             })
         })
         var carousel = new bootstrap.Carousel(document.getElementById('carouselExampleRide'), {
-            interval: 2000 // 3000ms tương đương 3 giây
+            interval: 1000 // 3000ms tương đương 3 giây
         });
     </script>
 </body>

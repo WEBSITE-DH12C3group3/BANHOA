@@ -67,7 +67,13 @@ if ($categories_result) {
       z-index: 1000;
       background-color: white;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      /* Add any other necessary styles to position the header correctly */
+      transition: top 0.3s;
+      /* Thêm hiệu ứng chuyển đổi */
+    }
+
+    .hidden {
+      top: -200px;
+      /* Chiều cao của menu để nó biến mất khi cuộn xuống */
     }
 
     #cart:hover {
@@ -77,8 +83,8 @@ if ($categories_result) {
 </head>
 
 <body>
-  <header>
-    <section class="myheader" id="myHeader">
+  <header class="myheader sticky" id="myHeader">
+    <section>
       <div class="container py-3">
         <div class="row align-items-center">
           <!-- Logo -->
@@ -270,14 +276,23 @@ if ($categories_result) {
     });
   </script>
   <script>
-    window.onscroll = function() {
-      var header = document.getElementById("myHeader");
-      if (window.pageYOffset > 0) {
-        header.classList.add("sticky");
+    let lastScrollTop = 0;
+    const header = document.getElementById("myHeader");
+
+    window.addEventListener("scroll", function() {
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > lastScrollTop) {
+        // Cuộn xuống
+        header.classList.add("hidden");
       } else {
-        header.classList.remove("sticky");
+        // Cuộn lên
+        header.classList.remove("hidden");
+        header.classList.add("sticky");
       }
-    };
+
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Đặt lại lastScrollTop để tránh giá trị âm
+    });
   </script>
 
 </body>

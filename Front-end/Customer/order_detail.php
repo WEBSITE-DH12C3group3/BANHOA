@@ -36,26 +36,11 @@ if (isset($_GET['order_code'])) {
     <title>Chi tiết đơn hàng #<?php echo $order_code; ?></title>
     <link rel="stylesheet" href="/BANHOA/mycss/order_manage.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            width: 80%;
-            margin: 40px auto;
-            padding: 5px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
         h1 {
             font-size: 24px;
             color: #444;
             margin-bottom: 30px;
+            text-align: center;
         }
 
         table {
@@ -104,7 +89,7 @@ if (isset($_GET['order_code'])) {
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-top: 10px;
+
         }
 
         button:hover {
@@ -117,10 +102,19 @@ if (isset($_GET['order_code'])) {
             font-size: 1.2rem;
 
         }
+
+        .left {
+            text-align: left;
+        }
+
+        .right {
+            text-align: right;
+            margin-bottom: 0px;
+        }
     </style>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
     <div class="container">
         <h1>Chi tiết đơn hàng <span class="code">#<?php echo $order_code; ?></span></h1>
         <table>
@@ -154,11 +148,11 @@ if (isset($_GET['order_code'])) {
                 <?php } ?>
             </tbody>
         </table>
-        <h3>Tổng cộng: <?php echo number_format($total_amount, 0, ',', '.'); ?> VND</h3>
+        <h3 class="left">Tổng cộng: <?php echo number_format($total_amount, 0, ',', '.'); ?> VND</h3>
 
         <?php if ($order_status === 'chờ duyệt') { ?>
             <!-- Nút Hủy đơn hàng với JavaScript xác nhận -->
-            <form id="cancelOrderForm" action="/BANHOA/database/cancel_order.php" method="post" onsubmit="return confirmCancel();">
+            <form class="right" id="cancelOrderForm" action="/BANHOA/database/cancel_order.php" method="post" onsubmit="return confirmCancel();">
                 <input type="hidden" name="order_code" value="<?php echo $order_code; ?>">
                 <button type="submit" name="cancel_order">
                     Hủy đơn hàng
