@@ -17,20 +17,13 @@ $result = $db->select($query);
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý đơn hàng</title>
     <style>
         /* CSS cho trang Quản lý đơn hàng */
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
 
         .container {
             width: 80%;
@@ -52,11 +45,14 @@ $result = $db->select($query);
             margin-top: 5px;
         }
 
-        table, th, td {
+        table,
+        th,
+        td {
             border: 1px solid #ddd;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px;
             text-align: center;
         }
@@ -96,14 +92,17 @@ $result = $db->select($query);
 
         a {
             color: #007BFF;
-            text-decoration: none;  /* Bỏ gạch chân */
+            text-decoration: none;
+            /* Bỏ gạch chân */
         }
 
         a:hover {
-            text-decoration: none;  /* Bỏ gạch chân */
+            text-decoration: none;
+            /* Bỏ gạch chân */
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Quản lý đơn hàng của tôi</h1>
@@ -118,25 +117,40 @@ $result = $db->select($query);
                 </tr>
             </thead>
             <tbody>
-                <?php if ($result) {
-                    while ($order = $result->fetch_assoc()) { ?>
-                    <tr>
-                        <td><?php echo $order['order_code']; ?></td>    
-                        <td><?php echo number_format($order['total'], 0, ',', '.'); ?> VND</td>
-                        <td>
-                            <?php 
-                            if ($order['status'] == 'Đã duyệt') {
-                                echo '<span class="status approved">Đã duyệt</span>';
-                            } else if ($order['status'] == 'chờ duyệt') {
-                                echo '<span class="status pending">Chờ duyệt</span>';
-                            } else {
-                                echo '<span class="status canceled">Đã hủy</span>';
+                <?php
+                if ($result) {
+                    while ($order = $result->fetch_assoc()) {
+                        $q = "SELECT p.price_sale, oi.quantity
+                        FROM order_items oi
+                        JOIN orders o ON oi.order_code = o.order_code
+                        JOIN products p ON oi.product_id = p.id
+                        WHERE o.order_code = '$order[order_code]'";
+                        $rs = $db->select($q);
+                        if ($rs) {
+                            $total_amount = 0;
+                            while ($item = $rs->fetch_assoc()) {
+                                $total_price = $item['price_sale'] * $item['quantity'];
+                                $total_amount += $total_price;
                             }
-                            ?>
-                        </td>
-                        <td><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
-                        <td><a href="order_detail.php?order_code=<?php echo $order['order_code']; ?>">Xem chi tiết</a></td>
-                    </tr>
+                        }
+                ?>
+                        <tr>
+                            <td><?php echo $order['order_code']; ?></td>
+                            <td><?php echo number_format($total_amount, 0, ',', '.'); ?> VND</td>
+                            <td>
+                                <?php
+                                if ($order['status'] == 'Đã duyệt') {
+                                    echo '<span class="status approved">Đã duyệt</span>';
+                                } else if ($order['status'] == 'chờ duyệt') {
+                                    echo '<span class="status pending">Chờ duyệt</span>';
+                                } else {
+                                    echo '<span class="status canceled">Đã hủy</span>';
+                                }
+                                ?>
+                            </td>
+                            <td><?php echo date('d/m/Y', strtotime($order['order_date'])); ?></td>
+                            <td><a href="order_detail.php?order_code=<?php echo $order['order_code']; ?>">Xem chi tiết</a></td>
+                        </tr>
                     <?php }
                 } else { ?>
                     <tr>
@@ -147,5 +161,6 @@ $result = $db->select($query);
         </table>
     </div>
 </body>
+
 </html>
-<?php include 'footer.php'; ?> 
+<?php include 'footer.php'; ?>

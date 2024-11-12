@@ -14,17 +14,6 @@ $db = new Database();
             max-height: 300px;
             object-fit: cover;
         }
-
-        .discount-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: red;
-            color: white;
-            padding: 5px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
     </style>
     <title>EDEN</title>
 </head>
@@ -76,10 +65,10 @@ $db = new Database();
                             $result = $db->select($sql);
                             if ($result) {
                                 while ($row = $result->fetch_assoc()) { ?>
-                                    <div class="item hover-effect">
+                                    <div class="item hover-effect" style="border-radius: 10px; padding: 5px;">
                                         <div class="category-icon text-center"> <!-- Thêm class 'text-center' để căn giữa -->
                                             <a href="hoa.php?id=<?php echo $row['id']; ?>" class="product-link">
-                                                <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" alt="hoaxinh" class="img-fluid rounded-circle">
+                                                <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" alt="hoaxinh" class="img-fluid">
                                                 <h6 class="mt-2" style="color: black;"><?php echo $row['product_name']; ?></h6> <!-- Thêm margin-top để tạo khoảng cách giữa ảnh và chữ -->
                                             </a>
                                         </div>
@@ -91,7 +80,6 @@ $db = new Database();
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="container-fluid">
