@@ -16,7 +16,7 @@
                         <li><a href="about.html">Giới Thiệu</a></li>
                         <li><a href="#">Tuyển dụng</a></li>
                         <li><a href="#">Câu hỏi thường gặp</a></li>
-                        <li><a href="contact.html">Liên hệ</a></li>
+                        <li><a href="/BANHOA/Front-end/Customer/contact.php">Liên hệ</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
