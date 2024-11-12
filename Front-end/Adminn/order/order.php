@@ -116,8 +116,12 @@ $db = new Database();
                                 <td><?php echo $row['phone']; ?></td>
                                 <td><?php if ($row['status'] == 'Đã duyệt') {
                                         echo $row['total'] . ' ₫';
-                                    } else {
-                                        echo "Đợi duyệt";
+                                    }elseif($row['status'] == 'Đã hủy'){
+                                        echo $row['total'] . ' Đã hủy';
+
+                                    }
+                                     else {
+                                        echo $row['total'] . ' Chờ duyệt';
                                     } ?>
                                 </td>
                                 <td><?php echo $row['order_date']; ?></td>
@@ -125,8 +129,9 @@ $db = new Database();
                                 <td>
                                     <a href="order_detail.php?code=<?php echo $row['order_code']; ?>&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>
                                     <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                    <?php if ($row['status'] != 'Đã duyệt') { ?>
+                                    <?php if ($row['status'] != 'Đã duyệt' && $row['status']!='Đã hủy') { ?>
                                         <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>&order_code=<?php echo $row['order_code']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
+
                                     <?php } ?>
                                 </td>
                             </tr>

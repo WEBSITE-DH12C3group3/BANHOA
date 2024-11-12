@@ -34,7 +34,7 @@ $result = $db->select($query);
 
         .container {
             width: 80%;
-            margin: 40px auto;
+            margin: 20px auto;
             /* background: #fff; */
             padding: 5px;
             border-radius: 5px;
@@ -49,7 +49,7 @@ $result = $db->select($query);
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 5px;
         }
 
         table, th, td {
@@ -97,12 +97,10 @@ $result = $db->select($query);
         a {
             color: #007BFF;
             text-decoration: none;  /* Bỏ gạch chân */
-            text-decoration: none;
         }
 
         a:hover {
             text-decoration: none;  /* Bỏ gạch chân */
-            text-decoration: underline;
         }
     </style>
 </head>
@@ -123,7 +121,7 @@ $result = $db->select($query);
                 <?php if ($result) {
                     while ($order = $result->fetch_assoc()) { ?>
                     <tr>
-                        <td><?php echo $order['order_code']; ?></td>
+                        <td><?php echo $order['order_code']; ?></td>    
                         <td><?php echo number_format($order['total'], 0, ',', '.'); ?> VND</td>
                         <td>
                             <?php 
