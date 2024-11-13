@@ -10,7 +10,7 @@ if (isset($_GET['order_code'])) {
     $order_code = $_GET['order_code'];
 
     // Truy vấn thông tin chi tiết đơn hàng và trạng thái
-    $query = "SELECT o.order_code, o.status, p.product_name, p.price_sale AS price, oi.quantity
+    $query = "SELECT o.order_code, o.status, p.id, p.image, p.product_name, p.price_sale AS price, oi.quantity
               FROM order_items oi
               JOIN orders o ON oi.order_code = o.order_code
               JOIN products p ON oi.product_id = p.id
@@ -120,6 +120,7 @@ if (isset($_GET['order_code'])) {
         <table>
             <thead>
                 <tr>
+                    <th>Hình ảnh sản phẩm</th>
                     <th>Tên sản phẩm</th>
                     <th>Số lượng</th>
                     <th>Giá</th>
@@ -135,7 +136,8 @@ if (isset($_GET['order_code'])) {
                         $total_amount += $total_price;
                 ?>
                         <tr>
-                            <td><?php echo $item['product_name']; ?></td>
+                            <td><img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $item['image']; ?>" alt="" width="100"></td>
+                            <td><a href="hoa.php?id=<?php echo $item['id']; ?>"><?php echo $item['product_name']; ?></a></td>
                             <td><?php echo $item['quantity']; ?></td>
                             <td><?php echo number_format($item['price'], 0, ',', '.'); ?> VND</td>
                             <td><?php echo number_format($total_price, 0, ',', '.'); ?> VND</td>
