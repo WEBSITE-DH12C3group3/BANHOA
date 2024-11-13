@@ -135,7 +135,9 @@ $result = $db->select($query);
                                     echo '<span class="status approved">Đã duyệt</span>';
                                 } else if ($order['status'] == 'chờ duyệt') {
                                     echo '<span class="status pending">Chờ duyệt</span>';
-                                } else {
+                                }else if ($order['status'] == 'Đã nhận') {
+                                    echo '<span class="status pending">Đã nhận</span>';}
+                                 else {
                                     echo '<span class="status canceled">Đã hủy</span>';
                                 }
                                 ?>

@@ -5,6 +5,22 @@ include_once '/xampp/htdocs/BANHOA/database/connect.php';
 
 $db = new Database();
 
+// Kiểm tra xem có yêu cầu cập nhật trạng thái không (thông qua POST)
+if (isset($_POST['order_code']) && isset($_POST['status'])) {
+    $order_code = $_POST['order_code'];
+    $status = $_POST['status'];
+
+    // Cập nhật trạng thái trong cơ sở dữ liệu
+    $update_query = "UPDATE orders SET status = ? WHERE order_code = ?";
+    $update_stmt = $db->conn->prepare($update_query);
+    $update_stmt->bind_param("ss", $status, $order_code); // s cho chuỗi
+    if ($update_stmt->execute()) {
+        echo "<script>alert('Cập nhật trạng thái thành công!');</script>";
+    } else {
+        echo "Có lỗi xảy ra khi cập nhật trạng thái.";
+    }
+}
+
 // Lấy mã đơn hàng từ URL
 if (isset($_GET['order_code'])) {
     $order_code = $_GET['order_code'];
@@ -89,7 +105,6 @@ if (isset($_GET['order_code'])) {
             border: none;
             border-radius: 4px;
             cursor: pointer;
-
         }
 
         button:hover {
@@ -100,7 +115,6 @@ if (isset($_GET['order_code'])) {
             color: #007BFF;
             font-weight: bold;
             font-size: 1.2rem;
-
         }
 
         .left {
@@ -125,6 +139,9 @@ if (isset($_GET['order_code'])) {
                     <th>Số lượng</th>
                     <th>Giá</th>
                     <th>Tổng tiền</th>
+                    <?php if ($order_status === 'Đã nhận') { ?> <!-- Chỉ hiển thị cột đánh giá nếu trạng thái đơn hàng là 'Đã nhận' -->
+                        <th>Đánh giá</th>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -141,18 +158,47 @@ if (isset($_GET['order_code'])) {
                             <td><?php echo $item['quantity']; ?></td>
                             <td><?php echo number_format($item['price'], 0, ',', '.'); ?> VND</td>
                             <td><?php echo number_format($total_price, 0, ',', '.'); ?> VND</td>
+                            <?php if ($order_status === 'Đã nhận') { ?>
+                                <td><a href="hoa.php?id=<?php echo $item['id']; ?>" class="review-button">Đánh giá</a></td>
+                            <?php } ?>
                         </tr>
                     <?php }
                 } else { ?>
                     <tr>
-                        <td colspan="4">Không có sản phẩm nào trong đơn hàng này.</td>
+                        <td colspan="5">Không có sản phẩm nào trong đơn hàng này.</td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
         <h3 class="left">Tổng cộng: <?php echo number_format($total_amount, 0, ',', '.'); ?> VND</h3>
 
-        <?php if ($order_status === 'chờ duyệt') { ?>
+        <?php if ($order_status == 'Đã duyệt') { ?>
+            <!-- Nút để khách hàng xác nhận đã nhận hàng -->
+            <form class="right" id="receiveOrderForm" method="POST" action="" onsubmit="return confirmFinish();">
+                <input type="hidden" name="order_code" value="<?php echo $order_code; ?>">
+                <input type="hidden" name="status" value="Đã nhận">
+                <button type="submit" name="finish">
+                    Đã nhận hàng
+                </button>
+            </form>
+        <?php } ?>
+        <script>
+                function confirmFinish() {
+                    const confirmResult = confirm("Xác nhận rằng bạn đã nhận được đơn hàng này?");
+                    
+                    if (confirmResult) {
+                        alert("Bạn đã xác nhận đã nhận hàng. Cảm ơn bạn!");
+                        return true;
+                    } else {
+                        alert("Bạn chưa xác nhận đơn hàng.");
+                    }
+
+                    // Trả về false để ngăn biểu mẫu gửi đi và ở lại trang
+                    return false;
+                }
+            </script>
+
+        <?php if ($order_status === 'Chờ duyệt') { ?>
             <!-- Nút Hủy đơn hàng với JavaScript xác nhận -->
             <form class="right" id="cancelOrderForm" action="/BANHOA/database/cancel_order.php" method="post" onsubmit="return confirmCancel();">
                 <input type="hidden" name="order_code" value="<?php echo $order_code; ?>">
@@ -177,4 +223,4 @@ if (isset($_GET['order_code'])) {
 
 </html>
 
-<?php include 'footer.php'; ?>
+<?php include 'footer.php'; ?> 

@@ -234,9 +234,6 @@ $row = $result->fetch_assoc();
                             <input type="radio" name="options" id="option6" autocomplete="off"> 1 Sao (0)
                         </label>
                         <label class="btn">
-                            <input type="radio" name="options" id="option7" autocomplete="off"> Có Hình Ảnh / Video (24)
-                        </label>
-                        <label class="btn">
                             <input type="radio" name="options" id="option8" autocomplete="off"> Có Bình Luận (24)
                         </label>
                     </div>
@@ -281,7 +278,7 @@ $row = $result->fetch_assoc();
 
             if (rating && reviewText) {
                 document.getElementById("reviewMessage").innerHTML = `
-                    <div class="alert alert-success">
+                    <div class="alert alert-success">   
                         Cảm ơn bạn đã đánh giá ${rating.value} sao. Nhận xét của bạn: "${reviewText}"
                     </div>
                 `;
