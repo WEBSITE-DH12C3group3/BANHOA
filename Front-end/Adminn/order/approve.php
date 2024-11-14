@@ -63,4 +63,3 @@ if (isset($_GET['id']) && isset($_GET['order_code'])) {
     $update_stmt->close();
     $email_stmt->close();
 }
-?>

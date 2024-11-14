@@ -5,7 +5,7 @@ $db = new Database();
 // them order
 $uid = $_SESSION["users_id"];
 $order_code = substr(uniqid(), 0, 8);
-$insert_order = "INSERT INTO orders (order_code, user_id, order_date, status) VALUES ('" . $order_code . "', '" . $uid . "', NOW(), 'chờ duyệt')";
+$insert_order = "INSERT INTO orders (order_code, user_id, order_date, status) VALUES ('" . $order_code . "', '" . $uid . "', NOW(), 'Chờ duyệt')";
 $order_query = $db->insert($insert_order);
 if ($order_query) {
     // them san pham
