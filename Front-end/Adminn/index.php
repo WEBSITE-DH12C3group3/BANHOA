@@ -39,7 +39,7 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
             <!-- Logo and Title -->
             <div class="sidebar-header text-center py-4">
                 <a href="index.php">
-                    <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
+                    <h3><img src="/BANHOA/Front-end/Adminn/css/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
             </div>
 
@@ -101,20 +101,34 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
 
         <div lass="maincontent" id="content">
             <!-- Hiển thị các mục doanh thu cố định (Ngày, Tuần, Tháng) -->
-            <div>
-                <div class="dashboard" style="margin-left: 60px;">
-                    <div class="item total-revenue">
-                        <p>Tổng doanh thu (Ngày)</p>
-                        <p><?php echo number_format($total_revenue_day, 0, ',', '.') . " đ"; ?></p>
-                    </div>
-                    <div class="item total-revenue-week">
-                        <p>Tổng doanh thu (Tuần)</p>
-                        <p><?php echo number_format($total_revenue_week, 0, ',', '.') . " đ"; ?></p>
-                    </div>
-                    <div class="item total-revenue-month">
-                        <p>Tổng doanh thu (Tháng)</p>
-                        <p><?php echo number_format($total_revenue_month, 0, ',', '.') . " đ"; ?></p>
-                    </div>
+            <style>
+                .total-revenue {
+                    border-left: 10px solid #8BC34A;
+                    /* Xanh lá cây nhạt */
+                }
+
+                .total-revenue-week {
+                    border-left: 10px solid #2196F3;
+                    /* Xanh dương */
+                }
+
+                .total-revenue-month {
+                    border-left: 10px solid #FFC107;
+                    /* Vàng hổ phách */
+                }
+            </style>
+            <div class="dashboard" style="margin-left: 60px;">
+                <div class="item total-revenue">
+                    <p>Tổng doanh thu (Ngày)</p>
+                    <p><?php echo number_format($total_revenue_day, 0, ',', '.') . " đ"; ?></p>
+                </div>
+                <div class="item total-revenue-week">
+                    <p>Tổng doanh thu (Tuần)</p>
+                    <p><?php echo number_format($total_revenue_week, 0, ',', '.') . " đ"; ?></p>
+                </div>
+                <div class="item total-revenue-month">
+                    <p>Tổng doanh thu (Tháng)</p>
+                    <p><?php echo number_format($total_revenue_month, 0, ',', '.') . " đ"; ?></p>
                 </div>
             </div>
 
@@ -137,8 +151,8 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
 
             // Xử lý khi người dùng gửi form
             if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
-                $start_date = $_GET['start_date'];
-                $end_date = $_GET['end_date'];
+                $start_date = date('m-d-Y', strtotime($_GET['start_date']));
+                $end_date = date('m-d-Y', strtotime($_GET['end_date']));
 
                 // Truy vấn doanh thu cho khoảng thời gian được chọn
                 $sql_custom = "SELECT SUM(total) AS total_revenue_custom 
@@ -151,7 +165,7 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
                 echo "
         <div class='container'>
             <h5 style='text-align: center;'>Doanh thu từ ngày $start_date đến ngày $end_date</h5>
-            <table class='table'>
+            <table class='table' style='border-collapse: collapse; border: 1px solid #ddd;'>
                 <thead>
                     <tr>
                         <th>Khoảng thời gian</th>
@@ -160,7 +174,7 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Từ ngày " . date('d-m-Y', strtotime($start_date)) . " đến ngày " . date('d-m-Y', strtotime($end_date)) . "</td>
+                        <td>Từ ngày " . $start_date . " đến ngày " . $end_date . "</td>
                         <td>" . number_format($total_revenue_custom, 0, ',', '.') . " đ</td>
                     </tr>
                 </tbody>
@@ -169,17 +183,7 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
             }
             ?>
         </div>
-
-
-
-
-
-        <!-- <div class="card" style="min-height: 485px">
-            </div> -->
     </div>
-
-
-
 </body>
 
 </html>

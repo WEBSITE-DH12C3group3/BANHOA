@@ -61,11 +61,6 @@ a:focus {
   padding: 2px 7px;
 }
 
-#sidebar ul li.active > a {
-  color: #333;
-  background-color: rgba(200, 200, 200, 0.2);
-}
-
 .dropdown-toggle::after {
   position: absolute;
   right: 10px;
@@ -88,11 +83,6 @@ a:focus {
   position: relative;
   font-weight: 400;
   display: block;
-}
-
-#sidebar ul li a:hover {
-  color: #333;
-  background-color: rgba(200, 200, 200, 0.2);
 }
 
 #sidebar ul li a i {

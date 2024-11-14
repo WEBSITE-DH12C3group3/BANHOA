@@ -17,7 +17,7 @@ $db = new Database();
         <nav id="sidebar" class="bg-light border-right">
             <div class="sidebar-header text-center py-4">
                 <a href="/BANHOA/Front-end/Adminn/index.php">
-                    <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
+                    <h3><img src="/BANHOA/Front-end/Adminn/css/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
             </div>
             <div class="sidebar-header text-center py-2">

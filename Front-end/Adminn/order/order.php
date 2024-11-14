@@ -22,7 +22,7 @@ $db = new Database();
         <nav id="sidebar" class="bg-light border-right">
             <div class="sidebar-header text-center py-4">
                 <a href="/BANHOA/Front-end/Adminn/index.php">
-                    <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
+                    <h3><img src="/BANHOA/Front-end/Adminn/css/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
             </div>
             <div class="sidebar-header text-center py-2">
@@ -116,14 +116,11 @@ $db = new Database();
                                 <td><?php echo $row['phone']; ?></td>
                                 <td><?php if ($row['status'] == 'Đã duyệt') {
                                         echo $row['total'] . ' ₫';
-                                    }elseif($row['status'] == 'Đã hủy'){
+                                    } elseif ($row['status'] == 'Đã hủy') {
                                         echo $row['total'] . ' Đã hủy';
-
-                                    }elseif($row['status'] == 'Đã nhận'){
+                                    } elseif ($row['status'] == 'Đã nhận') {
                                         echo $row['total'] . '';
-
-                                    }
-                                     else {
+                                    } else {
                                         echo $row['total'] . ' Chờ duyệt';
                                     } ?>
                                 </td>
@@ -132,7 +129,7 @@ $db = new Database();
                                 <td>
                                     <a href="order_detail.php?code=<?php echo $row['order_code']; ?>&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>
                                     <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                    <?php if ($row['status'] != 'Đã duyệt' && $row['status']!='Đã hủy' && $row['status']!='Đã nhận') { ?>
+                                    <?php if ($row['status'] != 'Đã duyệt' && $row['status'] != 'Đã hủy' && $row['status'] != 'Đã nhận') { ?>
                                         <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>&order_code=<?php echo $row['order_code']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
 
                                     <?php } ?>
