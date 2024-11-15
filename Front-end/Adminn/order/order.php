@@ -130,7 +130,7 @@ $db = new Database();
                                     <a href="order_detail.php?code=<?php echo $row['order_code']; ?>&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>
                                     <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                     <?php if ($row['status'] === 'Đã duyệt') { ?>
-                                        <a href="print.php?code=<?php echo $row['order_code']; ?>&total=<?php echo $row['total']; ?>" class="btn btn-secondary"><i class="fa fa-print"></i></a>
+                                        <a href="print.php?code=<?php echo $row['order_code']; ?>" class="btn btn-secondary"><i class="fa fa-print"></i></a>
                                     <?php } ?>
                                     <?php if ($row['status'] === 'Chờ duyệt') { ?>
                                         <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>&order_code=<?php echo $row['order_code']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>

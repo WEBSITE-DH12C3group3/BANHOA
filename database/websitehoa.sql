@@ -189,8 +189,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `address`, `role`, `created_at`) VALUES
-(1, 'customer', 'test@1', '1', '0366379629', 'Việt Nam', 'customer', '2024-11-10 17:33:41'),
-(9999, 'admin', 'admin@1', '1', NULL, NULL, 'admin', '2024-11-10 17:32:49');
+(2, 'customer', 'test@1', '1', '0366379629', 'Việt Nam', 'customer', NOW()),
+(1, 'admin', 'admin@1', '1', NULL, NULL, 'admin', NOW());
 
 --
 -- Indexes for dumped tables
