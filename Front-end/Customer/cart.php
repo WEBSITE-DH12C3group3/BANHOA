@@ -88,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </tr>
                     <?php
                     } else {
-                        echo "<tr style='height: 100px;'><td colspan='6'>Giỏ hàng trống!</td></tr>";
+                        echo "<tr style='height: 100px;'><td colspan='6'>Giỏ hàng trống!<br>
+                          <a href='index.php' class='btn btn-success' style='margin-top: 10px;'>Mua Ngay</a></td></tr>";
                     }
                     ?>
                 </tbody>

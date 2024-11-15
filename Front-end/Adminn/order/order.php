@@ -21,7 +21,7 @@ $db = new Database();
 
         <nav id="sidebar" class="bg-light border-right">
             <div class="sidebar-header text-center py-4">
-                <a href="/BANHOA/Front-end/Adminn/index.php">
+                <a href="/BANHOA/Front-end/Customer/index.php" onclick="return confirm('Trở về website?')">
                     <h3><img src="/BANHOA/Front-end/Adminn/css/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
             </div>

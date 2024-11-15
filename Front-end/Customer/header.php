@@ -193,6 +193,13 @@ if ($categories_result) {
                           class="dropdown-item"
                           href="trangcanhan.php">Trang cá nhân</a>
                       </li>
+                      <?php if ($_SESSION['role'] === 'admin'): ?>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            href="/BANHOA/Front-end/Adminn/index.php">Quản lý sản phẩm</a>
+                        </li>
+                      <?php endif; ?>
                       <li>
                         <a
                           class="dropdown-item"

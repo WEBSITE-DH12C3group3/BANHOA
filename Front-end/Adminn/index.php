@@ -38,7 +38,7 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
         <nav id="sidebar" class="bg-light border-right">
             <!-- Logo and Title -->
             <div class="sidebar-header text-center py-4">
-                <a href="index.php">
+                <a href="/BANHOA/Front-end/Customer/index.php" onclick="return confirm('Trở về website?')">
                     <h3><img src="/BANHOA/Front-end/Adminn/css/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
             </div>

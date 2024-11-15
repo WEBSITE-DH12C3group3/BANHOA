@@ -11,6 +11,7 @@ $row = $result->fetch_assoc();
 
 <head>
     <title>Hoa | <?php echo $row['product_name']; ?></title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -178,6 +179,22 @@ $row = $result->fetch_assoc();
                     <button class="btn btn-outline-secondary" name="add" type="submit"><i class="fas fa-cart-plus"></i> Thêm vào giỏ</button>
                     <button class="btn btn-danger" name="addcart" type="submit"><i class="fas fa-shopping-cart"></i> Mua ngay</button>
                 </div>
+                <?php if (isset($_GET['added']) && $_GET['added'] == 1): ?>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Đã thêm vào giỏ hàng!',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            toast: true,
+                            position: 'top-end',
+                            customClass: {
+                                popup: 'swal2-custom-popup',
+                                icon: 'swal2-custom-icon'
+                            }
+                        });
+                    </script>
+                <?php endif; ?>
 
                 <!-- Customer Service -->
                 <div class="mt-3">
