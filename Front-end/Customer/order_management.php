@@ -133,11 +133,11 @@ $result = $db->select($query);
                                 <?php
                                 if ($order['status'] == 'Đã duyệt') {
                                     echo '<span class="status approved">Đã duyệt</span>';
-                                } else if ($order['status'] == 'chờ duyệt') {
+                                } else if ($order['status'] == 'Chờ duyệt') {
                                     echo '<span class="status pending">Chờ duyệt</span>';
-                                }else if ($order['status'] == 'Đã nhận') {
-                                    echo '<span class="status pending">Đã nhận</span>';}
-                                 else {
+                                } else if ($order['status'] == 'Đã nhận') {
+                                    echo '<span class="status pending">Đã nhận</span>';
+                                } else {
                                     echo '<span class="status canceled">Đã hủy</span>';
                                 }
                                 ?>
@@ -153,6 +153,7 @@ $result = $db->select($query);
                 <?php } ?>
             </tbody>
         </table>
+        <h1 style="margin-top: 50px;"></h1>
     </div>
 </body>
 

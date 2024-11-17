@@ -116,7 +116,7 @@ $total = 0;
 
             <!-- Customer Information on the Right -->
             <div class="col-md-6">
-                <form class="checkout-container" action="thanhtoan.php" method="POST">
+                <form class="checkout-container" action="test.php" method="POST">
                     <h2 class=" text-center mb-4" style="color: #d8243c;">Thông tin thanh toán</h2>
                     <div class="form-section">
                         <div class="row">
@@ -212,7 +212,11 @@ $total = 0;
                                     </li>
                                 </ul>
                             </div>
-                            <a class="w-100 btn btn-primary btn-lg" href="order.php">Thanh toán</a>
+                            <?php if (count($_SESSION['cart']) > 0): ?>
+                                <a class="w-100 btn btn-primary btn-lg" href="order.php">Thanh toán</a>
+                            <?php else: ?>
+                                <a class="w-100 btn btn-primary btn-lg" href="index.php">Mua hàng</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </form>
