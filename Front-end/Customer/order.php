@@ -17,5 +17,4 @@ if ($order_query) {
     }
 }
 unset($_SESSION['cart']);
-// header("Location: arigatou.php?order_code=" . $order_code);
-header("Location: test.php");
+header("Location: arigatou.php?order_code=" . $order_code);

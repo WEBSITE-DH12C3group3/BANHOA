@@ -116,7 +116,7 @@ $total = 0;
 
             <!-- Customer Information on the Right -->
             <div class="col-md-6">
-                <form class="checkout-container" action="test.php" method="POST">
+                <form class="checkout-container" method="POST">
                     <h2 class=" text-center mb-4" style="color: #d8243c;">Thông tin thanh toán</h2>
                     <div class="form-section">
                         <div class="row">

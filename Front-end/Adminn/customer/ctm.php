@@ -71,7 +71,7 @@ $db = new Database();
         <!-- Page Content  -->
 
         <div class="maincontent" id="content">
-
+            <h2>Danh Sách Người Dùng</h2>
             <div class="search-bar">
                 <input type="text" id="searchBox"
                     onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
@@ -102,7 +102,7 @@ $db = new Database();
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM users ORDER BY id, fullname";
+                    $sql = "SELECT * FROM users ORDER BY created_at DESC, id, fullname";
                     $result = $db->select($sql);
                     if ($result) {
                         while ($row = $result->fetch_assoc()) { ?>

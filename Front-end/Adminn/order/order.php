@@ -74,7 +74,7 @@ $db = new Database();
         <!-- Page Content  -->
 
         <div class="maincontent" id="content">
-
+            <h2>Danh Sách Đơn hàng</h2>
             <div class="search-bar">
                 <input type="text" id="searchBox"
                     onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
@@ -84,7 +84,7 @@ $db = new Database();
                 <div class="total-posts">
                     <!-- count -->
                     <p>Tổng số đơn hàng:
-                        <?php $count = $db->count("SELECT * FROM orders");
+                        <?php $count = $db->count("SELECT * FROM orders ORDER BY order_date DESC");
                         echo $count; ?></p>
                 </div>
             </div>
@@ -106,7 +106,7 @@ $db = new Database();
                     $sql = "SELECT o.id, o.order_code, u.fullname, u.phone, o.order_date, o.total, o.status
                                 FROM orders o
                                 JOIN users u ON o.user_id = u.id
-                                ORDER BY o.id, o.order_code";
+                                ORDER BY o.order_date DESC";
                     $result = $db->select($sql);
                     if ($result) {
                         while ($row = $result->fetch_assoc()) { ?>

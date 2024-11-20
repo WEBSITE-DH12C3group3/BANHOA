@@ -71,7 +71,7 @@ $db = new Database();
 
         <!-- Page Content  -->
         <div class="maincontent" id="content">
-
+            <h2>Danh Sách Danh Mục</h2>
             <div class="search-bar">
                 <input type="text" id="searchBox"
                     onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
