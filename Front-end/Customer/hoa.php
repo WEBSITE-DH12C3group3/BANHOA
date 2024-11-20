@@ -259,7 +259,7 @@ $row = $result->fetch_assoc();
         </div>
 
         <!-- Đánh giá sản phẩm -->
-        <div class="rating-container mt-4">
+        <div id="comments" class="rating-container mt-4" style="display: none;">
             <h5>Đánh Giá Sản Phẩm</h5>
             <form id="ratingForm">
                 <div class="star-rating">
@@ -309,6 +309,7 @@ $row = $result->fetch_assoc();
             }
         });
     </script>
+    
 
     <div class="container mt-5">
         <h2 class="text-danger">Những mẫu hoa tươi cùng loại khác</h2>
@@ -362,6 +363,33 @@ $row = $result->fetch_assoc();
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/BANHOA/mycss/pagination.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Ẩn phần comments mặc định
+    const commentsSection = document.getElementById('comments');
+    commentsSection.style.display = 'none';  // Ẩn phần comments
+
+    // Kiểm tra xem có tham số trên URL hay không
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('show_comments') && urlParams.get('show_comments') === 'true') {
+        commentsSection.style.display = 'block'; // Hiển thị comments nếu tham số có giá trị true
+    }
+
+    // Lấy tất cả các nút "Đánh giá"
+    const reviewButtons = document.querySelectorAll('.review-button');
+
+    reviewButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+
+            // Thêm tham số vào URL để hiển thị phần comments
+            window.location.href = window.location.href.split('?')[0] + '?show_comments=true'; 
+        });
+    });
+});
+
+</script>
+
 </body>
 
 </html>

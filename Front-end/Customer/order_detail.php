@@ -159,7 +159,7 @@ if (isset($_GET['order_code'])) {
                             <td><?php echo number_format($item['price'], 0, ',', '.'); ?> VND</td>
                             <td><?php echo number_format($total_price, 0, ',', '.'); ?> VND</td>
                             <?php if ($order_status === 'Đã nhận') { ?>
-                                <td><a href="hoa.php?id=<?php echo $item['id']; ?>" class="review-button">Đánh giá</a></td>
+                                <td><a href="hoa.php?id=<?php echo $item['id']; ?>&show_comments=true#comments" class="review-button" data-target="comments">Đánh giá</a></td>
                             <?php } ?>
                         </tr>
                     <?php }
@@ -196,6 +196,8 @@ if (isset($_GET['order_code'])) {
                     // Trả về false để ngăn biểu mẫu gửi đi và ở lại trang
                     return false;
                 }
+
+                
             </script>
 
         <?php if ($order_status === 'Chờ duyệt') { ?>
