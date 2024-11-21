@@ -158,7 +158,7 @@ if (isset($_GET['order_code'])) {
                             <td><?php echo $item['quantity']; ?></td>
                             <td><?php echo number_format($item['price'], 0, ',', '.'); ?> VND</td>
                             <td><?php echo number_format($total_price, 0, ',', '.'); ?> VND</td>
-                            <?php if ($order_status === 'Đã nhận') { ?>
+                            <?php if ($order_status === 'Đã nhận') { ?> <!--khi click vao dnh gia se dan den phan danh gia tai trang hoa.php -->
                                 <td><a href="hoa.php?id=<?php echo $item['id']; ?>&show_comments=true#comments" class="review-button" data-target="comments">Đánh giá</a></td>
                             <?php } ?>
                         </tr>

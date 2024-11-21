@@ -24,6 +24,19 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
+-- thêm bảng comments
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_code INT(11),
+    product_id INT(11),
+    user_id INT(11),
+    rating INT(1),
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (order_code) REFERENCES order_items(id),
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
 --
 -- Table structure for table `categories`

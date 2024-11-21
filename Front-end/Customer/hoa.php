@@ -5,6 +5,27 @@ $product_id = $_GET['id'];
 $sql = "SELECT * FROM products WHERE id = '$product_id' LIMIT 1";
 $result = $db->select($sql);
 $row = $result->fetch_assoc();
+// Xử lý dữ liệu đánh giá khi người dùng gửi form
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
+    $user_id = 1; // Giả sử mã khách hàng là 1 (thay bằng mã khách hàng thực từ session hoặc đăng nhập)
+    $rating = intval($_POST['rating']); // Lấy số sao từ form
+    $comment = $db->escape_string($_POST['comment']);
+    $query = "INSERT INTO comments (content) VALUES ('$comment')";
+    $db->insert($query);
+        $created_at = date("Y-m-d H:i:s"); // Thời gian hiện tại
+
+    // Thêm vào bảng comments
+    $sql = "INSERT INTO comments (order_code, product_id, user_id, rating, comment, created_at)
+            VALUES (NULL, '$product_id', '$user_id', '$rating', '$comment', '$created_at')";
+
+    $result = $db->insert($sql);
+
+    if ($result) {
+        $message = "Đánh giá của bạn đã được gửi thành công!";
+    } else {
+        $message = "Có lỗi xảy ra. Vui lòng thử lại!";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -250,39 +271,65 @@ $row = $result->fetch_assoc();
                         <label class="btn">
                             <input type="radio" name="options" id="option6" autocomplete="off"> 1 Sao (0)
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="options" id="option8" autocomplete="off"> Có Bình Luận (24)
-                        </label>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Đánh giá sản phẩm -->
-        <div id="comments" class="rating-container mt-4" style="display: none;">
-            <h5>Đánh Giá Sản Phẩm</h5>
-            <form id="ratingForm">
-                <div class="star-rating">
-                    <input type="radio" id="star5" name="rating" value="5">
-                    <label for="star5">★</label>
-                    <input type="radio" id="star4" name="rating" value="4">
-                    <label for="star4">★</label>
-                    <input type="radio" id="star3" name="rating" value="3">
-                    <label for="star3">★</label>
-                    <input type="radio" id="star2" name="rating" value="2">
-                    <label for="star2">★</label>
-                    <input type="radio" id="star1" name="rating" value="1">
-                    <label for="star1">★</label>
-                </div>
+        <!-- Form Đánh Giá -->
+    <div id="comments" class="rating-container mt-4">
+        <h5>Đánh Giá Sản Phẩm</h5>
+        <form id="ratingForm" method="POST">
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5">
+                <label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1">★</label>
+            </div>
 
-                <div class="form-group mt-3">
-                    <textarea class="form-control" id="review" rows="4" placeholder="Nhập nhận xét của bạn"></textarea>
-                </div>
-                <button type="submit" class="btn btn-danger">Gửi Đánh Giá</button>
-            </form>
+            <div class="form-group mt-3">
+                <textarea class="form-control" id="review" name="comment" rows="4" placeholder="Nhập nhận xét của bạn"></textarea>
+            </div>
+            <button type="submit" name="submit_review" class="btn btn-danger">Gửi Đánh Giá</button>
+        </form>
 
-            <div class="mt-4" id="reviewMessage"></div>
+        <div class="customer-reviews mt-4">
+            <h5>Nhận Xét Khách Hàng</h5>
+            <?php
+                $sql = "SELECT c.*, u.username FROM comments c
+                        JOIN users u ON c.user_id = u.id
+                        WHERE c.product_id = '$product_id'
+                        ORDER BY c.created_at DESC";
+                $result = $db->select($sql);
+
+                if ($result && $result->num_rows > 0) {
+                    while ($review = $result->fetch_assoc()) {
+                        echo "<div class='review-item mb-3'>";
+                        echo "<h6><strong>" . htmlspecialchars($review['username']) . "</strong> - " . $review['rating'] . "★</h6>";
+                        echo "<p>" . htmlspecialchars($review['comment']) . "</p>";
+                        echo "<small class='text-muted'>Ngày đăng: " . $review['created_at'] . "</small>";
+                        echo "<hr>";
+                        echo "</div>";
+                    }
+                } else {
+                    echo "<p>Chưa có đánh giá nào cho sản phẩm này.</p>";
+                }
+            ?>
         </div>
+
+
+        <?php if (isset($message)): ?>
+            <div class="alert alert-info mt-3"><?php echo $message; ?></div>
+        <?php endif; ?>
+    </div>
+
     </div>
 
     <script>
