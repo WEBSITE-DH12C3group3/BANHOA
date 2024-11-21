@@ -23,6 +23,12 @@ class Database
         }
     }
 
+    // Phương thức escape string để tránh lỗi SQL Injection
+    public function escape_string($value)
+    {
+        return $this->conn->real_escape_string($value);
+    }
+
     // Phương thức chèn dữ liệu
     public function insert($query)
     {
