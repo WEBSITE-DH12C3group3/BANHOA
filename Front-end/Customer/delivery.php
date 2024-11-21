@@ -191,42 +191,37 @@ if (isset($_POST['update'])) {
                         <div class="form-section">
                             <div class="section-title">Phương thức thanh toán</div>
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" disabled>
-                                <label class="form-check-label" for="creditCard">
-                                    Thẻ tín dụng / Thẻ ghi nợ
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay">
+                                <label class="form-check-label" for="vnpay">
+                                    <img src="../public/vnpay.png" alt="vnpay" width="50px">
+                                    VNPAY
                                 </label>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6 mb-3">
-                                    <label for="cardName" class="form-label">Tên trên thẻ</label>
-                                    <input type="text" class="form-control" id="cardName">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="cardNumber" class="form-label">Số thẻ</label>
-                                    <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6 mb-3">
-                                    <label for="expiryDate" class="form-label">Ngày hết hạn</label>
-                                    <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="cvv" class="form-label">CVV</label>
-                                    <input type="text" class="form-control" id="cvv" placeholder="123">
-                                </div>
-                            </div>
-
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" disabled>
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="paypal">
+                                <label class="form-check-label" for="paypal">
+                                    <img src="../public/paypal.png" alt="paypal" width="50px">
+                                    Paypal
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="momo">
+                                <label class="form-check-label" for="momo">
+                                    <img src="../public/momo.png" alt="momo" width="50px">
+                                    MOMO
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer">
                                 <label class="form-check-label" for="bankTransfer">
+                                    <img src="../public/bank.png" alt="bank" width="50px">
                                     Chuyển khoản ngân hàng
                                 </label>
                             </div>
-
                             <div class="form-check mb-3">
                                 <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" checked>
                                 <label class="form-check-label" for="cashOnDelivery">
+                                    <img src="../public/cash.png" alt="cash" width="50px">
                                     Thanh toán khi nhận hàng
                                 </label>
                             </div>
@@ -256,8 +251,12 @@ if (isset($_POST['update'])) {
                                 </li>
                             </ul>
                         </div>
-                        <?php if (count($_SESSION['cart']) > 0): ?>
-                            <a class="w-100 btn btn-primary btn-lg" href="order.php">Thanh toán</a>
+                        <?php if (count($_SESSION['cart']) > 0):
+                            if ($name != "" || $email != "" || $phone != "") { ?>
+                                <a class="w-100 btn btn-primary btn-lg" href="payments.php">Thanh toán</a>
+                            <?php } else { ?>
+                                <div class="w-100" style="text-align: center;"><strong>Vui lòng nhập thông tin thanh toán</strong></div>
+                            <?php } ?>
                         <?php else: ?>
                             <a class="w-100 btn btn-primary btn-lg" href="index.php">Mua hàng</a>
                         <?php endif; ?>

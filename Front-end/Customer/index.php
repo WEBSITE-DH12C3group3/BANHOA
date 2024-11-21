@@ -130,7 +130,6 @@ $db = new Database();
                                                                         <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
                                                                         <div class="card-body text-center">
                                                                             <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
-
                                                                             <!-- Hiển thị giá -->
                                                                             <p class="text-muted">
                                                                                 <?php if ($price_sale) { ?>
@@ -142,8 +141,9 @@ $db = new Database();
                                                                                     <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
                                                                                 <?php } ?>
                                                                             </p>
-                                                                            <button class="btn btn-primary">Đặt hàng</button>
-
+                                                                            <form action="modelcart.php?product_id=<?php echo $row['id'] ?>" method="post">
+                                                                                <button class="btn btn-success" name="addcart">Đặt hàng</button>
+                                                                            </form>
                                                                         </div>
                                                                     </a>
                                                                 </div>
