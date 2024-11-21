@@ -13,14 +13,16 @@ $db->handleSqlError($sql);
 $row = $result->fetch_assoc();
 $id_delivery = $row['id'];
 // them don hang
-$insert_order = "INSERT INTO orders (order_code, user_id, order_date, status, payment_method, id_delivery) VALUES ('" . $order_code . "', '" . $uid . "', NOW(), 'Chờ duyệt', '" . $payment_method . "', '" . $id_delivery . "')";
+$insert_order = "INSERT INTO orders (order_code, user_id, order_date, status, payment_method, id_delivery) 
+    VALUES ('" . $order_code . "', '" . $uid . "', NOW(), 'Chờ duyệt', '" . $payment_method . "', '" . $id_delivery . "')";
 $order_query = $db->insert($insert_order);
 if ($order_query) {
     // them san pham
     foreach ($_SESSION['cart'] as $key => $value) {
         $product_id = $value['id'];
         $quantity = $value['quantity'];
-        $insert_order_detail = "INSERT INTO order_items (order_code, product_id, quantity) VALUES ('" . $order_code . "', '" . $product_id . "', '" . $quantity . "')";
+        $insert_order_detail = "INSERT INTO order_items (order_code, product_id, quantity) 
+            VALUES ('" . $order_code . "', '" . $product_id . "', '" . $quantity . "')";
         $db->insert($insert_order_detail);
     }
 }

@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
     $comment = $db->escape_string($_POST['comment']);
     $query = "INSERT INTO comments (content) VALUES ('$comment')";
     $db->insert($query);
-        $created_at = date("Y-m-d H:i:s"); // Thời gian hiện tại
+    $created_at = date("Y-m-d H:i:s"); // Thời gian hiện tại
 
     // Thêm vào bảng comments
     $sql = "INSERT INTO comments (order_code, product_id, user_id, rating, comment, created_at)
@@ -278,32 +278,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
 
         <!-- Đánh giá sản phẩm -->
         <!-- Form Đánh Giá -->
-    <div id="comments" class="rating-container mt-4">
-        <h5>Đánh Giá Sản Phẩm</h5>
-        <form id="ratingForm" method="POST">
-            <div class="star-rating">
-                <input type="radio" id="star5" name="rating" value="5">
-                <label for="star5">★</label>
-                <input type="radio" id="star4" name="rating" value="4">
-                <label for="star4">★</label>
-                <input type="radio" id="star3" name="rating" value="3">
-                <label for="star3">★</label>
-                <input type="radio" id="star2" name="rating" value="2">
-                <label for="star2">★</label>
-                <input type="radio" id="star1" name="rating" value="1">
-                <label for="star1">★</label>
-            </div>
+        <div id="comments" class="rating-container mt-4">
+            <h5>Đánh Giá Sản Phẩm</h5>
+            <form id="ratingForm" method="POST">
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">★</label>
+                </div>
 
-            <div class="form-group mt-3">
-                <textarea class="form-control" id="review" name="comment" rows="4" placeholder="Nhập nhận xét của bạn"></textarea>
-            </div>
-            <button type="submit" name="submit_review" class="btn btn-danger">Gửi Đánh Giá</button>
-        </form>
+                <div class="form-group mt-3">
+                    <textarea class="form-control" id="review" name="comment" rows="4" placeholder="Nhập nhận xét của bạn"></textarea>
+                </div>
+                <button type="submit" name="submit_review" class="btn btn-danger">Gửi Đánh Giá</button>
+            </form>
 
-        <div class="customer-reviews mt-4">
-            <h5>Nhận Xét Khách Hàng</h5>
-            <?php
-                $sql = "SELECT c.*, u.username FROM comments c
+            <div class="customer-reviews mt-4">
+                <h5>Nhận Xét Khách Hàng</h5>
+                <?php
+                $sql = "SELECT c.*, u.email FROM comments c
                         JOIN users u ON c.user_id = u.id
                         WHERE c.product_id = '$product_id'
                         ORDER BY c.created_at DESC";
@@ -321,14 +321,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
                 } else {
                     echo "<p>Chưa có đánh giá nào cho sản phẩm này.</p>";
                 }
-            ?>
+                ?>
+            </div>
+
+
+            <?php if (isset($message)): ?>
+                <div class="alert alert-info mt-3"><?php echo $message; ?></div>
+            <?php endif; ?>
         </div>
-
-
-        <?php if (isset($message)): ?>
-            <div class="alert alert-info mt-3"><?php echo $message; ?></div>
-        <?php endif; ?>
-    </div>
 
     </div>
 
@@ -356,7 +356,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
             }
         });
     </script>
-    
+
 
     <div class="container mt-5">
         <h2 class="text-danger">Những mẫu hoa tươi cùng loại khác</h2>
@@ -411,31 +411,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/BANHOA/mycss/pagination.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    // Ẩn phần comments mặc định
-    const commentsSection = document.getElementById('comments');
-    commentsSection.style.display = 'none';  // Ẩn phần comments
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ẩn phần comments mặc định
+            const commentsSection = document.getElementById('comments');
+            commentsSection.style.display = 'none'; // Ẩn phần comments
 
-    // Kiểm tra xem có tham số trên URL hay không
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('show_comments') && urlParams.get('show_comments') === 'true') {
-        commentsSection.style.display = 'block'; // Hiển thị comments nếu tham số có giá trị true
-    }
+            // Kiểm tra xem có tham số trên URL hay không
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('show_comments') && urlParams.get('show_comments') === 'true') {
+                commentsSection.style.display = 'block'; // Hiển thị comments nếu tham số có giá trị true
+            }
 
-    // Lấy tất cả các nút "Đánh giá"
-    const reviewButtons = document.querySelectorAll('.review-button');
+            // Lấy tất cả các nút "Đánh giá"
+            const reviewButtons = document.querySelectorAll('.review-button');
 
-    reviewButtons.forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+            reviewButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
 
-            // Thêm tham số vào URL để hiển thị phần comments
-            window.location.href = window.location.href.split('?')[0] + '?show_comments=true'; 
+                    // Thêm tham số vào URL để hiển thị phần comments
+                    window.location.href = window.location.href.split('?')[0] + '?show_comments=true';
+                });
+            });
         });
-    });
-});
-
-</script>
+    </script>
 
 </body>
 

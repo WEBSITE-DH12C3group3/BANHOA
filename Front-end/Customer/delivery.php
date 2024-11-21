@@ -28,6 +28,7 @@ if (isset($_POST['update'])) {
     <title>Thanh Toán</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             background-color: #f7f7f7;
@@ -188,87 +189,99 @@ if (isset($_POST['update'])) {
                                 </div>
                             </div>
                         </form>
-                        <form class="form-section" action="order.php" method="POST">
-                            <div class="section-title">Phương thức thanh toán</div>
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" value="vnpay">
-                                <label class="form-check-label" for="vnpay">
-                                    <img src="../public/vnpay.png" alt="vnpay" width="50px">
-                                    VNPAY
-                                </label>
-                            </div>
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="paypal" value="paypal">
-                                <label class="form-check-label" for="paypal">
-                                    <img src="../public/paypal.png" alt="paypal" width="50px">
-                                    Paypal
-                                </label>
-                            </div>
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="momo" value="momo">
-                                <label class="form-check-label" for="momo">
-                                    <img src="../public/momo.png" alt="momo" width="50px">
-                                    MOMO
-                                </label>
-                            </div>
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bank">
-                                <label class="form-check-label" for="bankTransfer">
-                                    <img src="../public/bank.png" alt="bank" width="50px">
-                                    Chuyển khoản ngân hàng
-                                </label>
-                            </div>
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" checked value="cash">
-                                <label class="form-check-label" for="cashOnDelivery">
-                                    <img src="../public/cash.png" alt="cash" width="50px">
-                                    Thanh toán khi nhận hàng
-                                </label>
-                            </div>
-                        </form>
-
-                        <!-- Order Summary Section -->
                         <div class="form-section">
-                            <div class="section-title">Tóm tắt đơn hàng</div>
-                            <ul class="list-group mb-3">
-                                <?php foreach ($_SESSION['cart'] as $key => $value) {
-                                    $query = "SELECT price, sale FROM products WHERE id = '" . $value['id'] . "'";
-                                    $rs = $db->select($query);
-                                    $r = $rs->fetch_assoc();
-                                    $price = ($r['price'] - ($r['price'] * $r['sale'] / 100)) * $value['quantity'];
-                                    $total += $price * $value['quantity'];
-                                ?>
-                                    <li class="list-group-item d-flex justify-content-between lh-sm">
-                                        <div>
-                                            <h6 class="my-0"><?php echo $value['name']; ?></h6>
-                                        </div>
-                                        <span class="text-muted"><?php echo number_format($price, 0, ',', '.'); ?> ₫</span>
+                            <div class="section-title">Phương thức thanh toán</div>
+                            <form id="paymentForm" action="t.php" method="POST" style="display: none;">
+                                <input type="hidden" name="paymentMethod" id="hiddenPaymentMethod" value="">
+                            </form>
+                            <div class="payment-methods">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" value="vnpay">
+                                    <label class="form-check-label" for="vnpay">
+                                        <img src="../public/vnpay.png" alt="vnpay" width="50px">
+                                        VNPAY
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="paypal" value="paypal">
+                                    <label class="form-check-label" for="paypal">
+                                        <img src="../public/paypal.png" alt="paypal" width="50px">
+                                        Paypal
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="momo" value="momo">
+                                    <label class="form-check-label" for="momo">
+                                        <img src="../public/momo.png" alt="momo" width="50px">
+                                        MOMO
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bank">
+                                    <label class="form-check-label" for="bankTransfer">
+                                        <img src="../public/bank.png" alt="bank" width="50px">
+                                        Chuyển khoản ngân hàng
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" checked value="cash">
+                                    <label class="form-check-label" for="cashOnDelivery">
+                                        <img src="../public/cash.png" alt="cash" width="50px">
+                                        Thanh toán khi nhận hàng
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Order Summary Section -->
+                            <div class="form-section">
+                                <div class="section-title">Tóm tắt đơn hàng</div>
+                                <ul class="list-group mb-3">
+                                    <?php foreach ($_SESSION['cart'] as $key => $value) {
+                                        $query = "SELECT price, sale FROM products WHERE id = '" . $value['id'] . "'";
+                                        $rs = $db->select($query);
+                                        $r = $rs->fetch_assoc();
+                                        $price = ($r['price'] - ($r['price'] * $r['sale'] / 100)) * $value['quantity'];
+                                        $total += $price * $value['quantity'];
+                                    ?>
+                                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                                            <div>
+                                                <h6 class="my-0"><?php echo $value['name']; ?></h6>
+                                            </div>
+                                            <span class="text-muted"><?php echo number_format($price, 0, ',', '.'); ?> ₫</span>
+                                        </li>
+                                    <?php } ?>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Tổng (VND)</span>
+                                        <strong class="total-price"><?php echo number_format($total, 0, ',', '.'); ?> ₫</strong>
                                     </li>
+                                </ul>
+                            </div>
+                            <?php if (count($_SESSION['cart']) > 0):
+                                if ($name != "" || $email != "" || $phone != "") { ?>
+                                    <button type="submit" class="w-100 btn btn-primary btn-lg">Thanh toán</button>
+                                <?php } else { ?>
+                                    <div class="w-100" style="text-align: center;"><strong>Vui lòng nhập thông tin thanh toán</strong></div>
                                 <?php } ?>
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Tổng (VND)</span>
-                                    <strong class="total-price"><?php echo number_format($total, 0, ',', '.'); ?> ₫</strong>
-                                </li>
-                            </ul>
+                            <?php else: ?>
+                                <a class="w-100 btn btn-primary btn-lg" href="index.php">Mua hàng</a>
+                            <?php endif; ?>
                         </div>
-                        <?php if (count($_SESSION['cart']) > 0):
-                            if ($name != "" || $email != "" || $phone != "") { ?>
-                                <button type="submit" class="w-100 btn btn-primary btn-lg">Thanh toán</button>
-                            <?php } else { ?>
-                                <div class="w-100" style="text-align: center;"><strong>Vui lòng nhập thông tin thanh toán</strong></div>
-                            <?php } ?>
-                        <?php else: ?>
-                            <a class="w-100 btn btn-primary btn-lg" href="index.php">Mua hàng</a>
-                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-    <?php include 'footer.php'; ?>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            $(document).ready(function() { // Đảm bảo DOM đã sẵn sàng
+                $('.payment-methods input[name="paymentMethod"]').change(function() {
+                    $('#hiddenPaymentMethod').val($(this).val());
+                    $('#paymentForm').submit();
+                });
+            });
+        </script>
+        <?php include 'footer.php'; ?>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
