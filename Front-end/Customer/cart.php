@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="cart-total py-2">
                         <?php if (isset($_SESSION['user_logged_in'])): ?>
-                            <button class="bton"><a href="htvc.php" style="color: white; text-decoration: none;">Hình thức vận chuyển</a></button>
+                            <button class="bton"><a href="delivery.php" style="color: white; text-decoration: none;">Hình thức vận chuyển</a></button>
                         <?php else: ?>
                             <button class="bton"><a href="dangky.php" style="color: white; text-decoration: none;">Đăng ký để tiếp tục</a></button>
                         <?php endif; ?>
