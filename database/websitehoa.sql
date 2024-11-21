@@ -89,21 +89,8 @@ CREATE TABLE `order_items` (
   `id` int(11) NOT NULL,
   `order_code` varchar(8) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
-  `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payments`
---
-
-CREATE TABLE `payments` (
-  `id` int(11) NOT NULL,
-  `order_id` int(11) DEFAULT NULL,
-  `payment_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `payment_method` varchar(50) DEFAULT NULL,
-  `amount` decimal(10,2) DEFAULT NULL
+  `quantity` int(11) NOT NULL,
+  `payment_method` varchar(255) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
