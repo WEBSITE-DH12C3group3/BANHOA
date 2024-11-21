@@ -76,7 +76,9 @@ CREATE TABLE `orders` (
   `user_id` int(11) DEFAULT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` varchar(50) DEFAULT NULL,
-  `total` decimal(10,2) DEFAULT NULL
+  `total` decimal(10,2) DEFAULT NULL,
+  `payment_method` varchar(255) NOT NULL,
+  `id_delivery` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

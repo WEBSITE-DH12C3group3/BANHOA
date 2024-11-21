@@ -188,44 +188,44 @@ if (isset($_POST['update'])) {
                                 </div>
                             </div>
                         </form>
-                        <div class="form-section">
+                        <form class="form-section" action="order.php" method="POST">
                             <div class="section-title">Phương thức thanh toán</div>
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" value="vnpay">
                                 <label class="form-check-label" for="vnpay">
                                     <img src="../public/vnpay.png" alt="vnpay" width="50px">
                                     VNPAY
                                 </label>
                             </div>
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="paypal">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="paypal" value="paypal">
                                 <label class="form-check-label" for="paypal">
                                     <img src="../public/paypal.png" alt="paypal" width="50px">
                                     Paypal
                                 </label>
                             </div>
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="momo">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="momo" value="momo">
                                 <label class="form-check-label" for="momo">
                                     <img src="../public/momo.png" alt="momo" width="50px">
                                     MOMO
                                 </label>
                             </div>
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bank">
                                 <label class="form-check-label" for="bankTransfer">
                                     <img src="../public/bank.png" alt="bank" width="50px">
                                     Chuyển khoản ngân hàng
                                 </label>
                             </div>
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" checked>
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" checked value="cash">
                                 <label class="form-check-label" for="cashOnDelivery">
                                     <img src="../public/cash.png" alt="cash" width="50px">
                                     Thanh toán khi nhận hàng
                                 </label>
                             </div>
-                        </div>
+                        </form>
 
                         <!-- Order Summary Section -->
                         <div class="form-section">
@@ -253,7 +253,7 @@ if (isset($_POST['update'])) {
                         </div>
                         <?php if (count($_SESSION['cart']) > 0):
                             if ($name != "" || $email != "" || $phone != "") { ?>
-                                <a class="w-100 btn btn-primary btn-lg" href="payments.php">Thanh toán</a>
+                                <button type="submit" class="w-100 btn btn-primary btn-lg">Thanh toán</button>
                             <?php } else { ?>
                                 <div class="w-100" style="text-align: center;"><strong>Vui lòng nhập thông tin thanh toán</strong></div>
                             <?php } ?>
