@@ -96,6 +96,7 @@ $db = new Database();
                         <th scope="col">Tên khách hàng</th>
                         <th scope="col">Số điện thoại</th>
                         <th scope="col">Tổng tiền</th>
+                        <th scope="col">Phương thức thanh toán</th>
                         <th scope="col">Ngày tạo</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Hành động</th>
@@ -103,7 +104,7 @@ $db = new Database();
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT o.id, o.order_code, u.fullname, u.phone, o.order_date, o.total, o.status
+                    $sql = "SELECT o.id, o.order_code, u.fullname, u.phone, o.order_date, o.total, o.status, o.payment_method
                                 FROM orders o
                                 JOIN users u ON o.user_id = u.id
                                 ORDER BY o.order_date DESC";
@@ -123,6 +124,14 @@ $db = new Database();
                                     } else {
                                         echo $row['total'] . ' Chờ duyệt';
                                     } ?>
+                                </td>
+                                <td><?php if ($row['payment_method'] == 'bank') {
+                                        echo 'Chuyển khoản ngân hàng';
+                                    } elseif ($row['payment_method'] == 'cash') {
+                                        echo 'Thanh toán khi nhận hàng';
+                                    } else { ?>
+                                        <strong><?php echo $row['payment_method']; ?></strong>
+                                    <?php } ?>
                                 </td>
                                 <td><?php echo $row['order_date']; ?></td>
                                 <td><?php echo $row['status']; ?></td>

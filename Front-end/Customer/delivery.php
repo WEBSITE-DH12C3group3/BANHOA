@@ -135,7 +135,7 @@ if (isset($_POST['update'])) {
                 <div class="checkout-container">
                     <h2 class=" text-center mb-4" style="color: #d8243c;">Thông tin thanh toán</h2>
                     <div class="form-section">
-                        <form action="delivery.php" method="POST">
+                        <form id="deliveryForm" action="delivery.php" method="POST">
                             <?php
                             $sql = "SELECT * FROM delivery WHERE user_id = '" . $uid . "' LIMIT 1";
                             $result = $db->select($sql);
@@ -182,18 +182,15 @@ if (isset($_POST['update'])) {
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <?php if ($name == "" || $email == "" || $phone == ""): ?>
-                                        <button type="submit" name="add" class="form-control w-50 btn btn-primary btn-lg">Thêm vận chuyển</button>
+                                        <button type="submit" name="add" form="deliveryForm" class="form-control w-50 btn btn-primary btn-lg">Thêm vận chuyển</button>
                                     <?php else: ?>
-                                        <button type="submit" name="update" class="form-control w-50 btn btn-primary btn-lg">Cập nhật vận chuyển</button>
+                                        <button type="submit" name="update" form="deliveryForm" class="form-control w-50 btn btn-primary btn-lg">Cập nhật vận chuyển</button>
                                     <?php endif; ?>
                                 </div>
                             </div>
                         </form>
-                        <div class="form-section">
+                        <form id="paymentForm" action="order.php" method="POST">
                             <div class="section-title">Phương thức thanh toán</div>
-                            <form id="paymentForm" action="t.php" method="POST" style="display: none;">
-                                <input type="hidden" name="paymentMethod" id="hiddenPaymentMethod" value="">
-                            </form>
                             <div class="payment-methods">
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" value="vnpay">
@@ -203,28 +200,28 @@ if (isset($_POST['update'])) {
                                     </label>
                                 </div>
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="paypal" value="paypal">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" value="paypal" id="paypal">
                                     <label class="form-check-label" for="paypal">
                                         <img src="../public/paypal.png" alt="paypal" width="50px">
                                         Paypal
                                     </label>
                                 </div>
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="momo" value="momo">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" value="momo" id="momo">
                                     <label class="form-check-label" for="momo">
                                         <img src="../public/momo.png" alt="momo" width="50px">
                                         MOMO
                                     </label>
                                 </div>
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bank">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" value="bank" id="bankTransfer">
                                     <label class="form-check-label" for="bankTransfer">
                                         <img src="../public/bank.png" alt="bank" width="50px">
                                         Chuyển khoản ngân hàng
                                     </label>
                                 </div>
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" checked value="cash">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" checked value="cash" id="cashOnDelivery">
                                     <label class="form-check-label" for="cashOnDelivery">
                                         <img src="../public/cash.png" alt="cash" width="50px">
                                         Thanh toán khi nhận hàng
@@ -258,27 +255,18 @@ if (isset($_POST['update'])) {
                             </div>
                             <?php if (count($_SESSION['cart']) > 0):
                                 if ($name != "" || $email != "" || $phone != "") { ?>
-                                    <button type="submit" class="w-100 btn btn-primary btn-lg">Thanh toán</button>
+                                    <button type="submit" form="paymentForm" class="w-100 btn btn-primary btn-lg">Thanh toán</button>
                                 <?php } else { ?>
                                     <div class="w-100" style="text-align: center;"><strong>Vui lòng nhập thông tin thanh toán</strong></div>
                                 <?php } ?>
                             <?php else: ?>
                                 <a class="w-100 btn btn-primary btn-lg" href="index.php">Mua hàng</a>
                             <?php endif; ?>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
-        <script>
-            $(document).ready(function() { // Đảm bảo DOM đã sẵn sàng
-                $('.payment-methods input[name="paymentMethod"]').change(function() {
-                    $('#hiddenPaymentMethod').val($(this).val());
-                    $('#paymentForm').submit();
-                });
-            });
-        </script>
         <?php include 'footer.php'; ?>
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
