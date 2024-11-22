@@ -316,7 +316,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
                 </ul>
             </div>
         </div>
-        <div id="comments" class="rating-container mt-4">
+        <div id="comments" class="rating-container mt-4" style="display: none;">
             <h5>Đánh Giá Sản Phẩm</h5>
             <form id="ratingForm" method="POST">
                 <div class="star-rating">
@@ -342,6 +342,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Ẩn phần comments mặc định
+    const commentsSection = document.getElementById('comments');
+    commentsSection.style.display = 'none';  // Ẩn phần comments
+
+    // Kiểm tra xem có tham số trên URL hay không
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('show_comments') && urlParams.get('show_comments') === 'true') {
+        commentsSection.style.display = 'block'; // Hiển thị comments nếu tham số có giá trị true
+    }
+
+    // Lấy tất cả các nút "Đánh giá"
+    const reviewButtons = document.querySelectorAll('.review-button');
+
+    reviewButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+
+            // Thêm tham số vào URL để hiển thị phần comments
+            window.location.href = window.location.href.split('?')[0] + '?show_comments=true'; 
+        });
+    });
+});
+
+</script>
     <script>
         function filterReviews(rating) {
             var commentsHtml = '';
