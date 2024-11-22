@@ -50,15 +50,16 @@ INSERT INTO `categories` (`id`, `category_name`) VALUES
 -- Table structure for table `comments`
 --
 
-CREATE TABLE `comments` (
-  `id` int(11) NOT NULL,
-  `order_code` int(11) DEFAULT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `rating` int(1) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    fullname VARCHAR(255) NOT NULL,
+    rating INT(1) CHECK (rating >= 1 AND rating <= 5),
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
 
 -- --------------------------------------------------------
 

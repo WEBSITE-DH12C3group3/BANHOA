@@ -174,7 +174,7 @@ if (isset($_GET['order_code'])) {
 
         <?php if ($order_status == 'Đã duyệt') { ?>
             <!-- Nút để khách hàng xác nhận đã nhận hàng -->
-            <form class="right" id="receiveOrderForm" method="POST" action="" onsubmit="return confirmFinish();">
+            <form class="right" id="receiveOrderForm" method="POST" onsubmit="return confirmFinish();">
                 <input type="hidden" name="order_code" value="<?php echo $order_code; ?>">
                 <input type="hidden" name="status" value="Đã nhận">
                 <button type="submit" name="finish">
