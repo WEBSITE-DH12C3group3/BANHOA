@@ -246,7 +246,8 @@ if (isset($_POST['update'])) {
                                             </div>
                                             <span class="text-muted"><?php echo number_format($price, 0, ',', '.'); ?> ₫</span>
                                         </li>
-                                    <?php } ?>
+                                    <?php }
+                                    $_SESSION["total"] = $total; ?>
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>Tổng (VND)</span>
                                         <strong class="total-price"><?php echo number_format($total, 0, ',', '.'); ?> ₫</strong>
