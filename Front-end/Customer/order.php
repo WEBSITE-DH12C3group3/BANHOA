@@ -16,6 +16,8 @@ $id_delivery = $row['id'];
 $insert_order = "INSERT INTO orders (order_code, user_id, order_date, status, payment_method, id_delivery) 
     VALUES ('" . $order_code . "', '" . $uid . "', NOW(), 'Chờ duyệt', '" . $payment_method . "', '" . $id_delivery . "')";
 $order_query = $db->insert($insert_order);
+$db->handleSqlError($insert_order);
+// them order detail
 if ($order_query) {
     // them san pham
     foreach ($_SESSION['cart'] as $key => $value) {

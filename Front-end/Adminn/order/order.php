@@ -130,7 +130,7 @@ $db = new Database();
                                     } elseif ($row['payment_method'] == 'cash') {
                                         echo 'Thanh toán khi nhận hàng';
                                     } else { ?>
-                                        <strong><?php echo $row['payment_method']; ?></strong>
+                                        <p class="text-uppercase"><?php echo $row['payment_method']; ?></p>
                                     <?php } ?>
                                 </td>
                                 <td><?php echo $row['order_date']; ?></td>

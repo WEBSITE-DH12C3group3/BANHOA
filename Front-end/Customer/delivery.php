@@ -196,7 +196,7 @@ if (isset($_POST['update'])) {
                                     <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" value="vnpay">
                                     <label class="form-check-label" for="vnpay">
                                         <img src="../public/vnpay.png" alt="vnpay" width="50px">
-                                        VNPAY
+                                        Vnpay
                                     </label>
                                 </div>
                                 <div class="form-check mb-3">
@@ -210,7 +210,7 @@ if (isset($_POST['update'])) {
                                     <input class="form-check-input" type="radio" name="paymentMethod" value="momo" id="momo">
                                     <label class="form-check-label" for="momo">
                                         <img src="../public/momo.png" alt="momo" width="50px">
-                                        MOMO
+                                        Momo
                                     </label>
                                 </div>
                                 <div class="form-check mb-3">
