@@ -258,6 +258,35 @@ INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `address`, 
 (9999, 'admin', 'admin@1', '1', NULL, NULL, 'admin', '2024-11-10 17:32:49'),
 (10000, 'doan hong quan', 'quan@2', '2', '1', '1', 'customer', '2024-11-10 18:26:45');
 
+CREATE TABLE `vnpay` (
+  `vnpay_id` int(11) NOT NULL,
+  `vnpay_amount` varchar(50) NOT NULL,
+  `vnpay_bankcode` varchar(50) NOT NULL,
+  `vnpay_banktranno` varchar(50) NOT NULL,
+  `vnpay_cardtype` varchar(50) NOT NULL,
+  `vnpay_orderinfo` varchar(100) NOT NULL,
+  `vnpay_paydate` varchar(50) NOT NULL,
+  `vnpay_tmncode` varchar(50) NOT NULL,
+  `vnpay_transactionno` varchar(50) NOT NULL,
+  `order_code` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Chỉ mục cho bảng `vnpay`
+--
+ALTER TABLE `vnpay`
+  ADD PRIMARY KEY (`vnpay_id`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
+
+--
+-- AUTO_INCREMENT cho bảng `vnpay`
+--
+ALTER TABLE `vnpay`
+  MODIFY `vnpay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+COMMIT;
 --
 -- Indexes for dumped tables
 --

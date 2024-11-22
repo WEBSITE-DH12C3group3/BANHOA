@@ -255,9 +255,11 @@ if (isset($_POST['update'])) {
                             </div>
                             <?php if (count($_SESSION['cart']) > 0):
                                 if ($name != "" || $email != "" || $phone != "") { ?>
-                                    <button type="submit" form="paymentForm" class="w-100 btn btn-primary btn-lg">Thanh toán</button>
+                                    <button type="submit" form="paymentForm" name="redirect" class="w-100 btn btn-primary btn-lg">Thanh toán</button>
                                 <?php } else { ?>
-                                    <div class="w-100" style="text-align: center;"><strong>Vui lòng nhập thông tin thanh toán</strong></div>
+                                    <div class="w-100" style="text-align: center;">
+                                        <srong>Vui lòng nhập thông tin thanh toán</srong>
+                                    </div>
                                 <?php } ?>
                             <?php else: ?>
                                 <a class="w-100 btn btn-primary btn-lg" href="index.php">Mua hàng</a>
