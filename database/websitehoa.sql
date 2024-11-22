@@ -54,7 +54,7 @@ CREATE TABLE comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,
     fullname VARCHAR(255) NOT NULL,
-    rating INT(1) CHECK (rating >= 1 AND rating <= 5),
+    rating INT(1) CHECK (rating >= 1 AND rating <= 5),      
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(id)
