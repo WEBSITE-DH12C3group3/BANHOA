@@ -52,147 +52,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoa | <?php echo $row['product_name']; ?></title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f7f7f7;
-        }
-
-        .product-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .price {
-            font-size: 1.5rem;
-            color: red;
-        }
-
-        .old-price {
-            text-decoration: line-through;
-            color: #999;
-        }
-
-        .offer-section {
-            background-color: #e9f7ef;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-
-        .offer-section li {
-            list-style-type: none;
-            margin: 5px 0;
-        }
-
-        .product-buttons {
-            margin-top: 20px;
-        }
-
-        .product-buttons button {
-            margin-right: 10px;
-        }
-
-        .note {
-            background-color: #ffefef;
-            padding: 10px;
-            margin-top: 10px;
-            border-left: 5px solid red;
-        }
-
-        .rating-container {
-            background-color: #fdf7f2;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #f5ece6;
-            margin-top: 20px;
-        }
-
-        .rating-stars {
-            color: #f44336;
-            font-size: 20px;
-        }
-
-        .btn-group-toggle .btn {
-            border: 1px solid #ccc;
-            background-color: white;
-            color: #333;
-        }
-
-        .btn.active {
-            background-color: #f5ece6;
-            border-color: #f44336;
-            color: #f44336;
-        }
-
-        .star-rating input {
-            display: none;
-        }
-
-        .star-rating label {
-            font-size: 24px;
-            color: #ddd;
-            cursor: pointer;
-        }
-
-        .star-rating input:checked~label,
-        .star-rating label:hover,
-        .star-rating label:hover~label {
-            color: #f44336;
-        }
-
-        .sale-badge {
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            font-size: 12px;
-        }
-
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .card h5 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            font-size: 16px;
-        }
-
-        .card-body {
-            padding: 10px;
-        }
-
-        .text-danger {
-            color: #dc3545 !important;
-        }
-
-        .text-white {
-            color: #fff !important;
-        }
-
-        .bg-danger {
-            background-color: #dc3545 !important;
-        }
-
-        .bg-warning {
-            background-color: #ffc107 !important;
-        }
-
-        a:hover {
-            text-decoration: none;
-            color: black;
-        }
-    </style>
+    <link rel="stylesheet" href="/BANHOA/mycss/hoacss.css">
 </head>
 <body style="margin-top: 200px;">
-<div class="container mt-5">
+    <div class="container mt-5">
         <form class="row" action="modelcart.php?product_id=<?php echo $row['id'] ?>" method="post">
             <!-- Product Image -->
             <div class="col-md-6">
@@ -202,13 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
             <div class="col-md-6">
                 <h3 class="product-title"><?php echo $row['product_name']; ?></h3>
                 <p>
-                    <span class="old-price" style="font-weight: bold;color: #000000 "><?php echo number_format($row['price'], 0, ',', '.'); ?> VND</span>
+                    <span class="old-price" style="font-weight: bold;color: #000000;"><?php echo number_format($row['price'], 0, ',', '.'); ?> VND</span>
                     <span class="price" style="font-weight: bold; color: #f2231d;"><?php echo number_format($row['price_sale'], 0, ',', '.'); ?> VND</span>
                 </p>
 
                 <p><small>Giá đã bao gồm 8% VAT - Sản phẩm hỗ trợ giao miễn phí khu vực gần.</small></p>
 
-                <!-- Product Components -->
                 <ul class="list-unstyled">
                     <li><?php echo $row['description']; ?></li>
                 </ul>
@@ -260,10 +127,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
             </div>
         </form>
     </div>
-    </div>
 
-<div class="container">
-    <!-- Phần đánh giá sản phẩm -->
+    <div class="container">
+        <!-- Phần đánh giá sản phẩm -->
         <div class="rating-container">
             <div class="row">
                 <div class="col-md-2 text-center">
@@ -310,37 +176,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
         <div class="customer-reviews mt-4">
             <h5>Nhận Xét Khách Hàng</h5>
             <div id="reviewList">
-                <!-- Các đánh giá sẽ được load ở đây thông qua AJAX -->
                 <ul>
                     <?php foreach ($comments as $comment) { ?>
                         <li>
-                            <strong><?php echo htmlspecialchars($comment['fullname']); ?> - <?php echo $comment['rating']; ?> Sao</strong>
+                            <strong><?php echo htmlspecialchars($comment['fullname']); ?></strong>
+                            <div class="rating">
+                                <?php for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $comment['rating']) {
+                                        echo '★';
+                                    } else {
+                                        echo '☆';
+                                    }
+                                } ?>
+                            </div>
                             <p><?php echo htmlspecialchars($comment['comment']); ?></p>
-                            <span><em>Ngày: <?php echo $comment['created_at']; ?></em></span>
+                            <small><?php echo $comment['created_at']; ?></small>
                         </li>
                     <?php } ?>
                 </ul>
             </div>
-        </div>
-    <div id="comments" class="rating-container mt-4" style="display: none;">
-        <h5>Đánh Giá Sản Phẩm</h5>
-        <form method="POST">
-            <div class="star-rating">
-                <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
-                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
-                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
-                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
-                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
-            </div>
-            <div class="form-group mt-3">
-                <textarea class="form-control" name="comment" rows="4" placeholder="Nhập nhận xét của bạn"></textarea>
-            </div>
-            <button type="submit" name="submit_review" class="btn btn-danger">Gửi Đánh Giá</button>
-        </form>
-    </div>
-</>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <?php if (isset($message) && $message): ?>
+                <div class="alert alert-info"><?php echo $message; ?></div>
+            <?php endif; ?>
+
+            <!-- Form for submitting review -->
+            <div id="comments" class="rating-container mt-4" style="display: none;">
+                <h5>Đánh Giá Sản Phẩm</h5>
+                <form method="POST">
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                    </div>
+                    <div class="form-group mt-3">
+                        <textarea class="form-control" name="comment" rows="4" placeholder="Nhập nhận xét của bạn"></textarea>
+                    </div>
+                    <button type="submit" name="submit_review" class="btn btn-danger">Gửi Đánh Giá</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -368,33 +247,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
 });
 
 </script>
-    <script>
-        function filterReviews(rating) {
-            var commentsHtml = '';
-            var allComments = <?php echo json_encode($comments); ?>;
-            var filteredComments = allComments.filter(function(comment) {
-                return comment.rating == rating;
-            });
-            
-            filteredComments.forEach(function(comment) {
-                commentsHtml += '<li><strong>' + comment.fullname + ' - ' + comment.rating + ' Sao</strong>';
-                commentsHtml += '<p>' + comment.comment + '</p>';
-                commentsHtml += '<span><em>Ngày: ' + comment.created_at + '</em></span></li>';
-            });
-            
-            if (commentsHtml === '') {
-                commentsHtml = '<li>Không có nhận xét cho mức sao này.</li>';
-            }
-            
-            $('#reviewList').html('<ul>' + commentsHtml + '</ul>');
-        }
 
-        // Khi trang được tải, hiển thị tất cả đánh giá mặc định
-        $(document).ready(function() {
-            filterReviews(0); // 0 nghĩa là tất cả các đánh giá
-        });
-    </script>
-    <div class="container mt-5">
+<div class="container mt-5">
         <h2 class="text-danger">Những mẫu hoa tươi cùng loại khác</h2>
         <div class="row" id="Table">
             <?php
@@ -446,5 +300,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/BANHOA/mycss/pagination.js"></script>
+    
 </body>
 </html>
