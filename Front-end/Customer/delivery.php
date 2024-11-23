@@ -221,7 +221,7 @@ if (isset($_POST['update'])) {
                                     </label>
                                 </div>
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" value="mmatm" id="mmatm">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" value="momo_atm" id="momo_atm">
                                     <label class="form-check-label" for="mmatm">
                                         <img src="../public/momo.png" alt="momo atm" width="50px">
                                         MoMo ATM
@@ -247,7 +247,8 @@ if (isset($_POST['update'])) {
                                             <span class="text-muted"><?php echo number_format($price, 0, ',', '.'); ?> ₫</span>
                                         </li>
                                     <?php }
-                                    $_SESSION["total"] = $total; ?>
+                                    $_SESSION["total"] = $total;
+                                    ?>
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>Tổng (VND)</span>
                                         <strong class="total-price"><?php echo number_format($total, 0, ',', '.'); ?> ₫</strong>

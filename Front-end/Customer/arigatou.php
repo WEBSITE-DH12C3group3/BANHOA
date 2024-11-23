@@ -6,6 +6,8 @@ if (isset($_GET['order_code'])) {
     $order_code = $_GET['order_code'];
 } elseif (isset($_GET['vnp_TxnRef'])) {
     $order_code = $_GET['vnp_TxnRef'];
+} elseif (isset($_GET['orderId'])) {
+    $order_code = $_GET['orderId'];
 } else {
     die("Lỗi: Thiếu mã đơn hàng.");
 }
@@ -23,6 +25,19 @@ if (isset($_GET['vnp_Amount'])) {
         VALUES ('" . $order_code . "', '" . $vnp_Amount . "', '" . $vnp_BankCode . "', '" . $vnp_BankTranNo . "', '" . $vnp_OrderInfo . "', '" . $vnp_PayDate . "', '" . $vnp_TmnCode . "', '" . $vnp_TransactionNo . "', '" . $vnp_CardType . "')";
     $db->insert($insert_vnp);
     $db->handleSqlError($insert_vnp);
+} elseif (isset($_GET['partnerCode'])) {
+    $partnerCode = $_GET['partnerCode'];
+    $order_code = $_GET['orderId'];
+    $amount = $_GET['amount'];
+    $order_info = $_GET['orderInfo'];
+    $order_type = $_GET['orderType'];
+    $trans_id = $_GET['transId'];
+    $pay_type = $_GET['payType'];
+
+    $insert_momo = "INSERT INTO momo (partner_code, order_code, amount, order_info, order_type, trans_id, pay_type) 
+        VALUES ('" . $partnerCode . "', '" . $order_code . "', '" . $amount . "', '" . $order_info . "', '" . $order_type . "', '" . $trans_id . "', '" . $pay_type . "')";
+    $db->insert($insert_momo);
+    $db->handleSqlError($insert_momo);
 }
 ?>
 
