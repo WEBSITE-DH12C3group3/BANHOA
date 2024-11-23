@@ -213,18 +213,18 @@ if (isset($_POST['update'])) {
                                         Vnpay
                                     </label>
                                 </div>
-                                <!-- <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" value="paypal" id="paypal">
-                                    <label class="form-check-label" for="paypal">
-                                        <img src="../public/paypal.png" alt="paypal" width="50px">
-                                        Paypal
-                                    </label>
-                                </div> -->
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="radio" name="paymentMethod" value="momo" id="momo">
                                     <label class="form-check-label" for="momo">
                                         <img src="../public/momo.png" alt="momo" width="50px">
-                                        Momo
+                                        MoMo
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" value="mmatm" id="mmatm">
+                                    <label class="form-check-label" for="mmatm">
+                                        <img src="../public/momo.png" alt="momo atm" width="50px">
+                                        MoMo ATM
                                     </label>
                                 </div>
                             </div>

@@ -48,6 +48,10 @@ if ($payment_method == 'vnpay') {
     // xuly momo
     include_once "mmhandle.php";
     exit();
+} elseif ($payment_method == 'mmatm') {
+    // xuly momo atm
+    include_once "mmatmhandle.php";
+    exit();
 } else {
     // thanh toan khi nhận hàng và chuyển khoản
     $insert_order = "INSERT INTO orders (order_code, user_id, order_date, status, payment_method, id_delivery) 

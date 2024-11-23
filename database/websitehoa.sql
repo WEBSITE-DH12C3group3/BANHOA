@@ -3,16 +3,16 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2024 at 06:07 PM
+-- Generation Time: Nov 23, 2024 at 05:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
-
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
+CREATE DATABASE `websitehoa` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `websitehoa`;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `websitehoa`
 --
-CREATE DATABASE websitehoa;
-USE websitehoa;
 
 -- --------------------------------------------------------
 
@@ -50,18 +48,14 @@ INSERT INTO `categories` (`id`, `category_name`) VALUES
 -- Table structure for table `comments`
 --
 
-CREATE TABLE comments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    product_id INT NOT NULL,
-    user_id INT NOT NULL,
-    fullname VARCHAR(255) NOT NULL,
-    rating INT CHECK (rating >= 1 AND rating <= 5),      
-    comment TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `rating` int(1) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -76,18 +70,6 @@ CREATE TABLE `contact_submissions` (
   `message` text NOT NULL,
   `submitted_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `contact_submissions`
---
-
-INSERT INTO `contact_submissions` (`id`, `name`, `email`, `message`, `submitted_at`) VALUES
-(1, 'namu', 'nam@1', '1', '2024-11-10 17:46:05'),
-(2, '1', '1@1', '1', '2024-11-11 01:06:15'),
-(3, '1', '1@1', '1', '2024-11-11 01:06:26'),
-(4, 'sfdf', '1@1', 'fdsg', '2024-11-11 01:07:21'),
-(5, 'sfdf', '1@1', 'fdsg', '2024-11-11 01:07:42'),
-(6, 'sfdfdsd', '1@1dfs', 'fdsgdsd', '2024-11-11 01:07:52');
 
 -- --------------------------------------------------------
 
@@ -105,12 +87,22 @@ CREATE TABLE `delivery` (
   `note` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `delivery`
+-- Table structure for table `momo`
 --
 
-INSERT INTO `delivery` (`id`, `user_id`, `email`, `name`, `phone`, `address`, `note`) VALUES
-(1, 9999, 'admin@1', 'Nam2', '1', 'koko', 'nhanh');
+CREATE TABLE `momo` (
+  `id_momo` int(11) NOT NULL,
+  `partner_code` varchar(50) NOT NULL,
+  `order_code` varchar(8) NOT NULL,
+  `amount` varchar(50) NOT NULL,
+  `order_info` varchar(100) NOT NULL,
+  `order_type` varchar(50) NOT NULL,
+  `trans_id` int(11) NOT NULL,
+  `pay_type` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -129,16 +121,6 @@ CREATE TABLE `orders` (
   `id_delivery` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `order_code`, `user_id`, `order_date`, `status`, `total`, `payment_method`, `id_delivery`) VALUES
-(1, '6731592a', 9999, '2024-11-11 01:08:58', 'Đã duyệt', 181500.00, '', 0),
-(2, '67332e2c', 10000, '2024-11-12 10:30:04', 'Chờ duyệt', NULL, '', 0),
-(3, '673330bd', 10000, '2024-11-12 10:41:01', 'Đã duyệt', 537000.00, '', 0),
-(14, '673f2b37', 9999, '2024-11-21 12:44:39', 'Chờ duyệt', NULL, '', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -151,27 +133,6 @@ CREATE TABLE `order_items` (
   `product_id` int(11) DEFAULT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `order_items`
---
-
-INSERT INTO `order_items` (`id`, `order_code`, `product_id`, `quantity`) VALUES
-(1, '6731592a', 9, 1),
-(2, '6731592a', 36, 1),
-(3, '67332e2c', 29, 1),
-(4, '673330bd', 29, 1),
-(5, '673330bd', 14, 1),
-(6, '6735ef0e', 13, 1),
-(7, '6738bab8', 24, 1),
-(8, '6738bab8', 36, 2),
-(9, '6739e7bc', 36, 1),
-(10, '6739e9d7', 13, 1),
-(11, '673de498', 9, 1),
-(12, '673de4a4', 9, 1),
-(13, '673de4da', 13, 1),
-(14, '673de4f7', 15, 1),
-(15, '673f2b37', 13, 1);
 
 -- --------------------------------------------------------
 
@@ -256,9 +217,15 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `address`, `role`, `created_at`) VALUES
-(1, 'customer', 'test@1', '1', '0366379629', 'Việt Nam', 'customer', '2024-11-10 17:33:41'),
-(9999, 'admin', 'admin@1', '1', NULL, NULL, 'admin', '2024-11-10 17:32:49'),
-(10000, 'doan hong quan', 'quan@2', '2', '1', '1', 'customer', '2024-11-10 18:26:45');
+(1, 'admin', 'admin@1', '1', NULL, NULL, 'admin', '2024-11-10 17:32:49'),
+(2, 'customer', 'test@1', '1', '0366379629', 'Việt Nam', 'customer', '2024-11-10 17:33:41'),
+(3, 'doan hong quan', 'quan@2', '2', '1', '1', 'customer', '2024-11-10 18:26:45');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vnpay`
+--
 
 CREATE TABLE `vnpay` (
   `vnpay_id` int(11) NOT NULL,
@@ -274,22 +241,6 @@ CREATE TABLE `vnpay` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Chỉ mục cho bảng `vnpay`
---
-ALTER TABLE `vnpay`
-  ADD PRIMARY KEY (`vnpay_id`);
-
---
--- AUTO_INCREMENT cho các bảng đã đổ
---
-
---
--- AUTO_INCREMENT cho bảng `vnpay`
---
-ALTER TABLE `vnpay`
-  MODIFY `vnpay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-COMMIT;
---
 -- Indexes for dumped tables
 --
 
@@ -304,9 +255,7 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `order_code` (`order_code`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `contact_submissions`
@@ -348,6 +297,18 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `vnpay`
+--
+ALTER TABLE `vnpay`
+  ADD PRIMARY KEY (`vnpay_id`);
+
+--
+-- Indexes for table `vnpay`
+--
+ALTER TABLE `momo`
+  ADD PRIMARY KEY (`id_momo`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -355,31 +316,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `contact_submissions`
 --
 ALTER TABLE `contact_submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `delivery`
 --
 ALTER TABLE `delivery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -391,8 +352,20 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
+--
+-- AUTO_INCREMENT for table `vnpay`
+--
+ALTER TABLE `vnpay`
+  MODIFY `vnpay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `momo`
+--
+ALTER TABLE `momo`
+  MODIFY `id_momo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
 --
 -- Constraints for dumped tables
 --
@@ -401,9 +374,7 @@ ALTER TABLE `users`
 -- Constraints for table `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`order_code`) REFERENCES `order_items` (`id`),
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `comments_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `orders`
