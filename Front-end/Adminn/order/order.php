@@ -145,7 +145,7 @@ $db = new Database();
                                 <td>
                                     <a href="order_detail.php?code=<?php echo $row['order_code']; ?>&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>
                                     <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                    <?php if ($row['status'] === 'Đã duyệt' || $row['status'] === 'Đã thanh toán') { ?>
+                                    <?php if ($row['status'] === 'Đã duyệt' || $row['status'] === 'Đã thanh toán' || $row['status'] === 'Đã nhận') { ?>
                                         <a href="print.php?code=<?php echo $row['order_code']; ?>" class="btn btn-secondary"><i class="fa fa-print"></i></a>
                                     <?php } ?>
                                     <?php if ($row['status'] === 'Chờ duyệt') { ?>

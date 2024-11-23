@@ -78,6 +78,12 @@ $result = $db->select($query);
             background-color: #FFC107;
         }
 
+        .status.paid {
+            /*  Thêm trạng thái đã thanh toán*/
+            background-color: #2196F3;
+            /* Blue - Đã thanh toán */
+        }
+
         .status.canceled {
             background-color: #F44336;
         }
@@ -134,9 +140,11 @@ $result = $db->select($query);
                                 if ($order['status'] == 'Đã duyệt') {
                                     echo '<span class="status approved">Đã duyệt</span>';
                                 } else if ($order['status'] == 'Chờ duyệt') {
-                                    echo '<span class="status pending">Chờ duyệt</span>';
+                                    echo '<span class="status pending">Đang xử lý</span>';
                                 } else if ($order['status'] == 'Đã nhận') {
                                     echo '<span class="status pending">Đã nhận</span>';
+                                } else if ($order['status'] == 'Đã thanh toán') {
+                                    echo '<span class="status paid">Đã thanh toán</span>';
                                 } else {
                                     echo '<span class="status canceled">Đã hủy</span>';
                                 }

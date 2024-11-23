@@ -1,10 +1,11 @@
 <?php
 include 'header.php';
 $db = new Database();
-if (isset($_GET['vnp_SecureHash'])) {
+$order_code = "";
+if (isset($_GET['order_code'])) {
     $order_code = $_GET['order_code'];
 } elseif (isset($_GET['vnp_TxnRef'])) {
-    $order_code = $_GET['vnp_TxRef'];
+    $order_code = $_GET['vnp_TxnRef'];
 } else {
     die("Lỗi: Thiếu mã đơn hàng.");
 }
@@ -76,7 +77,7 @@ if (isset($_GET['vnp_Amount'])) {
         <h1>Cảm ơn bạn đã đặt hàng!</h1>
         <p>Chúng tôi đã nhận được đơn hàng của bạn. Mã đơn hàng của bạn là:</p>
         <p class="order-code">#<?php if (isset($order_code)) echo $order_code; ?></p>
-        <p>Vui lòng kiểm tra email để biết chi tiết về đơn hàng và thời gian giao hàng.</p>
+        <p>Vui lòng kiểm tra email để biết chi tiết về đơn hàng và thời gian giao hàng. Bạn có thể xem lịch sử đơn hàng <a href="order_management.php">tại đây</a>.</p>
         <p>Nếu có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi qua:</p>
         <p><strong>Email:</strong> support@eden.com</p>
         <p><strong>Số điện thoại:</strong> 0333268135</p>

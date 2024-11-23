@@ -95,12 +95,10 @@ if ($payment_method == 'vnpay') {
         echo json_encode($returnData);
     }
     // vui lòng tham khảo thêm tại code demo
-} elseif ($payment_method == 'paypal') {
-    echo "paypal";
 } elseif ($payment_method == 'momo') {
     echo "momo";
 } else {
-    // thanh toan khi nhận hàng
+    // thanh toan khi nhận hàng và chuyển khoản
     $insert_order = "INSERT INTO orders (order_code, user_id, order_date, status, payment_method, id_delivery) 
     VALUES ('" . $order_code . "', '" . $uid . "', NOW(), 'Chờ duyệt', '" . $payment_method . "', '" . $id_delivery . "')";
     $order_query = $db->insert($insert_order);
