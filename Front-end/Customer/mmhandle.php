@@ -30,9 +30,9 @@ $partnerCode = 'MOMOBKUN20180529';
 $accessKey = 'klm05TvNBzhg7h7j';
 $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
 
-$orderInfo = "Thanh toán mã QR qua MoMo";
+$orderInfo = "Thanh toán mã QR";
 $amount = $_SESSION["total"];
-$orderId = time() . "";
+$orderId = $order_code;
 $redirectUrl = "http://localhost/BANHOA/Front-end/Customer/arigatou.php";
 $ipnUrl = "http://localhost/BANHOA/Front-end/Customer/arigatou.php";
 $extraData = "";

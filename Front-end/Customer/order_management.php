@@ -11,7 +11,8 @@ $user_id = $_SESSION['users_id'];
 // Truy vấn tất cả đơn hàng của khách hàng
 $query = "SELECT id, order_code, user_id, order_date, total, status 
           FROM orders 
-          WHERE user_id = $user_id";
+          WHERE user_id = $user_id
+          ORDER BY order_date DESC";
 $result = $db->select($query);
 ?>
 
