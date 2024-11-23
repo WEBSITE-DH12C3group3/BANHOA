@@ -1,15 +1,11 @@
 <?php
 include 'header.php';
-
-$product_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-if (!$product_id) {
-    die("Không tìm thấy sản phẩm!"); // Kiểm tra id hợp lệ
-}
+$product_id = $_GET('id');
 
 $db = new Database();
 
 // Truy vấn sản phẩm
-$product_query = "SELECT * FROM products WHERE id = {$product_id} LIMIT 1";
+$product_query = "SELECT * FROM products WHERE id = " . (int)$product_id . " LIMIT 1";
 $product_result = $db->select($product_query);
 
 if (!$product_result) {
@@ -18,7 +14,7 @@ if (!$product_result) {
 $row = $product_result->fetch_assoc();
 
 // Lấy thông tin đánh giá sản phẩm
-$ratings_query = "SELECT rating, fullname, comment, created_at FROM comments WHERE product_id = {$product_id} ORDER BY created_at DESC";
+$ratings_query = "SELECT rating, user_id, fullname, comment, created_at FROM comments WHERE product_id = {$product_id} ORDER BY created_at DESC";
 $ratings_result = $db->select($ratings_query);
 $comments = [];
 if ($ratings_result) {
@@ -31,22 +27,40 @@ if ($ratings_result) {
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
     if (isset($_SESSION['fullname'])) {
+        $user_id = $_SESSION['users_id'];
         $fullname = $_SESSION['fullname'];
         $rating = intval($_POST['rating']); // Lấy số sao từ form
         $comment = $db->escape_string($_POST['comment']);
         $created_at = date("Y-m-d H:i:s");
 
-        $insert_query = "INSERT INTO comments (product_id, fullname, rating, comment, created_at)
-                         VALUES ('{$product_id}', '{$fullname}', '{$rating}', '{$comment}', '{$created_at}')";
-        if ($db->insert($insert_query)) {
-            $message = "Đánh giá của bạn đã được gửi thành công!";
-        } else {
-            $message = "Có lỗi xảy ra. Vui lòng thử lại!";
+        // Kiểm tra dữ liệu đầu vào
+        if ($rating < 1 || $rating > 5) {
+            $_SESSION['message'] = "Đánh giá không hợp lệ!";
+            header("Location: /BANHOA/Front-end/Customer/hoa.php?id={$product_id}");
+            exit;
         }
+        if (empty(trim($comment))) {
+            $_SESSION['message'] = "Bình luận không được để trống!";
+            header("Location: /BANHOA/Front-end/Customer/hoa.php?id={$product_id}");
+            exit;
+        }
+
+        $insert_query = "INSERT INTO comments (product_id, user_id, fullname, rating, comment, created_at)
+                         VALUES ('{$product_id}', '$user_id', '{$fullname}', '{$rating}', '{$comment}', '{$created_at}')";
+        if ($db->insert($insert_query)) {
+            $_SESSION['message'] = "Đánh giá của bạn đã được gửi thành công!";
+        }
+
+        // Chuyển hướng để ngăn double-submit
+        header("Location: /BANHOA/Front-end/Customer/hoa.php?id={$product_id}");
+        exit;
     } else {
-        $message = "Bạn cần đăng nhập để gửi đánh giá.";
+        $_SESSION['message'] = "Bạn cần đăng nhập để gửi đánh giá.";
+        header("Location: login.php");
+        exit;
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -222,33 +236,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    // Ẩn phần comments mặc định
-    const commentsSection = document.getElementById('comments');
-    commentsSection.style.display = 'none';  // Ẩn phần comments
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ẩn phần comments mặc định
+            const commentsSection = document.getElementById('comments');
+            commentsSection.style.display = 'none';  // Ẩn phần comments
 
-    // Kiểm tra xem có tham số trên URL hay không
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('show_comments') && urlParams.get('show_comments') === 'true') {
-        commentsSection.style.display = 'block'; // Hiển thị comments nếu tham số có giá trị true
-    }
+            // Kiểm tra xem có tham số trên URL hay không
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('show_comments') && urlParams.get('show_comments') === 'true') {
+                commentsSection.style.display = 'block'; // Hiển thị comments nếu tham số có giá trị true
+            }
 
-    // Lấy tất cả các nút "Đánh giá"
-    const reviewButtons = document.querySelectorAll('.review-button');
+            // Lấy tất cả các nút "Đánh giá"
+            const reviewButtons = document.querySelectorAll('.review-button');
 
-    reviewButtons.forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+            reviewButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
 
-            // Thêm tham số vào URL để hiển thị phần comments
-            window.location.href = window.location.href.split('?')[0] + '?show_comments=true'; 
+                    // Thêm tham số vào URL để hiển thị phần comments
+                    window.location.href = window.location.href.split('?')[0] + '?show_comments=true'; 
+                });
+            });
         });
-    });
-});
+    </script>
 
-</script>
-
-<div class="container mt-5">
+    <div class="container mt-5">
         <h2 class="text-danger">Những mẫu hoa tươi cùng loại khác</h2>
         <div class="row" id="Table">
             <?php
