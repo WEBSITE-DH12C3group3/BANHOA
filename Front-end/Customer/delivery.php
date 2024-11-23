@@ -237,7 +237,7 @@ if (isset($_POST['update'])) {
                                         $query = "SELECT price, sale FROM products WHERE id = '" . $value['id'] . "'";
                                         $rs = $db->select($query);
                                         $r = $rs->fetch_assoc();
-                                        $price = ($r['price'] - ($r['price'] * $r['sale'] / 100)) * $value['quantity'];
+                                        $price = ($r['price'] - ($r['price'] * $r['sale'] / 100));
                                         $total += $price * $value['quantity'];
                                     ?>
                                         <li class="list-group-item d-flex justify-content-between lh-sm">

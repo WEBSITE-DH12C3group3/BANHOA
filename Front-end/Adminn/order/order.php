@@ -115,14 +115,21 @@ $db = new Database();
                                 <td><?php echo $row['order_code']; ?></td>
                                 <td><?php echo $row['fullname']; ?></td>
                                 <td><?php echo $row['phone']; ?></td>
-                                <td><?php if ($row['status'] == 'Đã duyệt') {
+                                <td><?php $row['total'] = number_format($row['total'], 0, ',', '.');
+                                    if ($row['status'] == 'Đã duyệt') {
                                         echo $row['total'] . ' ₫';
                                     } elseif ($row['status'] == 'Đã hủy') {
                                         echo $row['total'] . ' Đã hủy';
                                     } elseif ($row['status'] == 'Đã nhận') {
                                         echo $row['total'] . '';
+                                    } elseif ($row['status'] == 'Đã thanh toán') {
+                                        // Cập nhật tổng tiền và trạng thái đơn hàng trong bảng orders
+                                        $update_query = "UPDATE orders SET total = ? WHERE id = ? AND order_code = ?";
+                                        $update_stmt = $db->conn->prepare($update_query);
+                                        $update_stmt->bind_param("dis", $total, $id, $order_code);
+                                        echo $row['total'] . ' ₫';
                                     } else {
-                                        echo $row['total'] . ' Chờ duyệt';
+                                        echo 'Chờ duyệt';
                                     } ?>
                                 </td>
                                 <td><?php if ($row['payment_method'] == 'bank') {
