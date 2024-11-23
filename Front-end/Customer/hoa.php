@@ -1,11 +1,11 @@
 <?php
 include 'header.php';
-$product_id = $_GET('id');
+$product_id = $_GET['id'];
 
 $db = new Database();
 
 // Truy vấn sản phẩm
-$product_query = "SELECT * FROM products WHERE id = " . (int)$product_id . " LIMIT 1";
+$product_query = "SELECT * FROM products WHERE id = " . $product_id . " LIMIT 1";
 $product_result = $db->select($product_query);
 
 if (!$product_result) {
@@ -14,7 +14,7 @@ if (!$product_result) {
 $row = $product_result->fetch_assoc();
 
 // Lấy thông tin đánh giá sản phẩm
-$ratings_query = "SELECT rating, user_id, fullname, comment, created_at FROM comments WHERE product_id = {$product_id} ORDER BY created_at DESC";
+$ratings_query = "SELECT * FROM comments WHERE product_id = " . $product_id . " ORDER BY created_at DESC";
 $ratings_result = $db->select($ratings_query);
 $comments = [];
 if ($ratings_result) {
@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/BANHOA/mycss/hoacss.css">
 </head>
+
 <body style="margin-top: 200px;">
     <div class="container mt-5">
         <form class="row" action="modelcart.php?product_id=<?php echo $row['id'] ?>" method="post">
@@ -168,19 +170,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
                 <div class="col-md-10">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn">
-                            <input type="radio" name="options" id="option1" autocomplete="off" onclick="filterReviews(1)"> 1 Sao (<?php echo count(array_filter($comments, function($comment) { return $comment['rating'] == 1; })); ?>)
+                            <input type="radio" name="options" id="option1" autocomplete="off" onclick="filterReviews(1)"> 1 Sao (<?php echo count(array_filter($comments, function ($comment) {
+                                                                                                                                        return $comment['rating'] == 1;
+                                                                                                                                    })); ?>)
                         </label>
                         <label class="btn">
-                            <input type="radio" name="options" id="option2" autocomplete="off" onclick="filterReviews(2)"> 2 Sao (<?php echo count(array_filter($comments, function($comment) { return $comment['rating'] == 2; })); ?>)
+                            <input type="radio" name="options" id="option2" autocomplete="off" onclick="filterReviews(2)"> 2 Sao (<?php echo count(array_filter($comments, function ($comment) {
+                                                                                                                                        return $comment['rating'] == 2;
+                                                                                                                                    })); ?>)
                         </label>
                         <label class="btn">
-                            <input type="radio" name="options" id="option3" autocomplete="off" onclick="filterReviews(3)"> 3 Sao (<?php echo count(array_filter($comments, function($comment) { return $comment['rating'] == 3; })); ?>)
+                            <input type="radio" name="options" id="option3" autocomplete="off" onclick="filterReviews(3)"> 3 Sao (<?php echo count(array_filter($comments, function ($comment) {
+                                                                                                                                        return $comment['rating'] == 3;
+                                                                                                                                    })); ?>)
                         </label>
                         <label class="btn">
-                            <input type="radio" name="options" id="option4" autocomplete="off" onclick="filterReviews(4)"> 4 Sao (<?php echo count(array_filter($comments, function($comment) { return $comment['rating'] == 4; })); ?>)
+                            <input type="radio" name="options" id="option4" autocomplete="off" onclick="filterReviews(4)"> 4 Sao (<?php echo count(array_filter($comments, function ($comment) {
+                                                                                                                                        return $comment['rating'] == 4;
+                                                                                                                                    })); ?>)
                         </label>
                         <label class="btn">
-                            <input type="radio" name="options" id="option5" autocomplete="off" onclick="filterReviews(5)"> 5 Sao (<?php echo count(array_filter($comments, function($comment) { return $comment['rating'] == 5; })); ?>)
+                            <input type="radio" name="options" id="option5" autocomplete="off" onclick="filterReviews(5)"> 5 Sao (<?php echo count(array_filter($comments, function ($comment) {
+                                                                                                                                        return $comment['rating'] == 5;
+                                                                                                                                    })); ?>)
                         </label>
                     </div>
                 </div>
@@ -236,10 +248,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             // Ẩn phần comments mặc định
             const commentsSection = document.getElementById('comments');
-            commentsSection.style.display = 'none';  // Ẩn phần comments
+            commentsSection.style.display = 'none'; // Ẩn phần comments
 
             // Kiểm tra xem có tham số trên URL hay không
             const urlParams = new URLSearchParams(window.location.search);
@@ -251,11 +263,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
             const reviewButtons = document.querySelectorAll('.review-button');
 
             reviewButtons.forEach(button => {
-                button.addEventListener('click', function (event) {
+                button.addEventListener('click', function(event) {
                     event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
 
                     // Thêm tham số vào URL để hiển thị phần comments
-                    window.location.href = window.location.href.split('?')[0] + '?show_comments=true'; 
+                    window.location.href = window.location.href.split('?')[0] + '?show_comments=true';
                 });
             });
         });
@@ -313,6 +325,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/BANHOA/mycss/pagination.js"></script>
-    
+
 </body>
+
 </html>

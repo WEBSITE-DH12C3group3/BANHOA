@@ -1,6 +1,6 @@
 <?php
 include "/xampp/htdocs/BANHOA/database/connect.php";
-include "config.php";
+include "config_vnp.php";
 session_start();
 $db = new Database();
 
