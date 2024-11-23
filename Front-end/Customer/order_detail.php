@@ -172,7 +172,7 @@ if (isset($_GET['order_code'])) {
         </table>
         <h3 class="left">Tổng cộng: <?php echo number_format($total_amount, 0, ',', '.'); ?> VND</h3>
 
-        <?php if ($order_status == 'Đã duyệt') { ?>
+        <?php if ($order_status == 'Đã duyệt' || $order_status == 'Đã thanh toán') { ?>
             <!-- Nút để khách hàng xác nhận đã nhận hàng -->
             <form class="right" id="receiveOrderForm" method="POST" onsubmit="return confirmFinish();">
                 <input type="hidden" name="order_code" value="<?php echo $order_code; ?>">
@@ -183,22 +183,20 @@ if (isset($_GET['order_code'])) {
             </form>
         <?php } ?>
         <script>
-                function confirmFinish() {
-                    const confirmResult = confirm("Xác nhận rằng bạn đã nhận được đơn hàng này?");
-                    
-                    if (confirmResult) {
-                        alert("Bạn đã xác nhận đã nhận hàng. Cảm ơn bạn!");
-                        return true;
-                    } else {
-                        alert("Bạn chưa xác nhận đơn hàng.");
-                    }
+            function confirmFinish() {
+                const confirmResult = confirm("Xác nhận rằng bạn đã nhận được đơn hàng này?");
 
-                    // Trả về false để ngăn biểu mẫu gửi đi và ở lại trang
-                    return false;
+                if (confirmResult) {
+                    alert("Bạn đã xác nhận đã nhận hàng. Cảm ơn bạn!");
+                    return true;
+                } else {
+                    alert("Bạn chưa xác nhận đơn hàng.");
                 }
 
-                
-            </script>
+                // Trả về false để ngăn biểu mẫu gửi đi và ở lại trang
+                return false;
+            }
+        </script>
 
         <?php if ($order_status === 'Chờ duyệt') { ?>
             <!-- Nút Hủy đơn hàng với JavaScript xác nhận -->
@@ -225,4 +223,4 @@ if (isset($_GET['order_code'])) {
 
 </html>
 
-<?php include 'footer.php'; ?> 
+<?php include 'footer.php'; ?>

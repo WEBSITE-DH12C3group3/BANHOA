@@ -72,8 +72,8 @@ if ($payment_method == 'vnpay') {
         'data' => $vnp_Url
     );
     if (isset($_POST['redirect'])) {
-        $insert_order = "INSERT INTO orders (order_code, user_id, order_date, status, payment_method, id_delivery) 
-            VALUES ('" . $order_code . "', '" . $uid . "', NOW(), 'Đã thanh toán', '" . $payment_method . "', '" . $id_delivery . "')";
+        $insert_order = "INSERT INTO orders (order_code, user_id, order_date, status, total, payment_method, id_delivery) 
+            VALUES ('" . $order_code . "', '" . $uid . "', NOW(), 'Đã thanh toán', '" . $_SESSION["total"] . "', '" . $payment_method . "', '" . $id_delivery . "')";
         $order_query = $db->insert($insert_order);
         $db->handleSqlError($insert_order);
         // them order detail
@@ -88,18 +88,17 @@ if ($payment_method == 'vnpay') {
             }
         }
         unset($_SESSION['total']);
+        unset($_SESSION['cart']);
         header('Location: ' . $vnp_Url);
         die();
     } else {
         echo json_encode($returnData);
     }
     // vui lòng tham khảo thêm tại code demo
-} elseif ($payment_method == 'paypal') {
-    echo "paypal";
 } elseif ($payment_method == 'momo') {
     echo "momo";
 } else {
-    // thanh toan khi nhận hàng
+    // thanh toan khi nhận hàng và chuyển khoản
     $insert_order = "INSERT INTO orders (order_code, user_id, order_date, status, payment_method, id_delivery) 
     VALUES ('" . $order_code . "', '" . $uid . "', NOW(), 'Chờ duyệt', '" . $payment_method . "', '" . $id_delivery . "')";
     $order_query = $db->insert($insert_order);

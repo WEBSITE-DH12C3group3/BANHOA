@@ -193,24 +193,10 @@ if (isset($_POST['update'])) {
                             <div class="section-title">Phương thức thanh toán</div>
                             <div class="payment-methods">
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" value="vnpay">
-                                    <label class="form-check-label" for="vnpay">
-                                        <img src="../public/vnpay.png" alt="vnpay" width="50px">
-                                        Vnpay
-                                    </label>
-                                </div>
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" value="paypal" id="paypal">
-                                    <label class="form-check-label" for="paypal">
-                                        <img src="../public/paypal.png" alt="paypal" width="50px">
-                                        Paypal
-                                    </label>
-                                </div>
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" value="momo" id="momo">
-                                    <label class="form-check-label" for="momo">
-                                        <img src="../public/momo.png" alt="momo" width="50px">
-                                        Momo
+                                    <input class="form-check-input" type="radio" name="paymentMethod" checked value="cash" id="cashOnDelivery">
+                                    <label class="form-check-label" for="cashOnDelivery">
+                                        <img src="../public/cash.png" alt="cash" width="50px">
+                                        Thanh toán khi nhận hàng
                                     </label>
                                 </div>
                                 <div class="form-check mb-3">
@@ -221,10 +207,24 @@ if (isset($_POST['update'])) {
                                     </label>
                                 </div>
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" checked value="cash" id="cashOnDelivery">
-                                    <label class="form-check-label" for="cashOnDelivery">
-                                        <img src="../public/cash.png" alt="cash" width="50px">
-                                        Thanh toán khi nhận hàng
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" value="vnpay">
+                                    <label class="form-check-label" for="vnpay">
+                                        <img src="../public/vnpay.png" alt="vnpay" width="50px">
+                                        Vnpay
+                                    </label>
+                                </div>
+                                <!-- <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" value="paypal" id="paypal">
+                                    <label class="form-check-label" for="paypal">
+                                        <img src="../public/paypal.png" alt="paypal" width="50px">
+                                        Paypal
+                                    </label>
+                                </div> -->
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" value="momo" id="momo">
+                                    <label class="form-check-label" for="momo">
+                                        <img src="../public/momo.png" alt="momo" width="50px">
+                                        Momo
                                     </label>
                                 </div>
                             </div>
@@ -237,7 +237,7 @@ if (isset($_POST['update'])) {
                                         $query = "SELECT price, sale FROM products WHERE id = '" . $value['id'] . "'";
                                         $rs = $db->select($query);
                                         $r = $rs->fetch_assoc();
-                                        $price = ($r['price'] - ($r['price'] * $r['sale'] / 100)) * $value['quantity'];
+                                        $price = ($r['price'] - ($r['price'] * $r['sale'] / 100));
                                         $total += $price * $value['quantity'];
                                     ?>
                                         <li class="list-group-item d-flex justify-content-between lh-sm">

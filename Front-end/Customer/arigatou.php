@@ -1,54 +1,28 @@
 <?php
 include 'header.php';
-include 'config.php';
+$db = new Database();
+$order_code = "";
+if (isset($_GET['order_code'])) {
+    $order_code = $_GET['order_code'];
+} elseif (isset($_GET['vnp_TxnRef'])) {
+    $order_code = $_GET['vnp_TxnRef'];
+} else {
+    die("Lỗi: Thiếu mã đơn hàng.");
+}
+if (isset($_GET['vnp_Amount'])) {
+    $vnp_Amount = $_GET['vnp_Amount'];
+    $vnp_BankCode = $_GET['vnp_BankCode'];
+    $vnp_BankTranNo = $_GET['vnp_BankTranNo'];
+    $vnp_OrderInfo = $_GET['vnp_OrderInfo'];
+    $vnp_PayDate = $_GET['vnp_PayDate'];
+    $vnp_TmnCode = $_GET['vnp_TmnCode'];
+    $vnp_TransactionNo = $_GET['vnp_TransactionNo'];
+    $vnp_CardType = $_GET['vnp_CardType'];
 
-try {
-    $db = new Database();
-    if (!$db->conn) {
-        throw new Exception("Không thể kết nối tới cơ sở dữ liệu.");
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        // Kiểm tra tất cả các biến GET
-        $required_params = ['vnp_Amount', 'vnp_BankCode', 'vnp_BankTranNo', 'vnp_CardType', 'vnp_OrderInfo', 'vnp_PayDate', 'vnp_TmCode', 'vnp_TransactionNo', 'vnp_Txnref'];
-        foreach ($required_params as $param) {
-            if (!isset($_GET[$param])) {
-                throw new Exception("Thiếu tham số: " . htmlspecialchars($param)); // Hiển thị lỗi chi tiết
-            }
-        }
-
-        // Lấy giá trị sau khi đã kiểm tra isset
-        $vnp_Amount = intval($_GET['vnp_Amount']);
-        $vnp_BankCode = $db->conn->real_escape_string($_GET['vnp_BankCode']);
-        $vnp_BankTranNo = $db->conn->real_escape_string($_GET['vnp_BankTranNo']);
-        $vnp_CardType = $db->conn->real_escape_string($_GET['vnp_CardType']);
-        $vnp_OrderInfo = $db->conn->real_escape_string($_GET['vnp_OrderInfo']);
-        $vnp_PayDate = $db->conn->real_escape_string($_GET['vnp_PayDate']);
-        $vnp_TmCode = $db->conn->real_escape_string($_GET['vnp_TmCode']);
-        $vnp_TransactionNo = $db->conn->real_escape_string($_GET['vnp_TransactionNo']);
-        $order_code = $db->conn->real_escape_string($_GET['vnp_Txnref']);
-
-        // Chuẩn bị câu lệnh SQL  
-        $insert_vnpay = "INSERT INTO vnpay (vnp_amount, vnp_bankcode, vnpay_banktranno, vnp_cardtype, vnp_orderinfo, vnp_paydate, vnp_tmncode, vnp_transactionno, order_code) 
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $db->conn->prepare($insert_vnpay);
-        if (!$stmt) {
-            throw new Exception("Lỗi chuẩn bị câu lệnh: " . $db->conn->error);
-        }
-
-        $stmt->bind_param("issssssss", $vnp_Amount, $vnp_BankCode, $vnp_BankTranNo, $vnp_CardType, $vnp_OrderInfo, $vnp_PayDate, $vnp_TmCode, $vnp_TransactionNo, $order_code);
-
-        if (!$stmt->execute()) {
-            throw new Exception("Lỗi thực thi câu lệnh: " . $stmt->error);
-        }
-
-        $stmt->close();
-
-        // Xóa giỏ hàng sau khi thanh toán thành công (nếu cần)
-        unset($_SESSION['cart']);
-    }
-} catch (Exception $e) {
-    die("Đã xảy ra lỗi: " . $e->getMessage());
+    $insert_vnp = "INSERT INTO vnpay (order_code, vnpay_amount, vnpay_bankcode, vnpay_banktranno, vnpay_orderinfo, vnpay_paydate, vnpay_tmncode, vnpay_transactionno, vnpay_cardtype) 
+        VALUES ('" . $order_code . "', '" . $vnp_Amount . "', '" . $vnp_BankCode . "', '" . $vnp_BankTranNo . "', '" . $vnp_OrderInfo . "', '" . $vnp_PayDate . "', '" . $vnp_TmnCode . "', '" . $vnp_TransactionNo . "', '" . $vnp_CardType . "')";
+    $db->insert($insert_vnp);
+    $db->handleSqlError($insert_vnp);
 }
 ?>
 
@@ -103,7 +77,7 @@ try {
         <h1>Cảm ơn bạn đã đặt hàng!</h1>
         <p>Chúng tôi đã nhận được đơn hàng của bạn. Mã đơn hàng của bạn là:</p>
         <p class="order-code">#<?php if (isset($order_code)) echo $order_code; ?></p>
-        <p>Vui lòng kiểm tra email để biết chi tiết về đơn hàng và thời gian giao hàng.</p>
+        <p>Vui lòng kiểm tra email để biết chi tiết về đơn hàng và thời gian giao hàng. Bạn có thể xem lịch sử đơn hàng <a href="order_management.php">tại đây</a>.</p>
         <p>Nếu có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi qua:</p>
         <p><strong>Email:</strong> support@eden.com</p>
         <p><strong>Số điện thoại:</strong> 0333268135</p>

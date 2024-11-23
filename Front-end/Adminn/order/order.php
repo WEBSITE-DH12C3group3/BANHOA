@@ -115,14 +115,21 @@ $db = new Database();
                                 <td><?php echo $row['order_code']; ?></td>
                                 <td><?php echo $row['fullname']; ?></td>
                                 <td><?php echo $row['phone']; ?></td>
-                                <td><?php if ($row['status'] == 'Đã duyệt') {
+                                <td><?php $row['total'] = number_format($row['total'], 0, ',', '.');
+                                    if ($row['status'] == 'Đã duyệt') {
                                         echo $row['total'] . ' ₫';
                                     } elseif ($row['status'] == 'Đã hủy') {
                                         echo $row['total'] . ' Đã hủy';
                                     } elseif ($row['status'] == 'Đã nhận') {
                                         echo $row['total'] . '';
+                                    } elseif ($row['status'] == 'Đã thanh toán') {
+                                        // Cập nhật tổng tiền và trạng thái đơn hàng trong bảng orders
+                                        $update_query = "UPDATE orders SET total = ? WHERE id = ? AND order_code = ?";
+                                        $update_stmt = $db->conn->prepare($update_query);
+                                        $update_stmt->bind_param("dis", $total, $id, $order_code);
+                                        echo $row['total'] . ' ₫';
                                     } else {
-                                        echo $row['total'] . ' Chờ duyệt';
+                                        echo 'Chờ duyệt';
                                     } ?>
                                 </td>
                                 <td><?php if ($row['payment_method'] == 'bank') {
@@ -138,7 +145,7 @@ $db = new Database();
                                 <td>
                                     <a href="order_detail.php?code=<?php echo $row['order_code']; ?>&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>
                                     <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                    <?php if ($row['status'] === 'Đã duyệt' || $row['status'] === 'Đã thanh toán') { ?>
+                                    <?php if ($row['status'] === 'Đã duyệt' || $row['status'] === 'Đã thanh toán' || $row['status'] === 'Đã nhận') { ?>
                                         <a href="print.php?code=<?php echo $row['order_code']; ?>" class="btn btn-secondary"><i class="fa fa-print"></i></a>
                                     <?php } ?>
                                     <?php if ($row['status'] === 'Chờ duyệt') { ?>
