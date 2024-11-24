@@ -222,7 +222,7 @@ if (isset($_POST['update'])) {
                                 </div>
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="radio" name="paymentMethod" value="momo_atm" id="momo_atm">
-                                    <label class="form-check-label" for="mmatm">
+                                    <label class="form-check-label" for="momo_atm">
                                         <img src="../public/momo.png" alt="momo atm" width="50px">
                                         MoMo ATM
                                     </label>

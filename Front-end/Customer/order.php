@@ -21,10 +21,10 @@ if ($payment_method == 'vnpay') {
     include_once "vnphandle.php";
 } elseif ($payment_method == 'momo') {
     // xuly momo
-    include_once "mmhandle.php";
+    include_once "momohandle.php";
 } elseif ($payment_method == 'momo_atm') {
     // xuly momo atm
-    include_once "mmatmhandle.php";
+    include_once "momohandle.php";
 } else {
     // thanh toan khi nhận hàng và chuyển khoản
     $insert_order = "INSERT INTO orders (order_code, user_id, order_date, status, payment_method, id_delivery) 
