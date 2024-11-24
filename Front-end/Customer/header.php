@@ -40,15 +40,23 @@ if ($categories_result) {
   <link rel="stylesheet" href="/BANHOA/mycss/footder.css">
   <style>
     /* Style for the dropdown */
-    .dropdown-menu {
-      display: none;
-      /* Initially hide dropdown */
-      background-color: #f7aaaa;
-    }
-
     .dropdown:hover .dropdown-menu {
       display: block;
-      /* Show dropdown when hovering */
+      /* Hiển thị menu khi hover vào phần tử dropdown */
+    }
+
+    .dropdown-menu {
+      display: none;
+      /* Ẩn menu mặc định */
+      position: absolute;
+      /* Đặt menu vào vị trí tuyệt đối */
+      z-index: 1000;
+      /* Đảm bảo menu hiển thị trên các phần tử khác */
+    }
+
+    .dropdown {
+      width: fit-content;
+      position: relative;
     }
 
     .dropdown-item {
@@ -72,7 +80,7 @@ if ($categories_result) {
     }
 
     .hidden {
-      top: -200px;
+      top: -125px;
       /* Chiều cao của menu để nó biến mất khi cuộn xuống */
     }
 
@@ -120,8 +128,7 @@ if ($categories_result) {
 
           <!-- Cart and Account Section -->
           <div class="col-md-4 col-4">
-            <div
-              class="d-flex justify-content-center justify-content-md-end align-items-center">
+            <div class="d-flex justify-content-center justify-content-md-end align-items-center">
               <!-- Cart -->
               <div class="col-6">
                 <div class="me-4 position-relative text-center">
@@ -179,34 +186,25 @@ if ($categories_result) {
                   $name = shortenName($_SESSION['fullname'], 10); // Rút gọn nếu dài hơn 10 ký tự
                 ?>
                   <div class="dropdown nav-item">
-                    <a class="btn btn-secondary dropdown-toggle"
-                      href="#"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button">
                       <i class="fa-regular fa-user"></i>
                       <?php echo $name; ?> <!-- Hiển thị tên người dùng -->
                     </a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a
-                          class="dropdown-item"
-                          href="trangcanhan.php">Trang cá nhân</a>
+                        <a class="dropdown-item" href="trangcanhan.php">Trang cá nhân</a>
                       </li>
                       <?php if ($_SESSION['role'] === 'admin'): ?>
                         <li>
-                          <a
-                            class="dropdown-item"
-                            href="/BANHOA/Front-end/Adminn/index.php">Quản lý sản phẩm</a>
+                          <a class="dropdown-item" href="/BANHOA/Front-end/Adminn/index.php">Quản lý sản phẩm</a>
                         </li>
                       <?php endif; ?>
                       <li>
-                        <a
-                          class="dropdown-item"
-                          href="/BANHOA/database/logout.php">Đăng xuất</a>
+                        <a class="dropdown-item" href="/BANHOA/database/logout.php">Đăng xuất</a>
                       </li>
                     </ul>
                   </div>
+
                 <?php endif; ?>
               </div>
             </div>
@@ -258,30 +256,7 @@ if ($categories_result) {
 
   <!-- Optional: Add JavaScript if you want a click-based dropdown -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    // Click-based dropdown toggle using jQuery (optional)
-    $(document).ready(function() {
-      $('.dropdown-toggle').click(function(e) {
-        var $el = $(this).next('.dropdown-menu');
-        var isVisible = $el.is(':visible');
 
-        // Hide all dropdown menus
-        $('.dropdown-menu').slideUp();
-
-        // Toggle the visibility of the current dropdown
-        if (!isVisible) {
-          $el.stop(true, true).slideDown();
-        }
-      });
-
-      // Close the dropdown if clicked outside
-      $(document).click(function(e) {
-        if (!$(e.target).closest('.dropdown').length) {
-          $('.dropdown-menu').slideUp();
-        }
-      });
-    });
-  </script>
   <script>
     let lastScrollTop = 0;
     const header = document.getElementById("myHeader");
