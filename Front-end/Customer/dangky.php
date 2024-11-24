@@ -84,41 +84,17 @@
         <script src="/BANHOA/js/bootstrap.bundle.js"></script>
         <script src="/BANHOA/js/bootstrap.js"></script>
         <script>
-            $(document).ready(function() {
-                $('.owl-carousel').owlCarousel({
-                    loop: true,
-                    margin: 10,
-                    nav: false,
-                    responsiveClass: true,
-                    responsive: {
-                        0: {
-                            items: 1,
-                            // nav: true
-                        },
-                        600: {
-                            items: 3,
-                            // nav: false
-                        },
-                        1000: {
-                            items: 5,
-                            nav: true,
-                            loop: false,
-                            margin: 20
-                        }
-                    }
-                })
-            })
-
             function validateForm() {
+                var email = document.getElementById("email").value;
                 var password = document.getElementById("password").value;
                 var confirmPassword = document.getElementById("confirmPassword").value;
                 var errorMessage = document.getElementById("errorMessage");
 
-                // // Kiểm tra độ dài của mật khẩu
-                // if (password.length < 6) {
-                //     errorMessage.textContent = "Mật khẩu phải có ít nhất 6 ký tự!";
-                //     return false;
-                // }
+                // Kiểm tra độ dài của mật khẩu
+                if (password.length < 6) {
+                    errorMessage.textContent = "Mật khẩu phải có ít nhất 6 ký tự!";
+                    return false;
+                }
 
                 // Kiểm tra mật khẩu và xác nhận mật khẩu
                 if (password !== confirmPassword) {
@@ -126,16 +102,19 @@
                     return false;
                 }
 
+                // Gửi yêu cầu AJAX kiểm tra email
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "check_email.php", false); // "false" để thực hiện đồng bộ (chờ kết quả)
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.send("email=" + encodeURIComponent(email));
+
+                if (xhr.responseText === "exists") {
+                    errorMessage.textContent = "Email đã tồn tại!";
+                    return false;
+                }
+
                 errorMessage.textContent = "";
-                alert("Đăng ký thành công!");
                 return true; // Form sẽ được gửi nếu mọi thứ đúng
             }
-
-
-            //     function chuyedoidangky(next){
-            //         next.preventDefault();
-            //         window.location.href="/BANHOA/Front-end/Customer/index.html";
-            //     }
-            // 
         </script>
     </body>

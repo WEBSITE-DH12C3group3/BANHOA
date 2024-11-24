@@ -17,7 +17,8 @@ if (isset($_POST['btn-login'])) {
         $row = $result->fetch_assoc();
 
         // Kiểm tra mật khẩu
-        if ($password == $row['password']) {
+        if (password_verify($password, $row['password'])) {
+            // Mật khẩu chính xác, tiến hành xác thực người dùng (ví dụ: lưu thông tin vào session, cookie, ...)
             // Lưu thông tin người dùng vào session
             $_SESSION['user_logged_in'] = true;
             $_SESSION['users_id'] = $row['id'];
