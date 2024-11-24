@@ -1,6 +1,12 @@
 <?php
 include 'header.php';
-$product_id = $_GET['id'];
+// Giả sử product_id được truyền qua URL dưới dạng tham số GET
+if (isset($_GET['id'])) {
+    $product_id = $_GET['id'];
+
+    // Đặt biến phiên
+    $_SESSION['product_id'] = $product_id;
+}
 
 $db = new Database();
 
@@ -22,45 +28,6 @@ if ($ratings_result) {
         $comments[] = $rating;
     }
 }
-
-// Xử lý gửi đánh giá
-$message = '';
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
-    if (isset($_SESSION['fullname'])) {
-        $user_id = $_SESSION['users_id'];
-        $fullname = $_SESSION['fullname'];
-        $rating = intval($_POST['rating']); // Lấy số sao từ form
-        $comment = $db->escape_string($_POST['comment']);
-        $created_at = date("Y-m-d H:i:s");
-
-        // Kiểm tra dữ liệu đầu vào
-        if ($rating < 1 || $rating > 5) {
-            $_SESSION['message'] = "Đánh giá không hợp lệ!";
-            header("Location: /BANHOA/Front-end/Customer/hoa.php?id={$product_id}");
-            exit;
-        }
-        if (empty(trim($comment))) {
-            $_SESSION['message'] = "Bình luận không được để trống!";
-            header("Location: /BANHOA/Front-end/Customer/hoa.php?id={$product_id}");
-            exit;
-        }
-
-        $insert_query = "INSERT INTO comments (product_id, user_id, fullname, rating, comment, created_at)
-                         VALUES ('{$product_id}', '$user_id', '{$fullname}', '{$rating}', '{$comment}', '{$created_at}')";
-        if ($db->insert($insert_query)) {
-            $_SESSION['message'] = "Đánh giá của bạn đã được gửi thành công!";
-        }
-
-        // Chuyển hướng để ngăn double-submit
-        header("Location: /BANHOA/Front-end/Customer/hoa.php?id={$product_id}");
-        exit;
-    } else {
-        $_SESSION['message'] = "Bạn cần đăng nhập để gửi đánh giá.";
-        header("Location: login.php");
-        exit;
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -229,7 +196,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
             <!-- Form for submitting review -->
             <div id="comments" class="rating-container mt-4" style="display: none;">
                 <h5>Đánh Giá Sản Phẩm</h5>
-                <form method="POST">
+                <form method="POST" action="/BANHOA/database/xulycomments.php">
+                    <input type="hidden" name="product_id" value="<?php echo $product_id; ?>"> <!-- Gửi product_id -->
                     <div class="star-rating">
                         <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
                         <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
