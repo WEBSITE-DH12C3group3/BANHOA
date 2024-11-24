@@ -33,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
         if ($db->insert($insert_query)) {
             $_SESSION['message'] = "Đánh giá của bạn đã được gửi thành công!";
         }
-
         // Chuyển hướng để ngăn double-submit
         header("Location: /BANHOA/Front-end/Customer/hoa.php?id={$product_id}");
         exit;
+
     } else {
         $_SESSION['message'] = "Bạn cần đăng nhập để gửi đánh giá.";
         header("Location: login.php");

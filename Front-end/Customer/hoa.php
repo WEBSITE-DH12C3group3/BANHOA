@@ -8,6 +8,7 @@ if (isset($_GET['id'])) {
     $_SESSION['product_id'] = $product_id;
 }
 
+
 $db = new Database();
 
 // Truy vấn sản phẩm
@@ -136,31 +137,12 @@ if ($ratings_result) {
                 </div>
                 <div class="col-md-10">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn">
-                            <input type="radio" name="options" id="option1" autocomplete="off" onclick="filterReviews(1)"> 1 Sao (<?php echo count(array_filter($comments, function ($comment) {
-                                                                                                                                        return $comment['rating'] == 1;
-                                                                                                                                    })); ?>)
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name="options" id="option2" autocomplete="off" onclick="filterReviews(2)"> 2 Sao (<?php echo count(array_filter($comments, function ($comment) {
-                                                                                                                                        return $comment['rating'] == 2;
-                                                                                                                                    })); ?>)
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name="options" id="option3" autocomplete="off" onclick="filterReviews(3)"> 3 Sao (<?php echo count(array_filter($comments, function ($comment) {
-                                                                                                                                        return $comment['rating'] == 3;
-                                                                                                                                    })); ?>)
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name="options" id="option4" autocomplete="off" onclick="filterReviews(4)"> 4 Sao (<?php echo count(array_filter($comments, function ($comment) {
-                                                                                                                                        return $comment['rating'] == 4;
-                                                                                                                                    })); ?>)
-                        </label>
-                        <label class="btn">
-                            <input type="radio" name="options" id="option5" autocomplete="off" onclick="filterReviews(5)"> 5 Sao (<?php echo count(array_filter($comments, function ($comment) {
-                                                                                                                                        return $comment['rating'] == 5;
-                                                                                                                                    })); ?>)
-                        </label>
+                        <label class="btn btn-outline-primary active" onclick="filterReviews(0)">Tất cả</label>
+                        <label class="btn btn-outline-primary" onclick="filterReviews(1)"> 1 Sao (<?php echo count(array_filter($comments, function ($comment) { return $comment['rating'] == 1; })); ?>)</label>
+                        <label class="btn btn-outline-primary" onclick="filterReviews(2)"> 2 Sao (<?php echo count(array_filter($comments, function ($comment) { return $comment['rating'] == 2; })); ?>)</label>
+                        <label class="btn btn-outline-primary" onclick="filterReviews(3)"> 3 Sao (<?php echo count(array_filter($comments, function ($comment) { return $comment['rating'] == 3; })); ?>)</label>
+                        <label class="btn btn-outline-primary" onclick="filterReviews(4)"> 4 Sao (<?php echo count(array_filter($comments, function ($comment) { return $comment['rating'] == 4; })); ?>)</label>
+                        <label class="btn btn-outline-primary" onclick="filterReviews(5)"> 5 Sao (<?php echo count(array_filter($comments, function ($comment) { return $comment['rating'] == 5; })); ?>)</label>
                     </div>
                 </div>
             </div>
@@ -170,22 +152,22 @@ if ($ratings_result) {
             <h5>Nhận Xét Khách Hàng</h5>
             <div id="reviewList">
                 <ul>
-                    <?php foreach ($comments as $comment) { ?>
-                        <li>
+                    <?php foreach ($comments as $comment) : ?>
+                        <li data-rating="<?php echo $comment['rating']; ?>"> <li data-rating="<?php echo $comment['rating']; ?>">
                             <strong><?php echo htmlspecialchars($comment['fullname']); ?></strong>
                             <div class="rating">
-                                <?php for ($i = 1; $i <= 5; $i++) {
-                                    if ($i <= $comment['rating']) {
-                                        echo '★';
-                                    } else {
-                                        echo '☆';
-                                    }
-                                } ?>
+                                <?php for ($i = 1; $i <= 5; $i++) : ?>
+                                    <?php if ($i <= $comment['rating']) : ?>
+                                        ★
+                                    <?php else : ?>
+                                        ☆
+                                    <?php endif; ?>
+                                <?php endfor; ?>
                             </div>
                             <p><?php echo htmlspecialchars($comment['comment']); ?></p>
                             <small><?php echo $comment['created_at']; ?></small>
                         </li>
-                    <?php } ?>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 
@@ -198,6 +180,12 @@ if ($ratings_result) {
                 <h5>Đánh Giá Sản Phẩm</h5>
                 <form method="POST" action="/BANHOA/database/xulycomments.php">
                     <input type="hidden" name="product_id" value="<?php echo $product_id; ?>"> <!-- Gửi product_id -->
+                    <?php
+                    if (isset($_SESSION['message'])) {
+                        echo '<div class="alert alert-danger">' . $_SESSION['message'] . '</div>';
+                        unset($_SESSION['message']); // Xóa thông báo sau khi hiển thị
+                    }
+                    ?>
                     <div class="star-rating">
                         <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
                         <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
@@ -293,6 +281,28 @@ if ($ratings_result) {
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/BANHOA/mycss/pagination.js"></script>
+    <script>
+function filterReviews(rating) {
+    const reviewList = document.getElementById('reviewList');
+    const reviews = reviewList.querySelectorAll('li');
+
+    reviews.forEach(review => {
+        const reviewRating = parseInt(review.getAttribute('data-rating'));
+
+        if (rating === 0 || reviewRating === rating) { // Hiển thị tất cả nếu rating = 0
+            review.style.display = 'block';
+        } else {
+            review.style.display = 'none';
+        }
+    });
+}
+
+// Gọi hàm filterReviews khi trang được tải để hiển thị tất cả đánh giá ban đầu
+window.addEventListener('DOMContentLoaded', () => {
+    filterReviews(0); // Hiển thị tất cả đánh giá khi trang load
+});
+</script>
+
 
 </body>
 
