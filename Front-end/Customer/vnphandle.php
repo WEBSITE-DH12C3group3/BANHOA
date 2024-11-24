@@ -66,12 +66,11 @@ if (isset($_POST['redirect'])) {
             $product_id = $value['id'];
             $quantity = $value['quantity'];
             $insert_order_detail = "INSERT INTO order_items (order_code, product_id, quantity) 
-        VALUES ('" . $order_code . "', '" . $product_id . "', '" . $quantity . "')";
+            VALUES ('" . $order_code . "', '" . $product_id . "', '" . $quantity . "')";
             $db->insert($insert_order_detail);
         }
+        include 'formmail.php';
     }
-    unset($_SESSION['total']);
-    unset($_SESSION['cart']);
     header('Location: ' . $vnp_Url);
     die();
 } else {

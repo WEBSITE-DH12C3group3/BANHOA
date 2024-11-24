@@ -81,7 +81,6 @@ if ($order_query) {
             VALUES ('" . $order_code . "', '" . $product_id . "', '" . $quantity . "')";
         $db->insert($insert_order_detail);
     }
+    include 'formmail.php';
 }
-unset($_SESSION['total']);
-unset($_SESSION['cart']);
 header('Location: ' . $jsonResult['payUrl']);

@@ -24,6 +24,7 @@ if (isset($_POST['btn-login'])) {
             $_SESSION['users_id'] = $row['id'];
             $_SESSION['role'] = $row['role'];
             $_SESSION['fullname'] = $row['fullname'];
+            $_SESSION['email'] = $row['email'];
             // Chuyển hướng đến giao diện khách hàng hoặc admin
             if ($row['role'] == 'admin') {
                 header("Location: http://localhost/BANHOA/Front-end/Adminn/index.php"); // Giao diện dành cho admin

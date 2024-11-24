@@ -4,7 +4,7 @@ session_start(); // Đảm bảo session đã được start
 if (!isset($_SESSION['cart'])) {
   $_SESSION['cart'] = [];
 }
-include '/xampp/htdocs/BANHOA/database/connect.php';
+include '../../database/connect.php';
 
 // Tạo đối tượng Database
 $db = new Database();
@@ -30,14 +30,14 @@ if ($categories_result) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" href="/BANHOA/Front-end/public/Eden.png">
-  <link rel="stylesheet" href="/BANHOA/css/bootstrap.css">
-  <link rel="stylesheet" href="/BANHOA/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/BANHOA/mycss/style.css">
+  <link rel="icon" type="image/png" href="../public/Eden.png">
+  <link rel="stylesheet" href="../../css/bootstrap.css">
+  <link rel="stylesheet" href="../../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../mycss/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="/BANHOA/assets/owlcarousel/assets/owl.carousel.min.css">
-  <link rel="stylesheet" href="/BANHOA/assets/owlcarousel/assets/owl.theme.default.min.css">
-  <link rel="stylesheet" href="/BANHOA/mycss/footder.css">
+  <link rel="stylesheet" href="../../assets/owlcarousel/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="../../assets/owlcarousel/assets/owl.theme.default.min.css">
+  <link rel="stylesheet" href="../../mycss/footder.css">
   <style>
     /* Style for the dropdown */
     .dropdown:hover .dropdown-menu {
@@ -99,7 +99,7 @@ if ($categories_result) {
           <div class="col-md-3 col-4 text-center text-md-start mb-3 mb-md-0">
             <a href="index.php">
               <img
-                src="/BANHOA/Front-end/public/logo1.png"
+                src="../public/logo1.png"
                 class="img-fluid"
                 width="200px"
                 height="auto"
@@ -196,11 +196,11 @@ if ($categories_result) {
                       </li>
                       <?php if ($_SESSION['role'] === 'admin'): ?>
                         <li>
-                          <a class="dropdown-item" href="/BANHOA/Front-end/Adminn/index.php">Quản lý sản phẩm</a>
+                          <a class="dropdown-item" href="index.php">Quản lý sản phẩm</a>
                         </li>
                       <?php endif; ?>
                       <li>
-                        <a class="dropdown-item" href="/BANHOA/database/logout.php">Đăng xuất</a>
+                        <a class="dropdown-item" href="../../database/logout.php">Đăng xuất</a>
                       </li>
                     </ul>
                   </div>

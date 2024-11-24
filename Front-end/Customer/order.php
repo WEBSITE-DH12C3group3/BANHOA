@@ -1,5 +1,6 @@
 <?php
 include "/xampp/htdocs/BANHOA/database/connect.php";
+require '/xampp/htdocs/BANHOA/database/sendmailreset.php';
 include "config_vnp.php";
 session_start();
 $db = new Database();
@@ -41,8 +42,7 @@ if ($payment_method == 'vnpay') {
             VALUES ('" . $order_code . "', '" . $product_id . "', '" . $quantity . "')";
             $db->insert($insert_order_detail);
         }
+        include 'formmail.php';
     }
-    unset($_SESSION['total']);
-    unset($_SESSION['cart']);
     header("Location: arigatou.php?order_code=" . $order_code);
 }
