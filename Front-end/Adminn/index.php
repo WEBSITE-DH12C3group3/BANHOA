@@ -151,8 +151,8 @@ $total_revenue_month = $result_month->fetch_assoc()['total_revenue_month'] ?? 0;
 
             // Xử lý khi người dùng gửi form
             if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
-                $start_date = date('m-d-Y', strtotime($_GET['start_date']));
-                $end_date = date('m-d-Y', strtotime($_GET['end_date']));
+                $start_date = date('d-m-Y', strtotime($_GET['start_date']));
+                $end_date = date('d-m-Y', strtotime($_GET['end_date']));
 
                 // Truy vấn doanh thu cho khoảng thời gian được chọn
                 $sql_custom = "SELECT SUM(total) AS total_revenue_custom 

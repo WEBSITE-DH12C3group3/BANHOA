@@ -140,7 +140,7 @@ $db = new Database();
                                         <p class="text-uppercase"><?php echo $row['payment_method']; ?></p>
                                     <?php } ?>
                                 </td>
-                                <td><?php echo $row['order_date']; ?></td>
+                                <td><?php echo date('h:i:s A d-m-Y', strtotime($row['order_date'])); ?></td>
                                 <td><?php echo $row['status']; ?></td>
                                 <td>
                                     <a href="order_detail.php?code=<?php echo $row['order_code']; ?>&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>

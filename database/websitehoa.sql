@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2024 at 05:22 PM
+-- Generation Time: Nov 24, 2024 at 08:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -11,7 +11,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-CREATE DATABASE `websitehoa` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE `websitehoa` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 USE `websitehoa`;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -86,6 +86,13 @@ CREATE TABLE `delivery` (
   `address` varchar(200) NOT NULL,
   `note` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `delivery`
+--
+
+INSERT INTO `delivery` (`id`, `user_id`, `email`, `name`, `phone`, `address`, `note`) VALUES
+(1, 1, 'admin@1', 'admin', '1', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -217,9 +224,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `address`, `role`, `created_at`) VALUES
-(1, 'admin', 'admin@1', '1', NULL, NULL, 'admin', '2024-11-10 17:32:49'),
-(2, 'customer', 'test@1', '1', '0366379629', 'Việt Nam', 'customer', '2024-11-10 17:33:41'),
-(3, 'doan hong quan', 'quan@2', '2', '1', '1', 'customer', '2024-11-10 18:26:45');
+(1, 'admin', 'admin@1', '$2y$10$EEJca52zNM4q5dGaDxQNa.gB7Er9a9BG99oKLLkE64A.6dKIt4ETW', NULL, NULL, 'admin', '2024-11-10 17:32:49'),
+(2, 'doan hong quan', 'quan@2', '$2y$10$EEJca52zNM4q5dGaDxQNa.gB7Er9a9BG99oKLLkE64A.6dKIt4ETW', '2', '1', 'customer', '2024-11-10 18:26:45');
 
 -- --------------------------------------------------------
 
@@ -270,6 +276,12 @@ ALTER TABLE `delivery`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `momo`
+--
+ALTER TABLE `momo`
+  ADD PRIMARY KEY (`id_momo`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -303,12 +315,6 @@ ALTER TABLE `vnpay`
   ADD PRIMARY KEY (`vnpay_id`);
 
 --
--- Indexes for table `vnpay`
---
-ALTER TABLE `momo`
-  ADD PRIMARY KEY (`id_momo`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -316,31 +322,37 @@ ALTER TABLE `momo`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contact_submissions`
 --
 ALTER TABLE `contact_submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `delivery`
 --
 ALTER TABLE `delivery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `momo`
+--
+ALTER TABLE `momo`
+  MODIFY `id_momo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -358,14 +370,8 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `vnpay`
 --
 ALTER TABLE `vnpay`
-  MODIFY `vnpay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `vnpay_id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT for table `momo`
---
-ALTER TABLE `momo`
-  MODIFY `id_momo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-  
 --
 -- Constraints for dumped tables
 --

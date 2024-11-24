@@ -90,7 +90,7 @@ $db = new Database();
                             echo "<td>" . $row['name'] . "</td>";
                             echo "<td>" . $row['email'] . "</td>";
                             echo "<td>" . $row['message'] . "</td>";
-                            echo "<td>" . $row['submitted_at'] . "</td>";
+                            echo "<td>" . date('h:i:s A d-m-Y', strtotime($row['submitted_at'])) . "</td>";
                             echo "</tr>";
                         }
                     } else {

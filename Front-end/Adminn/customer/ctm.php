@@ -92,7 +92,6 @@ $db = new Database();
                         <th scope="col">ID</th>
                         <th scope="col">Họ tên</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Mật khẩu</th>
                         <th scope="col">Số điện thoại</th>
                         <th scope="col">Địa chỉ</th>
                         <th scope="col">Vai trò</th>
@@ -110,11 +109,10 @@ $db = new Database();
                                 <td><?php echo $row['id']; ?></td>
                                 <td><?php echo $row['fullname']; ?></td>
                                 <td><?php echo $row['email']; ?></td>
-                                <td><?php echo $row['password']; ?></td>
                                 <td><?php echo $row['phone']; ?></td>
                                 <td><?php echo $row['address']; ?></td>
                                 <td><?php echo $row['role']; ?></td>
-                                <td><?php echo $row['created_at']; ?></td>
+                                <td><?php echo date('h:i:s A d-m-Y', strtotime($row['created_at'])); ?></td>
                                 <td>
                                     <a type="button" class="btn btn-info"
                                         data-toggle="modal"
@@ -122,11 +120,11 @@ $db = new Database();
                                         data-id="<?php echo $row['id']; ?>"
                                         data-fullname="<?php echo $row['fullname']; ?>"
                                         data-email="<?php echo $row['email']; ?>"
-                                        data-password="<?php echo $row['password']; ?>"
                                         data-phone="<?php echo $row['phone']; ?>"
                                         data-address="<?php echo $row['address']; ?>"
-                                        data-role="<?php echo $row['role']; ?>" style="color: white;"><i class="fa fa-edit"></i></a>
-
+                                        data-role="<?php echo $row['role']; ?>" style="color: white;">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
                                     <a onclick="return confirm('Bạn có muốn xóa?')" href="deluser.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
@@ -159,10 +157,7 @@ $db = new Database();
                 </div>
                 <div class="modal-body">
                     <form id="editForm" method="POST" action="edituser.php">
-                        <div class="form-group">
-                            <label for="customerName">Mã Khách Hàng</label>
-                            <input type="text" class="form-control" id="customerID" name="customerID" placeholder="Mã khách hàng" value="<?php echo $row['id'] ?>" readonly>
-                        </div>
+                        <input type="text" class="form-control" id="customerID" name="customerID" placeholder="Mã khách hàng" value="<?php echo $row['id'] ?>" hidden>
                         <div class="form-group">
                             <label for="customerName">Tên Khách Hàng</label>
                             <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Tên khách hàng" required value="<?php echo $row['fullname'] ?>">
@@ -170,10 +165,6 @@ $db = new Database();
                         <div class="form-group">
                             <label for="customerEmail">Email</label>
                             <input type="email" class="form-control" id="customerEmail" name="customerEmail" placeholder="Nhập email" required value="<?php echo $row['email'] ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="customerPassword">Mật Khẩu</label>
-                            <input type="password" class="form-control" id="customerPassword" name="customerPassword" placeholder="Nhập mật khẩu" required value="<?php echo $row['password'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="customerPhone">Số Điện Thoại</label>
@@ -206,7 +197,6 @@ $db = new Database();
             var id = button.data('id'); // Extract info from data-* attributes
             var fullname = button.data('fullname');
             var email = button.data('email');
-            var password = button.data('password');
             var phone = button.data('phone');
             var address = button.data('address');
             var role = button.data('role');
@@ -215,7 +205,6 @@ $db = new Database();
             modal.find('#customerID').val(id);
             modal.find('#customerName').val(fullname);
             modal.find('#customerEmail').val(email);
-            modal.find('#customerPassword').val(password);
             modal.find('#customerPhone').val(phone);
             modal.find('#customerAddress').val(address);
             modal.find('#role').val(role);
