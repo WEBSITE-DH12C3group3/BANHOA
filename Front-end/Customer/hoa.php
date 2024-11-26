@@ -116,7 +116,7 @@ if ($ratings_result) {
         <!-- Phần đánh giá sản phẩm -->
         <div class="rating-container">
             <div class="row">
-                <div class="col-md-2 text-center">
+            <div class="col-md-2 text-center">
                     <div class="rating-summary">
                         <?php
                         $total_ratings = count($comments);
@@ -132,7 +132,23 @@ if ($ratings_result) {
                         ?>
                     </div>
                     <div class="rating-stars">
-                        <span>★★★★★</span>
+                        <?php
+                        $full_stars = floor($average_rating);
+                        $half_star = ($average_rating - $full_stars) >= 0.5 ? 1 : 0;
+                        $empty_stars = 5 - $full_stars - $half_star;
+
+                        for ($i = 0; $i < $full_stars; $i++) {
+                            echo '<i class="fas fa-star"></i>'; // Full star
+                        }
+
+                        if ($half_star) {
+                            echo '<i class="fas fa-star-half-alt"></i>'; // Half star
+                        }
+
+                        for ($i = 0; $i < $empty_stars; $i++) {
+                            echo '<i class="far fa-star"></i>'; // Empty star
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="col-md-10">

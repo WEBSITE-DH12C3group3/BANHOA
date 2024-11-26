@@ -35,6 +35,7 @@ if ($categories_result) {
   <link rel="stylesheet" href="../../css/bootstrap.min.css">
   <link rel="stylesheet" href="../../mycss/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOdLHNpLHn9+YRAy0RQgRNEirOrf0gR6Yq6yjHA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../assets/owlcarousel/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="../../assets/owlcarousel/assets/owl.theme.default.min.css">
   <link rel="stylesheet" href="../../mycss/footder.css">
@@ -196,7 +197,7 @@ if ($categories_result) {
                       </li>
                       <?php if ($_SESSION['role'] === 'admin'): ?>
                         <li>
-                          <a class="dropdown-item" href="index.php">Quản lý sản phẩm</a>
+                          <a class="dropdown-item" href="../Adminn/index.php">Quản lý sản phẩm</a>
                         </li>
                       <?php endif; ?>
                       <li>
