@@ -1,6 +1,6 @@
 <?php
 $vnp_TxnRef = $order_code; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-$vnp_OrderInfo = 'Thanh toán đơn hàng tại web';
+$vnp_OrderInfo = 'Thanh toán đơn hàng qua VNPAY';
 $vnp_OrderType = 'billpayment';
 $vnp_Amount = $_SESSION["total"] * 100;
 $vnp_Locale = 'vn';

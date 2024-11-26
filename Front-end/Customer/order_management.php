@@ -205,7 +205,7 @@ $result = $db->select($query);
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Chi tiết thanh toán</h5>
+                <h5 class="modal-title" id="ModalLabel">Chi tiết thanh toán qua cổng thanh toán</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -231,7 +231,7 @@ $result = $db->select($query);
 
             // Gửi dữ liệu qua AJAX
             var modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = "<p>Đang tải dữ liệu...</p>"; // Hiển thị thông báo đang tải
+            modalContent.innerHTML = "<p>Đang tải dữ liệu...</p>";
 
             fetch('fetch_order_details.php', {
                     method: 'POST',
@@ -243,24 +243,43 @@ $result = $db->select($query);
                         payment_method: paymentMethod
                     })
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Hiển thị dữ liệu chi tiết trong modal
-                        modalContent.innerHTML = `
-            <p><strong>Mã đơn hàng:</strong> ${data.details.order_code}</p>
-            <p><strong>Mã đối tác:</strong> ${data.details.partner_code}</p>
-            <p><strong>Số tiền:</strong> ${data.details.amount}</p>
-            <p><strong>Thông tin chi tiết:</strong> ${data.details.order_info}</p>
-            <p><strong>Kiểu giao dịch:</strong> ${data.details.order_type}</p>
-            <p><strong>Mã giao dịch:</strong> ${data.details.trans_id}</p>
-            <p><strong>Kiểu thanh toán:</strong> ${data.details.pay_type}</p>
-        `;
+                        const details = data.details;
+                        // Nội dung hiển thị cơ bản
+                        let content = `
+                        <p><strong>Mã đơn hàng:</strong> ${details.order_code}</p>
+                        <p><strong>Thông tin chi tiết:</strong> ${details.order_info}</p>
+                        <p><strong>Mã giao dịch:</strong> ${details.trans_id}</p>
+                        <p><strong>Kiểu thanh toán:</strong> ${details.pay_type}</p>
+                        `;
+
+                        // Hiển thị các trường bổ sung nếu có
+                        if (details.amount) {
+                            const formattedAmount = formatCurrency(details.amount);
+                            content += `<p><strong>Số tiền:</strong> ${formattedAmount}</p>`;
+                        }
+                        if (details.vnpay_amount) {
+                            amount = details.vnpay_amount / 100;
+                            const formattedAmount = formatCurrency(amount);
+                            content += `<p><strong>Số tiền:</strong> ${formattedAmount}</p>`;
+                        }
+                        if (details.vnpay_paydate) {
+                            const formattedDate = formatDate(details.vnpay_paydate);
+                            content += `<p><strong>Ngày thanh toán:</strong> ${formattedDate}</p>`;
+                        }
+                        if (details.vnpay_bankcode) {
+                            content += `<p><strong>Mã ngân hàng:</strong> ${details.vnpay_bankcode}</p>`;
+                        }
+                        if (details.vnpay_banktranno) {
+                            content += `<p><strong>Mã giao dịch ngân hàng:</strong> ${details.vnpay_banktranno}</p>`;
+                        }
+                        if (details.vnpay_tmncode) {
+                            content += `<p><strong>Mã điểm giao dịch:</strong> ${details.vnpay_tmncode}</p>`;
+                        }
+
+                        modalContent.innerHTML = content;
                     } else {
                         modalContent.innerHTML = `<p>${data.message}</p>`;
                     }
@@ -269,9 +288,38 @@ $result = $db->select($query);
                     console.error('Error fetching order details:', error);
                     modalContent.innerHTML = `<p>Lỗi: Không thể tải thông tin chi tiết. Vui lòng thử lại.</p>`;
                 });
-
         });
     });
+
+    function parseDate(dateString) {
+        const year = dateString.slice(0, 4);
+        const month = dateString.slice(4, 6);
+        const day = dateString.slice(6, 8);
+        const hour = dateString.slice(8, 10);
+        const minute = dateString.slice(10, 12);
+        const second = dateString.slice(12, 14);
+
+        return new Date(year, month - 1, day, hour, minute, second);
+    }
+
+    function formatDate(dateString) {
+        const date = parseDate(dateString);
+        return new Intl.DateTimeFormat('vi-VN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        }).format(date);
+    }
+
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(amount);
+    }
 </script>
 
 </html>
