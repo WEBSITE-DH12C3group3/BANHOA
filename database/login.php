@@ -26,11 +26,7 @@ if (isset($_POST['btn-login'])) {
             $_SESSION['fullname'] = $row['fullname'];
             $_SESSION['email'] = $row['email'];
             // Chuyển hướng đến giao diện khách hàng hoặc admin
-            if ($row['role'] == 'admin') {
-                header("Location: http://localhost/BANHOA/Front-end/Adminn/index.php"); // Giao diện dành cho admin
-            } else {
-                header("Location: http://localhost/BANHOA/Front-end/Customer/index.php"); // Giao diện dành cho khách hàng
-            }
+            header("Location: http://localhost/BANHOA/Front-end/Customer/index.php"); // Giao diện dành cho khách hàng
             exit();
         } else {
             $_SESSION['error'] = "Mật khẩu không chính xác, hãy thử lại!";

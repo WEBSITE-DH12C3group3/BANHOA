@@ -133,11 +133,11 @@ $db = new Database();
                                     } ?>
                                 </td>
                                 <td><?php if ($row['payment_method'] == 'bank') {
-                                        echo 'Chuyển khoản ngân hàng';
+                                        echo 'Banking';
                                     } elseif ($row['payment_method'] == 'cash') {
-                                        echo 'Thanh toán khi nhận hàng';
+                                        echo 'COD';
                                     } else { ?>
-                                        <p class="text-uppercase"><?php echo $row['payment_method']; ?></p>
+                                        <span class="text-uppercase"><?php echo $row['payment_method']; ?></span>
                                     <?php } ?>
                                 </td>
                                 <td><?php echo date('h:i:s A d-m-Y', strtotime($row['order_date'])); ?></td>
