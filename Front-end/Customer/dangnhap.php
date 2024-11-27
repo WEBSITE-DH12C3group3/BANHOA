@@ -9,7 +9,7 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
 
 <head>
     <title>EDEN | Đăng Nhập</title>
-    <link rel="stylesheet" href="/BANHOA/mycss/form.css">
+    <link rel="stylesheet" href="../../mycss/form.css">
     <style>
         .log {
             background-color: #28a228;
@@ -37,7 +37,7 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
                         </div>
                     <?php endif; ?>
 
-                    <form method="POST" action="/BANHOA/database/login.php">
+                    <form method="POST" action="../../database/login.php">
                         <!-- Email -->
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -50,7 +50,7 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
                             <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu" required>
                         </div>
                         <div class="form-group" style="margin-top: 20px;">
-                            <a href="/BANHOA/Front-end/Customer/forgotpassword.php">Quên mật khẩu?</a>
+                            <a href="forgotpassword.php">Quên mật khẩu?</a>
                             <a href="dangky.php">Đăng ký</a>
                             <button type="submit" name="btn-login" class="btn btn-block log" style="float: right;">Đăng nhập</button>
                         </div>
@@ -90,7 +90,7 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
 
         function chuyedoidangnhap(next) {
             next.preventDefault();
-            window.location.href = "/BANHOA/Front-end/Customer/index.html";
+            window.location.href = "index.html";
         }
     </script>
 </body>

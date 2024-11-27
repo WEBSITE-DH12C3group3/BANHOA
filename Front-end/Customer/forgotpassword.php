@@ -1,7 +1,7 @@
 <?php
 session_start();
 ob_start();
-require '/xampp/htdocs/BANHOA/database/sendmailreset.php';
+require '../../database/sendmailreset.php';
 
 $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
 unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
@@ -14,7 +14,6 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quên Mật Khẩu</title>
-    <link rel="icon" type="image/png" href="/BANHOA/Front-end/public/Eden.png">
 
     <style>
         body {
@@ -111,20 +110,20 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
         <?php endif; ?>
 
         <!-- Form nhập email để gửi mã xác nhận -->
-        <form id="emailForm" method="POST" action="/BANHOA/database/resetpassword.php">
+        <form id="emailForm" method="POST" action="../../database/resetpassword.php">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="email@example.com" required>
             <button type="submit" name="resetpassword">Gửi mã xác nhận</button>
         </form>
 
         <!-- Form nhập mã xác nhận (ẩn mặc định) -->
-        <form id="codeForm" method="POST" action="/BANHOA/database/resetpassword.php" style="display: none;">
+        <form id="codeForm" method="POST" action="../../database/resetpassword.php" style="display: none;">
             <label for="code">Mã xác nhận</label>
             <input type="text" id="code" name="code" placeholder="Nhập mã xác nhận" required>
             <button type="submit" name="checkCode">Xác nhận mã</button>
         </form>
 
-        <a href="/BANHOA/database/login.php" class="back-link">Quay lại trang đăng nhập</a>
+        <a href="../../database/login.php" class="back-link">Quay lại trang đăng nhập</a>
         <div class="message" id="message"></div>
     </div>
 

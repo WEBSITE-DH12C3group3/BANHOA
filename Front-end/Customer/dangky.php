@@ -4,7 +4,7 @@
 
     <head>
         <title>EDEN | Đăng Ký</title>
-        <link rel="stylesheet" href="/BANHOA/mycss/form.css">
+        <link rel="stylesheet" href="../../mycss/form.css">
         <style>
             .log {
                 background-color: #28a228;
@@ -25,7 +25,7 @@
                 <div class="row justify-content-center">
                     <div class="form-container">
                         <h2 class="text-center mb-4">Đăng Ký Tài Khoản</h2>
-                        <form action="/BANHOA/database/reg.php" method="post" onsubmit="return validateForm()">
+                        <form action="../../database/reg.php" method="post" onsubmit="return validateForm()">
                             <!-- Fullname -->
                             <div class="form-group">
                                 <label for="fullnamee">Họ và Tên</label>
@@ -80,9 +80,6 @@
 
         <?php include 'footer.php'; ?>
 
-        <script src="/BANHOA/js/bootstrap.bundle.min.js"></script>
-        <script src="/BANHOA/js/bootstrap.bundle.js"></script>
-        <script src="/BANHOA/js/bootstrap.js"></script>
         <script>
             function validateForm() {
                 var email = document.getElementById("email").value;

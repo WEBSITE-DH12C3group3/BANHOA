@@ -1,6 +1,6 @@
 <?php
-include "/xampp/htdocs/BANHOA/database/connect.php";
-require '/xampp/htdocs/BANHOA/database/sendmailreset.php';
+include '../../database/connect.php';
+require '../../database/sendmailreset.php';
 include "config_vnp.php";
 session_start();
 $db = new Database();

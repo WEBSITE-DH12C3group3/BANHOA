@@ -1,7 +1,7 @@
 <?php
 include 'header.php';
-include_once '/xampp/htdocs/BANHOA/database/sendmailreset.php';
-include_once '/xampp/htdocs/BANHOA/database/connect.php';
+include_once '../../database/sendmailreset.php';
+include_once '../../database/connect.php';
 
 $db = new Database();
 
