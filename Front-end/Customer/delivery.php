@@ -27,6 +27,8 @@ if (isset($_POST['update'])) {
 <head>
     <title>Thanh Toán</title>
     <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             background-color: #f7f7f7;
@@ -96,7 +98,7 @@ if (isset($_POST['update'])) {
                         ?>
                             <li class="list-group-item d-flex justify-content-between lh-sm">
                                 <div class="d-flex align-items-center">
-                                    <img src="../Adminn/uploads/<?php echo $value['image']; ?>" class="product-img" style="border-radius: 5px; width: 80px; height: 80px; object-fit: cover;">
+                                    <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $value['image']; ?>" class="product-img" style="border-radius: 5px; width: 80px; height: 80px; object-fit: cover;">
                                     <div style="margin-left: 20px;">
                                         <h6 class="my-0"><?php echo $value['name']; ?></h6>
                                     </div>
@@ -270,6 +272,8 @@ if (isset($_POST['update'])) {
             </div>
         </div>
         <?php include 'footer.php'; ?>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

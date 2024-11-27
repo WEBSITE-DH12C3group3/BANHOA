@@ -33,7 +33,7 @@ $result = $db->select($sql);
             ?>
                     <div class="col-md-3 col-sm-6 mb-4">
                         <a href="hoa.php?id=<?php echo $row['id']; ?>" class="card">
-                            <img src="../Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+                            <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
 
                             <div class="card-body text-center">
                                 <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
@@ -68,7 +68,7 @@ $result = $db->select($sql);
         </div>
     </div>
 
-    <script src="../../mycss/pagination2.js"></script>
+    <script src="/BANHOA/mycss/pagination2.js"></script>
     <?php
     include 'footer.php';
     ?>

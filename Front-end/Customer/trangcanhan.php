@@ -150,10 +150,10 @@ if ($result) {
                 <div class="account-sidebar">
                     <ul>
                         <li><a href="#">Thông tin tài khoản</a></li>
-                        <li><a href="../../database/updatepassword.php">Đổi mật khẩu</a></li>
-                        <li><a href="order_management.php">Xem lại đơn hàng</a></li>
+                        <li><a href="/BANHOA/database/updatepassword.php">Đổi mật khẩu</a></li>
+                        <li><a href="/BANHOA/Front-end/Customer/order_management.php">Xem lại đơn hàng</a></li>
                         <li><a href="#">Giới thiệu Enden đến người thân</a></li>
-                        <li><a href="../../database/logout.php">Đăng xuất</a></li>
+                        <li><a href="/BANHOA/database/logout.php">Đăng xuất</a></li>
                     </ul>
                 </div>
             </div>
@@ -163,7 +163,7 @@ if ($result) {
             <div class="col-md-9">
                 <div class="account-container">
                     <h2 class="mb-4" style="color: #d8243c;">Cập nhật thông tin tài khoản</h2>
-                    <form action="../../database/updateuser.php" method="post" onsubmit="return validateForm()">
+                    <form action="/BANHOA/database/updateuser.php" method="post" onsubmit="return validateForm()">
                         <!-- Fullname -->
                         <div class="form-group">
                             <label for="fullname">Họ và Tên</label>

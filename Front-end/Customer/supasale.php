@@ -199,10 +199,10 @@ $total_products = $total_row['total'];
                     ?>
                             <div class="col-md-3 col-sm-6 mb-4">
                                 <a href="hoa.php?id=<?php echo $row['id']; ?>" class="card">
-                                    <img src="../Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+                                    <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
 
                                     <div class="card-body text-center">
-                                        <h5 class="card-title" style="color: #505050;"><?php echo $row['product_name']; ?></h5>
+                                        <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
 
                                         <p class="text-muted">
                                             <?php if ($price_sale) {
@@ -217,7 +217,7 @@ $total_products = $total_row['total'];
                                             <?php } ?>
                                         </p>
 
-                                        <button class="btn btn-success">Đặt hàng</button>
+                                        <button class="btn btn-primary">Đặt hàng</button>
                                     </div>
                                 </a>
                             </div>
@@ -236,7 +236,7 @@ $total_products = $total_row['total'];
 
     <?php include 'footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../mycss/pagination2.js"></script>
+    <script src="/BANHOA/mycss/pagination2.js"></script>
 </body>
 
 </html>

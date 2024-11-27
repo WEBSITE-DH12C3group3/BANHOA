@@ -30,19 +30,19 @@ $db = new Database();
                 <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
                     <div class="carousel-inner" style="border-radius: 5px;">
                         <div class="carousel-item active">
-                            <img src="../public/copyside.jpg" class="d-block w-100" alt="anhslide">
+                            <img src="/BANHOA/Front-end/public/copyside.jpg" class="d-block w-100" alt="anhslide">
                         </div>
                         <div class="carousel-item">
-                            <img src="../public/copyslide.jpg" class="d-block w-100" alt="anhslide">
+                            <img src="/BANHOA/Front-end/public/copyslide.jpg" class="d-block w-100" alt="anhslide">
                         </div>
                         <div class="carousel-item">
-                            <img src="../public/cpsile.jpg" class="d-block w-100" alt="anhslide">
+                            <img src="/BANHOA/Front-end/public/cpsile.jpg" class="d-block w-100" alt="anhslide">
                         </div>
                         <div class="carousel-item">
-                            <img src="../public/ngay-phu-nu-viet-nam.jpg" class="d-block w-100" alt="anhslide">
+                            <img src="/BANHOA/Front-end/public/ngay-phu-nu-viet-nam.jpg" class="d-block w-100" alt="anhslide">
                         </div>
                         <div class="carousel-item">
-                            <img src="../public/tinh-thanh.jpg" class="d-block w-100" alt="anhslide">
+                            <img src="/BANHOA/Front-end/public/tinh-thanh.jpg" class="d-block w-100" alt="anhslide">
                         </div>
                     </div>
 
@@ -73,7 +73,7 @@ $db = new Database();
                                     <div class="item hover-effect" style="border-radius: 10px; padding: 5px;">
                                         <div class="category-icon text-center"> <!-- Thêm class 'text-center' để căn giữa -->
                                             <a href="hoa.php?id=<?php echo $row['id']; ?>" class="product-link">
-                                                <img src="../Adminn/uploads/<?php echo $row['image']; ?>" alt="hoaxinh" class="img-fluid">
+                                                <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" alt="hoaxinh" class="img-fluid">
                                                 <h6 class="mt-2" style="color: black;"><?php echo $row['product_name']; ?></h6> <!-- Thêm margin-top để tạo khoảng cách giữa ảnh và chữ -->
                                             </a>
                                         </div>
@@ -132,9 +132,9 @@ $db = new Database();
                                                             ?>
                                                                     <div class="col-md-3 col-sm-6 mb-4">
                                                                         <a class="card" href="hoa.php?id=<?php echo $row['id']; ?>">
-                                                                            <img src="../Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+                                                                            <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
                                                                             <div class="card-body text-center">
-                                                                                <h5 class="card-title" style="color: #505050;"><?php echo $row['product_name']; ?></h5>
+                                                                                <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
                                                                                 <!-- Hiển thị giá -->
                                                                                 <p class="text-muted">
                                                                                     <?php if ($price_sale) { ?>

@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDEN | Giỏ Hàng</title>
-    <link rel="stylesheet" href="../../mycss/cart.css">
+    <link rel="stylesheet" href="/BANHOA/mycss/cart.css">
 </head>
 
 <body style="margin-top: 200px;">
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ?>
                             <tr class="cart-item">
                                 <td><?php echo $i; ?></td>
-                                <td><img src="../Adminn/uploads/<?php echo $image; ?>" alt="Product Image" /></td>
+                                <td><img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $image; ?>" alt="Product Image" /></td>
                                 <td><?php echo $name; ?></td>
                                 <td>
                                     <a href="modelcart.php?minus=<?php echo $id; ?>" class="btn btn-light nuts"><i class="fa fa-minus"></i></a>

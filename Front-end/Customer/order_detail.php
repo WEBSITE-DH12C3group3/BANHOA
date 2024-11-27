@@ -1,7 +1,7 @@
 <?php
 include 'header.php';
-include_once '../../database/sendmailreset.php';
-include_once '../../database/connect.php';
+include_once '/xampp/htdocs/BANHOA/database/sendmailreset.php';
+include_once '/xampp/htdocs/BANHOA/database/connect.php';
 
 $db = new Database();
 
@@ -50,7 +50,7 @@ if (isset($_GET['order_code'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi tiết đơn hàng #<?php echo $order_code; ?></title>
-    <link rel="stylesheet" href="../../mycss/order_manage.css">
+    <link rel="stylesheet" href="/BANHOA/mycss/order_manage.css">
     <style>
         h1 {
             font-size: 24px;
@@ -153,7 +153,7 @@ if (isset($_GET['order_code'])) {
                         $total_amount += $total_price;
                 ?>
                         <tr>
-                            <td><img src="../Adminn/uploads/<?php echo $item['image']; ?>" alt="" width="100"></td>
+                            <td><img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $item['image']; ?>" alt="" width="100"></td>
                             <td><a href="hoa.php?id=<?php echo $item['id']; ?>"><?php echo $item['product_name']; ?></a></td>
                             <td><?php echo $item['quantity']; ?></td>
                             <td><?php echo number_format($item['price'], 0, ',', '.'); ?> VND</td>
@@ -200,7 +200,7 @@ if (isset($_GET['order_code'])) {
 
         <?php if ($order_status === 'Chờ duyệt') { ?>
             <!-- Nút Hủy đơn hàng với JavaScript xác nhận -->
-            <form class="right" id="cancelOrderForm" action="../../database/cancel_order.php" method="post" onsubmit="return confirmCancel();">
+            <form class="right" id="cancelOrderForm" action="/BANHOA/database/cancel_order.php" method="post" onsubmit="return confirmCancel();">
                 <input type="hidden" name="order_code" value="<?php echo $order_code; ?>">
                 <button type="submit" name="cancel_order">
                     Hủy đơn hàng

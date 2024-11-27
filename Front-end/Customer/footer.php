@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
 <body>
     <section class="mymainfooter text-dark py-4 fooder">
         <div class="container">
@@ -75,8 +80,9 @@
         </div>
         </div>
     </section>
-    <script src="../../assets/vendors/jquery.min.js"></script>
-    <script src="../../assets/owlcarousel/owl.carousel.js"></script>
+    <script src="/BANHOA/assets/vendors/jquery.min.js"></script>
+    <script src="/BANHOA/assets/owlcarousel/owl.carousel.js"></script>
+    <script src="/BANHOA/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
