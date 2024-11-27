@@ -25,7 +25,7 @@ if (isset($_POST['btn-reg'])) {
             // Hiển thị alert và quay lại trang đăng ký
             echo "<script>
                     alert('Email đã tồn tại!');
-                    window.location.href = '../Front-end/Customer/dangky.php';
+                    window.location.href = '/BANHOA/Front-end/Customer/dangky.php';
                   </script>";
             exit;
         }
@@ -38,19 +38,19 @@ if (isset($_POST['btn-reg'])) {
             // Hiển thị thông báo đăng ký thành công và chuyển hướng
             echo "<script>
                     alert('Đăng ký thành công!');
-                    window.location.href = '../Front-end/Customer/dangnhap.php';
+                    window.location.href = '/BANHOA/Front-end/Customer/dangnhap.php';
                   </script>";
             exit; // Dừng thực thi script sau khi chuyển hướng
         } else {
             echo "<script>
                     alert('Lỗi khi thêm dữ liệu vào cơ sở dữ liệu!');
-                    window.location.href = '../Front-end/Customer/dangky.php';
+                    window.location.href = '/BANHOA/Front-end/Customer/dangky.php';
                   </script>";
         }
     } else {
         echo "<script>
                 alert('Vui lòng nhập đầy đủ thông tin!');
-                window.location.href = '../Front-end/Customer/dangky.php';
+                window.location.href = '/BANHOA/Front-end/Customer/dangky.php';
               </script>";
     }
 }

@@ -18,12 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
         // Kiểm tra dữ liệu đầu vào
         if ($rating < 1 || $rating > 5) {
             $_SESSION['message'] = "Đánh giá không hợp lệ!";
-            header("Location: ../Front-end/Customer/hoa.php?id={$product_id}&show_comments=true#comments");
+            header("Location: /BANHOA/Front-end/Customer/hoa.php?id={$product_id}&show_comments=true#comments");
             exit;
         }
         if (empty(trim($comment))) {
             $_SESSION['message'] = "Bình luận không được để trống!";
-            header("Location: ../Front-end/Customer/hoa.php?id={$product_id}&show_comments=true#comments");
+            header("Location: /BANHOA/Front-end/Customer/hoa.php?id={$product_id}&show_comments=true#comments");
             exit;
         }
 
@@ -34,11 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review'])) {
             $_SESSION['message'] = "Đánh giá của bạn đã được gửi thành công!";
         }
         // Chuyển hướng để ngăn double-submit
-        header("Location: ../Front-end/Customer/hoa.php?id={$product_id}");
+        header("Location: /BANHOA/Front-end/Customer/hoa.php?id={$product_id}");
         exit;
+
     } else {
         $_SESSION['message'] = "Bạn cần đăng nhập để gửi đánh giá.";
         header("Location: login.php");
         exit;
     }
 }
+?>

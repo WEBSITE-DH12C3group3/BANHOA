@@ -7,5 +7,6 @@ session_unset();
 session_destroy();
 
 // Chuyển hướng về trang đăng nhập hoặc trang chủ
-header("Location: ../Front-end/Customer/index.php");
+header("Location: /BANHOA/Front-end/Customer/index.php");
 exit();
+?>
