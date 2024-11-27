@@ -15,15 +15,15 @@ if (isset($_POST['order_code'])) {
         $order = $result->fetch_assoc();
 
         // Kiểm tra nếu trạng thái đơn hàng là "chờ duyệt"
-        if ($order['status'] == 'chờ duyệt') {
+        if ($order['status'] == 'Chờ duyệt') {
             // Cập nhật trạng thái đơn hàng thành "Đã hủy"
-            $update_query = "UPDATE orders SET status = 'Đã hủy' WHERE order_code = '$order_code'";
+            $update_query = "UPDATE orders SET status = 'Đã hủy', total = 0 WHERE order_code = '$order_code'";
             $update_result = $db->update($update_query);
 
             if ($update_result) {
                 header("Location: /BANHOA/Front-end/Customer/order_management.php");
             } else {
-                echo "Lỗi khi hủy đơn hàng.";   
+                echo "Lỗi khi hủy đơn hàng.";
             }
         } else {
             echo "Không thể hủy đơn hàng này vì trạng thái hiện tại không phải là 'chờ duyệt'.";
@@ -34,4 +34,3 @@ if (isset($_POST['order_code'])) {
 } else {
     echo "Yêu cầu không hợp lệ.";
 }
-?>

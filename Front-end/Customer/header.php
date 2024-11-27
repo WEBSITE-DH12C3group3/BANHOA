@@ -197,7 +197,7 @@ if ($categories_result) {
                       </li>
                       <?php if ($_SESSION['role'] === 'admin'): ?>
                         <li>
-                          <a class="dropdown-item" href="../Adminn/index.php">Quản lý sản phẩm</a>
+                          <a class="dropdown-item" href="../Adminn/index.php">Quản lý</a>
                         </li>
                       <?php endif; ?>
                       <li>

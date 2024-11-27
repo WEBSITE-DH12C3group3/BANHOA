@@ -119,9 +119,9 @@ $db = new Database();
                                     if ($row['status'] == 'Đã duyệt') {
                                         echo $row['total'] . ' ₫';
                                     } elseif ($row['status'] == 'Đã hủy') {
-                                        echo $row['total'] . ' Đã hủy';
+                                        echo 'Đã hủy';
                                     } elseif ($row['status'] == 'Đã nhận') {
-                                        echo $row['total'] . '';
+                                        echo $row['total'] . ' ₫';
                                     } elseif ($row['status'] == 'Đã thanh toán') {
                                         // Cập nhật tổng tiền và trạng thái đơn hàng trong bảng orders
                                         $update_query = "UPDATE orders SET total = ? WHERE id = ? AND order_code = ?";

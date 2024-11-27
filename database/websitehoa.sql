@@ -156,6 +156,7 @@ CREATE TABLE `products` (
   `sale` int(3) DEFAULT NULL,
   `price_sale` decimal(10,2) GENERATED ALWAYS AS (`price` - `price` * `sale` / 100) STORED,
   `stock` int(11) NOT NULL,
+  `sold` int(11) NOT NULL DEFAULT 0,
   `remark` tinyint(1) NOT NULL DEFAULT 0,
   `category_id` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
