@@ -191,7 +191,7 @@ $result = $db->select($query);
                     <?php }
                 } else { ?>
                     <tr>
-                        <td colspan="5">Không có đơn hàng nào.</td>
+                        <td colspan="6">Không có đơn hàng nào.</td>
                     </tr>
                 <?php } ?>
             </tbody>

@@ -41,6 +41,10 @@ if ($payment_method == 'vnpay') {
             $insert_order_detail = "INSERT INTO order_items (order_code, product_id, quantity) 
             VALUES ('" . $order_code . "', '" . $product_id . "', '" . $quantity . "')";
             $db->insert($insert_order_detail);
+            // tru so luong san pham trong kho
+            $update_stock = "UPDATE products SET stock = stock - " . $quantity . ", sold = " . $quantity . " WHERE id = '" . $product_id . "'";
+            $db->update($update_stock);
+            $db->handleSqlError($update_stock);
         }
         include 'formmail.php';
     }

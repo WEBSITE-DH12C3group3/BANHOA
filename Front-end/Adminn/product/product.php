@@ -97,6 +97,7 @@ $db = new Database();
                         <th scope="col">Giá</th>
                         <th scope="col">Sale</th>
                         <th scope="col">Kho</th>
+                        <th scope="col">Đã bán</th>
                         <th scope="col">Nổi bật</th>
                         <th scope="col">Danh mục</th>
                         <th scope="col" style="width: 120px;">Hành động</th>
@@ -104,7 +105,7 @@ $db = new Database();
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.sale, p.stock, p.remark, c.category_name, p.category_id
+                    $sql = "SELECT p.id, p.product_name, p.image, p.description, p.price, p.sale, p.stock, p.remark, c.category_name, p.category_id, p.sold
                                 FROM products p
                                 JOIN categories c ON p.category_id = c.id
                                 ORDER BY p.id, p.product_name, c.category_name";
@@ -119,6 +120,8 @@ $db = new Database();
                                 <td><?php echo number_format($row['price'], 0, ',', '.'); ?>₫</td>
                                 <td><?php echo $row['sale']; ?>%</td>
                                 <td><?php echo $row['stock']; ?></td>
+                                <td><?php if (!$row['sold']) echo "0";
+                                    else echo $row['sold']; ?></td>
                                 <td><?php if ($row['remark'] == 1) echo "Có";
                                     else echo "Không"; ?></td>
                                 <td><?php echo $row['category_name']; ?></td>
