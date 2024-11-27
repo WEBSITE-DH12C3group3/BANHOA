@@ -1,5 +1,5 @@
 <?php
-require '/xampp/htdocs/BANHOA/database/resetpassword.php';
+require 'resetpassword.php';
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -8,7 +8,7 @@ require '/xampp/htdocs/BANHOA/database/resetpassword.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đặt Lại Mật Khẩu</title>
-    <link rel="icon" type="image/png" href="/BANHOA/Front-end/public/Eden.png">
+    <link rel="icon" type="image/png" href="../Front-end/public/Eden.png">
 
     <style>
         body {
@@ -104,7 +104,7 @@ require '/xampp/htdocs/BANHOA/database/resetpassword.php';
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
 
-        <form method="POST" action="/BANHOA/database/resetpassword.php" onsubmit="return validatePassword()">
+        <form method="POST" action="resetpassword.php" onsubmit="return validatePassword()">
             <?php if (isset($_SESSION['user_logged_in'])): // Trường hợp người dùng đã đăng nhập 
             ?>
                 <div class="form-group">

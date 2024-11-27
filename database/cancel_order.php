@@ -1,5 +1,5 @@
 <?php
-include_once '/xampp/htdocs/BANHOA/database/connect.php';
+include_once 'connect.php';
 
 $db = new Database();
 
@@ -23,7 +23,7 @@ if (isset($_POST['order_code'])) {
             if ($update_result) {
                 header("Location: /BANHOA/Front-end/Customer/order_management.php");
             } else {
-                echo "Lỗi khi hủy đơn hàng.";   
+                echo "Lỗi khi hủy đơn hàng.";
             }
         } else {
             echo "Không thể hủy đơn hàng này vì trạng thái hiện tại không phải là 'chờ duyệt'.";
@@ -34,4 +34,3 @@ if (isset($_POST['order_code'])) {
 } else {
     echo "Yêu cầu không hợp lệ.";
 }
-?>
