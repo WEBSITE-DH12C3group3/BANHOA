@@ -23,7 +23,7 @@ $db = new Database();
     <title>EDEN</title>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
     <section class="mymaincontent my-3">
         <div class="container my-3">
             <div class="slider">
@@ -97,77 +97,79 @@ $db = new Database();
                                 // Truy vấn tất cả các danh mục từ cơ sở dữ liệu
                                 $category_sql = "SELECT * FROM categories";
                                 $category_result = $db->select($category_sql);
-
                                 if ($category_result) {
                                     while ($category = $category_result->fetch_assoc()) {
                                         $category_id = $category['id'];
                                         $category_name = $category['category_name'];
+
+                                        // Kiểm tra nếu danh mục có sản phẩm
+                                        $product_sql = "SELECT * FROM products WHERE category_id = '$category_id' LIMIT 1"; // Chỉ cần kiểm tra 1 sản phẩm là đủ
+                                        $product_check = $db->select($product_sql);
+
+                                        if ($product_check && $product_check->num_rows > 0) { // Chỉ hiển thị danh mục nếu có sản phẩm
                                 ?>
-                                        <!-- Tiêu đề danh mục với tên danh mục -->
-                                        <div class="row text-center">
-                                            <div class="title-divider">
-                                                <span class="title-text" style="color: #3f640b;"><?php echo $category_name; ?></span>
+                                            <!-- Tiêu đề danh mục với tên danh mục -->
+                                            <div class="row text-center">
+                                                <div class="title-divider">
+                                                    <span class="title-text" style="color: #3f640b;"><?php echo $category_name; ?></span>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <!-- Sản phẩm trong danh mục -->
-                                        <div class="product_list-s">
-                                            <div class="row" style="background-color: #f7aaaa; border-radius: 5px;">
-                                                <div class="container">
-                                                    <div class="row">
-                                                        <?php
-                                                        // Truy vấn sản phẩm dựa trên danh mục hiện tại (đặt category_id trong dấu ngoặc đơn)
-                                                        $sql = "SELECT * FROM products WHERE category_id = '$category_id' ORDER BY id LIMIT 4";
-                                                        $result = $db->select($sql);
+                                            <!-- Sản phẩm trong danh mục -->
+                                            <div class="product_list-s">
+                                                <div class="row" style="background-color: #f7aaaa; border-radius: 5px;">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <?php
+                                                            // Truy vấn sản phẩm trong danh mục
+                                                            $sql = "SELECT * FROM products WHERE category_id = '$category_id' ORDER BY id LIMIT 4";
+                                                            $result = $db->select($sql);
 
-                                                        if ($result) {
-                                                            while ($row = $result->fetch_assoc()) {
-                                                                $price = number_format($row['price'], 0, ',', '.') . ' VND';
-                                                                $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
-                                                        ?>
-                                                                <div class="col-md-3 col-sm-6 mb-4">
-                                                                    <a class="card" href="hoa.php?id=<?php echo $row['id']; ?>">
-                                                                        <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
-                                                                        <div class="card-body text-center">
-                                                                            <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
-
-                                                                            <!-- Hiển thị giá -->
-                                                                            <p class="text-muted">
-                                                                                <?php if ($price_sale) { ?>
-                                                                                    <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span><br>
-                                                                                    <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
-                                                                                    <br>
-                                                                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>
-                                                                                <?php } else { ?>
-                                                                                    <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
-                                                                                <?php } ?>
-                                                                            </p>
-                                                                            <button class="btn btn-primary">Đặt hàng</button>
-
-                                                                        </div>
-                                                                    </a>
-                                                                </div>
-                                                        <?php
+                                                            if ($result) {
+                                                                while ($row = $result->fetch_assoc()) {
+                                                                    $price = number_format($row['price'], 0, ',', '.') . ' VND';
+                                                                    $price_sale = $row['price_sale'] ? number_format($row['price_sale'], 0, ',', '.') . ' VND' : null;
+                                                            ?>
+                                                                    <div class="col-md-3 col-sm-6 mb-4">
+                                                                        <a class="card" href="hoa.php?id=<?php echo $row['id']; ?>">
+                                                                            <img src="/BANHOA/Front-end/Adminn/uploads/<?php echo $row['image']; ?>" class="card-img-top product-image" alt="<?php echo $row['product_name']; ?>">
+                                                                            <div class="card-body text-center">
+                                                                                <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
+                                                                                <!-- Hiển thị giá -->
+                                                                                <p class="text-muted">
+                                                                                    <?php if ($price_sale) { ?>
+                                                                                        <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span><br>
+                                                                                        <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
+                                                                                        <br>
+                                                                                        <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>
+                                                                                    <?php } else { ?>
+                                                                                        <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
+                                                                                    <?php } ?>
+                                                                                </p>
+                                                                                <form action="modelcart.php?product_id=<?php echo $row['id'] ?>" method="post">
+                                                                                    <button class="btn btn-success" name="addcart">Đặt hàng</button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                            <?php
+                                                                }
                                                             }
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                    <!-- Nút xem thêm -->
-                                                    <div class="row text-center" style="width: 20%; margin: auto; margin-bottom: 10px;">
-                                                        <a href="category.php?id=<?php echo $category_id; ?>&category_name=<?php echo urlencode($category_name); ?>" class="btn btn-secondary btn-sm">Xem thêm</a>
+                                                            ?>
+                                                        </div>
+                                                        <!-- Nút xem thêm -->
+                                                        <div class="row text-center" style="width: 20%; margin: auto; margin-bottom: 10px;">
+                                                            <a href="category.php?id=<?php echo $category_id; ?>&category_name=<?php echo urlencode($category_name); ?>" class="btn btn-secondary btn-sm">Xem thêm</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-
                                 <?php
+                                        }
                                     }
                                 }
                                 ?>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -244,7 +246,7 @@ $db = new Database();
             })
         })
         var carousel = new bootstrap.Carousel(document.getElementById('carouselExampleRide'), {
-            interval: 2000 // 3000ms tương đương 3 giây
+            interval: 1000 // 3000ms tương đương 3 giây
         });
     </script>
 </body>

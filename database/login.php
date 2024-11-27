@@ -17,18 +17,16 @@ if (isset($_POST['btn-login'])) {
         $row = $result->fetch_assoc();
 
         // Kiểm tra mật khẩu
-        if ($password == $row['password']) {
+        if (password_verify($password, $row['password'])) {
+            // Mật khẩu chính xác, tiến hành xác thực người dùng (ví dụ: lưu thông tin vào session, cookie, ...)
             // Lưu thông tin người dùng vào session
             $_SESSION['user_logged_in'] = true;
             $_SESSION['users_id'] = $row['id'];
             $_SESSION['role'] = $row['role'];
             $_SESSION['fullname'] = $row['fullname'];
+            $_SESSION['email'] = $row['email'];
             // Chuyển hướng đến giao diện khách hàng hoặc admin
-            if ($row['role'] == 'admin') {
-                header("Location: http://localhost/BANHOA/Front-end/Adminn/index.php"); // Giao diện dành cho admin
-            } else {
-                header("Location: http://localhost/BANHOA/Front-end/Customer/index.php"); // Giao diện dành cho khách hàng
-            }
+            header("Location: http://localhost/BANHOA/Front-end/Customer/index.php"); // Giao diện dành cho khách hàng
             exit();
         } else {
             $_SESSION['error'] = "Mật khẩu không chính xác, hãy thử lại!";

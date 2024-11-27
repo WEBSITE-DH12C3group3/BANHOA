@@ -34,17 +34,17 @@ $id = $_GET['id'];
         <!-- Sidebar  -->
 
         <nav id="sidebar">
-            <div class="sidebar-header">
-                <a href="/BANHOA/Front-end/Adminn/index.php">
-                    <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
+            <div class="sidebar-header text-center py-4">
+                <a href="/BANHOA/Front-end/Customer/index.php" onclick="return confirm('Trở về website?')">
+                    <h3><img src="/BANHOA/Front-end/Adminn/css/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
             </div>
-            <div class="sidebar-header">
-                <a href=""> <i class="fas fa-user"></i><span>
-                        <?php
-                        echo $_SESSION["fullname"];
-                        ?>
-                    </span></a>
+            <div class="sidebar-header text-center py-2">
+                <i class="fas fa-user"></i><span>
+                    <?php
+                    echo $_SESSION["fullname"];
+                    ?>
+                </span>
             </div>
             <ul class="list-unstyled components">
                 <li>

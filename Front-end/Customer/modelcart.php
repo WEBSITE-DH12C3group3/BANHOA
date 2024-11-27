@@ -61,7 +61,7 @@ if (isset($_GET['deleteall']) && $_GET['deleteall'] == 1) {
     header("Location: cart.php");
 }
 
-//add cart 
+//buy
 if (isset($_POST['addcart'])) {
     $product_id = $_GET['product_id'];
     $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1; // Lấy số lượng từ form
@@ -113,6 +113,7 @@ if (isset($_POST['addcart'])) {
     exit();
 }
 
+//add
 if (isset($_POST['add'])) {
     $product_id = $_GET['product_id'];
     $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1; // Lấy số lượng từ form
@@ -160,6 +161,6 @@ if (isset($_POST['add'])) {
     }
 
     // Chuyển hướng đến trang giỏ hàng
-    header('Location: hoa.php?id=' . $product_id);
+    header('Location: hoa.php?id=' . $product_id . '&added=1');
     exit();
 }

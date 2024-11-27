@@ -21,8 +21,8 @@ $db = new Database();
 
         <nav id="sidebar" class="bg-light border-right">
             <div class="sidebar-header text-center py-4">
-                <a href="/BANHOA/Front-end/Adminn/index.php">
-                    <h3><img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
+                <a href="/BANHOA/Front-end/Customer/index.php" onclick="return confirm('Trở về website?')">
+                    <h3><img src="/BANHOA/Front-end/Adminn/css/logo.png" class="img-fluid" /><span>EDEN Shop</span></h3>
                 </a>
             </div>
             <div class="sidebar-header text-center py-2">
@@ -74,7 +74,7 @@ $db = new Database();
         <!-- Page Content  -->
 
         <div class="maincontent" id="content">
-
+            <h2>Danh Sách Đơn hàng</h2>
             <div class="search-bar">
                 <input type="text" id="searchBox"
                     onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">
@@ -84,7 +84,7 @@ $db = new Database();
                 <div class="total-posts">
                     <!-- count -->
                     <p>Tổng số đơn hàng:
-                        <?php $count = $db->count("SELECT * FROM orders");
+                        <?php $count = $db->count("SELECT * FROM orders ORDER BY order_date DESC");
                         echo $count; ?></p>
                 </div>
             </div>
@@ -96,6 +96,7 @@ $db = new Database();
                         <th scope="col">Tên khách hàng</th>
                         <th scope="col">Số điện thoại</th>
                         <th scope="col">Tổng tiền</th>
+                        <th scope="col">Phương thức thanh toán</th>
                         <th scope="col">Ngày tạo</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Hành động</th>
@@ -103,10 +104,10 @@ $db = new Database();
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT o.id, o.order_code, u.fullname, u.phone, o.order_date, o.total, o.status
+                    $sql = "SELECT o.id, o.order_code, u.fullname, u.phone, o.order_date, o.total, o.status, o.payment_method
                                 FROM orders o
                                 JOIN users u ON o.user_id = u.id
-                                ORDER BY o.id, o.order_code";
+                                ORDER BY o.order_date DESC";
                     $result = $db->select($sql);
                     if ($result) {
                         while ($row = $result->fetch_assoc()) { ?>
@@ -114,24 +115,41 @@ $db = new Database();
                                 <td><?php echo $row['order_code']; ?></td>
                                 <td><?php echo $row['fullname']; ?></td>
                                 <td><?php echo $row['phone']; ?></td>
-                                <td><?php if ($row['status'] == 'Đã duyệt') {
+                                <td><?php $row['total'] = number_format($row['total'], 0, ',', '.');
+                                    if ($row['status'] == 'Đã duyệt') {
                                         echo $row['total'] . ' ₫';
-                                    }elseif($row['status'] == 'Đã hủy'){
+                                    } elseif ($row['status'] == 'Đã hủy') {
                                         echo $row['total'] . ' Đã hủy';
-
-                                    }
-                                     else {
-                                        echo $row['total'] . ' Chờ duyệt';
+                                    } elseif ($row['status'] == 'Đã nhận') {
+                                        echo $row['total'] . '';
+                                    } elseif ($row['status'] == 'Đã thanh toán') {
+                                        // Cập nhật tổng tiền và trạng thái đơn hàng trong bảng orders
+                                        $update_query = "UPDATE orders SET total = ? WHERE id = ? AND order_code = ?";
+                                        $update_stmt = $db->conn->prepare($update_query);
+                                        $update_stmt->bind_param("dis", $total, $id, $order_code);
+                                        echo $row['total'] . ' ₫';
+                                    } else {
+                                        echo 'Chờ duyệt';
                                     } ?>
                                 </td>
-                                <td><?php echo $row['order_date']; ?></td>
+                                <td><?php if ($row['payment_method'] == 'bank') {
+                                        echo 'Banking';
+                                    } elseif ($row['payment_method'] == 'cash') {
+                                        echo 'COD';
+                                    } else { ?>
+                                        <span class="text-uppercase"><?php echo $row['payment_method']; ?></span>
+                                    <?php } ?>
+                                </td>
+                                <td><?php echo date('h:i:s A d-m-Y', strtotime($row['order_date'])); ?></td>
                                 <td><?php echo $row['status']; ?></td>
                                 <td>
                                     <a href="order_detail.php?code=<?php echo $row['order_code']; ?>&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>
                                     <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                    <?php if ($row['status'] != 'Đã duyệt' && $row['status']!='Đã hủy') { ?>
+                                    <?php if ($row['status'] === 'Đã duyệt' || $row['status'] === 'Đã thanh toán' || $row['status'] === 'Đã nhận') { ?>
+                                        <a href="print.php?code=<?php echo $row['order_code']; ?>" class="btn btn-secondary"><i class="fa fa-print"></i></a>
+                                    <?php } ?>
+                                    <?php if ($row['status'] === 'Chờ duyệt') { ?>
                                         <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>&order_code=<?php echo $row['order_code']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
-
                                     <?php } ?>
                                 </td>
                             </tr>

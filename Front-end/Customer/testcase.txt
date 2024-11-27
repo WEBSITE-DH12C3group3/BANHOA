@@ -1,0 +1,12 @@
+VNPAY :https://sandbox.vnpayment.vn/apis/vnpay-demo/ 
+9704198526191432198
+NGUYEN VAN A
+07/15
+123456
+
+MOMO ATM: https://developers.momo.vn/v3/vi/docs/payment/onboarding/test-instructions/
+9704 0000 0000 0018
+NGUYEN VAN A
+03/07
+OTP
+

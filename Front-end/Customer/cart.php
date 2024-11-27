@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="/BANHOA/mycss/cart.css">
 </head>
 
-<body>
+<body style="margin-top: 200px;">
 
     <section class="py-5">
         <div class="container mt-5">
@@ -88,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </tr>
                     <?php
                     } else {
-                        echo "<tr style='height: 100px;'><td colspan='6'>Giỏ hàng trống!</td></tr>";
+                        echo "<tr style='height: 100px;'><td colspan='6'>Giỏ hàng trống!<br>
+                          <a href='index.php' class='btn btn-success' style='margin-top: 10px;'>Mua Ngay</a></td></tr>";
                     }
                     ?>
                 </tbody>
@@ -101,9 +102,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="cart-total py-2">
                         <?php if (isset($_SESSION['user_logged_in'])): ?>
-                            <button class="bton"><a href="thanhtoan.php" style="color: white; text-decoration: none;">Thanh toán</a></button>
+                            <button class="bton"><a href="delivery.php" style="color: white; text-decoration: none;">Hình thức vận chuyển</a></button>
                         <?php else: ?>
-                            <button class="bton"><a href="dangky.php" style="color: white; text-decoration: none;">Đăng ký để thanh toán</a></button>
+                            <button class="bton"><a href="dangky.php" style="color: white; text-decoration: none;">Đăng ký để tiếp tục</a></button>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>

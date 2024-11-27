@@ -16,9 +16,9 @@ $db = new Database();
 
         <nav id="sidebar" class="bg-light border-right">
             <div class="sidebar-header text-center py-4">
-                <a href="/BANHOA/Front-end/Adminn/index.php">
+                <a href="/BANHOA/Front-end/Customer/index.php" onclick="return confirm('Trở về website?')">
                     <h3>
-                        <img src="/BANHOA/Front-end/Adminn/img/logo.png" class="img-fluid" /><span>EDEN Shop</span>
+                        <img src="/BANHOA/Front-end/Adminn/css/logo.png" class="img-fluid" /><span>EDEN Shop</span>
                     </h3>
                 </a>
             </div>
@@ -71,7 +71,7 @@ $db = new Database();
 
         <!-- Page Content  -->
         <div class="maincontent" id="content">
-
+            <h2>Danh Sách Danh Mục</h2>
             <div class="search-bar">
                 <input type="text" id="searchBox"
                     onkeyup="search()" placeholder="Nhập Từ Khóa Cần Tìm...">

@@ -1,4 +1,46 @@
-<?php include 'header.php'; ?>
+<?php
+include 'header.php';
+$db = new Database();
+$order_code = "";
+if (isset($_GET['order_code'])) {
+    $order_code = $_GET['order_code'];
+} elseif (isset($_GET['vnp_TxnRef'])) {
+    $order_code = $_GET['vnp_TxnRef'];
+} elseif (isset($_GET['orderId'])) {
+    $order_code = $_GET['orderId'];
+} else {
+    die("Lỗi: Thiếu mã đơn hàng.");
+}
+if (isset($_GET['vnp_Amount'])) {
+    $vnp_Amount = $_GET['vnp_Amount'];
+    $vnp_BankCode = $_GET['vnp_BankCode'];
+    $vnp_BankTranNo = $_GET['vnp_BankTranNo'];
+    $vnp_OrderInfo = $_GET['vnp_OrderInfo'];
+    $vnp_PayDate = $_GET['vnp_PayDate'];
+    $vnp_TmnCode = $_GET['vnp_TmnCode'];
+    $vnp_TransactionNo = $_GET['vnp_TransactionNo'];
+    $vnp_CardType = $_GET['vnp_CardType'];
+
+    $insert_vnp = "INSERT INTO vnpay (order_code, vnpay_amount, vnpay_bankcode, vnpay_banktranno, vnpay_orderinfo, vnpay_paydate, vnpay_tmncode, vnpay_transactionno, vnpay_cardtype) 
+        VALUES ('" . $order_code . "', '" . $vnp_Amount . "', '" . $vnp_BankCode . "', '" . $vnp_BankTranNo . "', '" . $vnp_OrderInfo . "', '" . $vnp_PayDate . "', '" . $vnp_TmnCode . "', '" . $vnp_TransactionNo . "', '" . $vnp_CardType . "')";
+    $db->insert($insert_vnp);
+    $db->handleSqlError($insert_vnp);
+} elseif (isset($_GET['partnerCode'])) {
+    $partnerCode = $_GET['partnerCode'];
+    $order_code = $_GET['orderId'];
+    $amount = $_GET['amount'];
+    $order_info = $_GET['orderInfo'];
+    $order_type = $_GET['orderType'];
+    $trans_id = $_GET['transId'];
+    $pay_type = $_GET['payType'];
+
+    $insert_momo = "INSERT INTO momo (partner_code, order_code, amount, order_info, order_type, trans_id, pay_type) 
+        VALUES ('" . $partnerCode . "', '" . $order_code . "', '" . $amount . "', '" . $order_info . "', '" . $order_type . "', '" . $trans_id . "', '" . $pay_type . "')";
+    $db->insert($insert_momo);
+    $db->handleSqlError($insert_momo);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -44,13 +86,13 @@
     </style>
 </head>
 
-<body>
+<body style="margin-top: 200px;">
 
     <div class="thank-you-container">
         <h1>Cảm ơn bạn đã đặt hàng!</h1>
         <p>Chúng tôi đã nhận được đơn hàng của bạn. Mã đơn hàng của bạn là:</p>
-        <p class="order-code">#<?php if (isset($_GET['order_code'])) echo $_GET['order_code']; ?></p>
-        <p>Vui lòng kiểm tra email để biết chi tiết về đơn hàng và thời gian giao hàng.</p>
+        <p class="order-code">#<?php if (isset($order_code)) echo $order_code; ?></p>
+        <p>Vui lòng kiểm tra email để biết chi tiết về đơn hàng và thời gian giao hàng. Bạn có thể xem lịch sử đơn hàng <a href="order_management.php">tại đây</a>.</p>
         <p>Nếu có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi qua:</p>
         <p><strong>Email:</strong> support@eden.com</p>
         <p><strong>Số điện thoại:</strong> 0333268135</p>

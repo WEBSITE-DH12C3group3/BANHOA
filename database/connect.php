@@ -23,6 +23,12 @@ class Database
         }
     }
 
+    // Phương thức escape string để tránh lỗi SQL Injection
+    public function escape_string($value)
+    {
+        return $this->conn->real_escape_string($value);
+    }
+
     // Phương thức chèn dữ liệu
     public function insert($query)
     {
@@ -78,4 +84,16 @@ class Database
             return false;
         }
     }
+
+    function handleSqlError($query)
+    {
+        // Kiểm tra nếu có lỗi trong kết nối hoặc truy vấn
+        if ($this->conn->error) {
+            echo "<div style='color: red; font-weight: bold;'>Có lỗi xảy ra trong truy vấn SQL:</div>";
+            echo "<div style='color: black;'><strong>Lỗi:</strong> " . $this->conn->error . "</div>";
+            echo "<div style='color: black;'><strong>Truy vấn:</strong> " . htmlspecialchars($query) . "</div>";
+            die(); // Dừng chương trình
+        }
+    }
 }
+?>
