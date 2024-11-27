@@ -28,10 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDEN | Giỏ Hàng</title>
     <link rel="stylesheet" href="/BANHOA/mycss/cart.css">
+    <style>
+        .buy {
+            background-color: #bbe1a8;
+            color: black;
+            border: #bbe1a8 solid 1px;
+        }
+
+        .buy:hover {
+            background-color: #a6b69c;
+            color: black;
+            border: #a6b69c solid 1px;
+        }
+    </style>
 </head>
 
-<body style="margin-top: 200px;">
-
+<body style="margin-top: 120px;">
     <section class="py-5">
         <div class="container mt-5">
             <h2 class="mb-4 text-center">Giỏ Hàng</h2>
@@ -86,12 +98,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <tr style="border: 0px solid white;">
                             <td colspan="6"><a href="modelcart.php?deleteall=1" class="btn btn-danger" style="float: right; margin-top: 10px;">Xóa tất cả</a></td>
                         </tr>
-                    <?php
-                    } else {
-                        echo "<tr style='height: 100px;'><td colspan='6'>Giỏ hàng trống!<br>
-                          <a href='index.php' class='btn btn-success' style='margin-top: 10px;'>Mua Ngay</a></td></tr>";
-                    }
-                    ?>
+                    <?php } else { ?>
+                        <tr>
+                            <td colspan='6'>
+                                <img src='../public/empty.png' width="500" height="auto"><br>
+                                <a href='index.php' class='btn btn-success buy'>Mua Ngay</a>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
 
