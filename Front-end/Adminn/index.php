@@ -254,8 +254,9 @@ while ($row = $result_monthly->fetch_assoc()) {
                                 label: 'Doanh thu',
                                 data: <?php echo json_encode($revenues); ?>, // Doanh thu từng giờ
                                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
+                                borderColor: '#333',
+                                borderWidth: 2,
+                                tension: 0.4
                             }]
                         },
                         options: {
@@ -297,7 +298,7 @@ while ($row = $result_monthly->fetch_assoc()) {
                     label: 'Doanh thu',
                     data: <?php echo json_encode($weekly_revenues); ?>, // Doanh thu từng ngày trong tuần
                     backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền dưới đường
-                    borderColor: 'rgba(75, 192, 192, 1)', // Màu đường
+                    borderColor: '#333', // Màu đường
                     borderWidth: 2,
                     tension: 0.4 // Độ cong của đường
                 }]
@@ -353,7 +354,7 @@ while ($row = $result_monthly->fetch_assoc()) {
                     label: 'Doanh thu',
                     data: <?php echo json_encode($monthly_revenues); ?>, // Doanh thu từng ngày
                     backgroundColor: 'rgba(255, 99, 132, 0.2)', // Màu nền dưới đường
-                    borderColor: 'rgba(255, 99, 132, 1)', // Màu đường
+                    borderColor: '#333', // Màu đường
                     borderWidth: 2,
                     tension: 0.4 // Độ cong của đường
                 }]
