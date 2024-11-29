@@ -9,11 +9,6 @@
   font-size: 1.2rem;
 }
 
-.input-group button {
-  height: 40px;
-  width: 40px;
-}
-
 .input-group .item-quantity {
   max-width: 60px;
   text-align: center;

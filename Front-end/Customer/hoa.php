@@ -102,11 +102,15 @@ if ($ratings_result) {
                         $count_like = 0;
                         $count_like = $db->count("SELECT * FROM favourite WHERE product_id = '" . $product_id . "'");
                         echo $count_like;
-                        $check_sql = "SELECT * FROM favourite WHERE user_id = '" . $_SESSION['users_id'] . "' AND product_id = '" . $product_id . "'";
-                        $check_query = $db->select($check_sql);
-                        if ($check_query && $check_query->num_rows > 0) { ?>
-                            <i class="fa-solid fa-heart" style="color: red;"></i> Đã thích
-                        <?php } else { ?>
+                        if (isset($_SESSION['user_logged_in'])) {
+                            $check_sql = "SELECT * FROM favourite WHERE user_id = '" . $_SESSION['users_id'] . "' AND product_id = '" . $product_id . "'";
+                            $check_query = $db->select($check_sql);
+                            if ($check_query && $check_query->num_rows > 0) { ?>
+                                <i class="fa-solid fa-heart" style="color: red;"></i> Đã thích
+                            <?php } else {
+                                echo " <i class='fa-regular fa-heart'></i> Đã thích";
+                            }
+                        } else { ?>
                             <i class="fa-regular fa-heart"></i> Đã thích
                         <?php } ?>
                     </button>

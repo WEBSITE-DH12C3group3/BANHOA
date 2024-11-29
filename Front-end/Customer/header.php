@@ -160,19 +160,20 @@ if ($categories_result) {
                       role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <i class="fa-regular fa-user"></i>
-                      Tài khoản
+                      <i class="fa-regular fa-user"></i> Tài khoản
                     </a>
                     <ul class="dropdown-menu">
                       <li>
                         <a
                           class="dropdown-item"
-                          href="dangky.php">Đăng ký</a>
+                          href="dangky.php">
+                          <i class="fa-regular fa-pen-to-square"></i> Đăng ký</a>
                       </li>
                       <li>
                         <a
                           class="dropdown-item"
-                          href="dangnhap.php">Đăng nhập</a>
+                          href="dangnhap.php">
+                          <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a>
                       </li>
                     </ul>
                   </div>
@@ -194,15 +195,18 @@ if ($categories_result) {
                     </a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a class="dropdown-item" href="trangcanhan.php">Trang cá nhân</a>
+                        <a class="dropdown-item" href="trangcanhan.php">
+                          <i class="fa-regular fa-address-card"></i> Trang cá nhân</a>
                       </li>
                       <?php if ($_SESSION['role'] === 'admin'): ?>
                         <li>
-                          <a class="dropdown-item" href="../Adminn/index.php">Quản lý</a>
+                          <a class="dropdown-item" href="../Adminn/index.php">
+                            <i class="fa-solid fa-gauge"></i> Quản lý</a>
                         </li>
                       <?php endif; ?>
                       <li>
-                        <a class="dropdown-item" href="../../database/logout.php">Đăng xuất</a>
+                        <a class="dropdown-item" href="../../database/logout.php">
+                          <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</a>
                       </li>
                     </ul>
                   </div>

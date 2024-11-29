@@ -165,6 +165,9 @@ if (isset($_POST['add'])) {
     exit();
 }
 if (isset($_POST['like'])) {
+    if (!isset($_SESSION['user_logged_in'])) {
+        header('Location: dangky.php');
+    }
     $product_id = $_GET['product_id'];
     $user_id = $_SESSION['users_id']; // Lấy user_id từ session hoặc phương thức xác thực khách hàng của bạn
     // Kiểm tra xem người dùng đã thích sản phẩm này chưa
