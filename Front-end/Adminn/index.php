@@ -39,6 +39,38 @@ $revenues = array_fill(0, 24, 0);  // Mảng doanh thu mặc định là 0 cho t
 while ($row = $result_hourly->fetch_assoc()) {
     $revenues[$row['hour']] = $row['revenue'];  // Lưu doanh thu cho từng giờ
 }
+
+$sql_weekly = "SELECT DAYOFWEEK(order_date) AS day_index, SUM(total) AS revenue
+               FROM orders
+               WHERE WEEK(order_date) = WEEK(CURDATE())
+               GROUP BY DAYOFWEEK(order_date)
+               ORDER BY DAYOFWEEK(order_date) ASC";
+
+$result_weekly = $conn->query($sql_weekly);
+
+// Khởi tạo các mảng để lưu trữ dữ liệu biểu đồ
+$days_of_week = ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+$weekly_revenues = array_fill(0, 7, 0); // Mảng doanh thu mặc định là 0 cho tất cả các ngày
+
+while ($row = $result_weekly->fetch_assoc()) {
+    $weekly_revenues[$row['day_index'] - 1] = $row['revenue']; // Trừ 1 để khớp chỉ số ngày
+}
+
+$sql_monthly = "SELECT DAY(order_date) AS day, SUM(total) AS revenue
+                FROM orders
+                WHERE MONTH(order_date) = MONTH(CURDATE())
+                GROUP BY DAY(order_date)
+                ORDER BY DAY(order_date) ASC";
+
+$result_monthly = $conn->query($sql_monthly);
+
+// Khởi tạo mảng cho biểu đồ
+$days_in_month = range(1, date('t')); // Tạo danh sách ngày trong tháng (1 -> số ngày cuối cùng của tháng)
+$monthly_revenues = array_fill(0, count($days_in_month), 0); // Doanh thu mặc định là 0 cho tất cả các ngày
+
+while ($row = $result_monthly->fetch_assoc()) {
+    $monthly_revenues[$row['day'] - 1] = $row['revenue']; // Trừ 1 để khớp chỉ số ngày
+}
 ?>
 
 <!DOCTYPE html>
@@ -147,15 +179,15 @@ while ($row = $result_hourly->fetch_assoc()) {
             </style>
             <div class="dashboard" style="margin-left: 60px;">
                 <div class="item total-revenue">
-                    <p>Tổng doanh thu (Ngày)</p>
+                    <p>Doanh thu trong ngày</p>
                     <p><?php echo number_format($total_revenue_day, 0, ',', '.') . " đ"; ?></p>
                 </div>
                 <div class="item total-revenue-week">
-                    <p>Tổng doanh thu (Tuần)</p>
+                    <p>Doanh thu trong tuần</p>
                     <p><?php echo number_format($total_revenue_week, 0, ',', '.') . " đ"; ?></p>
                 </div>
                 <div class="item total-revenue-month">
-                    <p>Tổng doanh thu (Tháng)</p>
+                    <p>Doanh thu trong tháng</p>
                     <p><?php echo number_format($total_revenue_month, 0, ',', '.') . " đ"; ?></p>
                 </div>
             </div>
@@ -252,6 +284,121 @@ while ($row = $result_hourly->fetch_assoc()) {
                     });
                 </script>
             </div>
+  <!-- Biểu đồ doanh thu theo tuần -->
+<div class="chart-container" style="width: 60%; margin: auto; margin-top: 40px;">
+    <canvas id="weekly-revenue-line-chart"></canvas>
+    <script>
+        var weeklyLineCtx = document.getElementById('weekly-revenue-line-chart').getContext('2d');
+        var weeklyLineChart = new Chart(weeklyLineCtx, {
+            type: 'line', // Loại biểu đồ đường
+            data: {
+                labels: <?php echo json_encode($days_of_week); ?>, // Các ngày trong tuần
+                datasets: [{
+                    label: 'Doanh thu',
+                    data: <?php echo json_encode($weekly_revenues); ?>, // Doanh thu từng ngày trong tuần
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền dưới đường
+                    borderColor: 'rgba(75, 192, 192, 1)', // Màu đường
+                    borderWidth: 2,
+                    tension: 0.4 // Độ cong của đường
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Biểu đồ thống kê doanh thu theo tuần'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Doanh thu (VND)'
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let value = context.raw || 0;
+                                return value.toLocaleString() + ' đ'; // Format doanh thu VND
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+
+<!-- Biểu đồ doanh thu theo tháng -->
+<div class="chart-container" style="width: 60%; margin: auto; margin-top: 40px;">
+    <canvas id="monthly-revenue-line-chart"></canvas>
+    <script>
+        var monthlyLineCtx = document.getElementById('monthly-revenue-line-chart').getContext('2d');
+        var monthlyLineChart = new Chart(monthlyLineCtx, {
+            type: 'line', // Loại biểu đồ đường
+            data: {
+                labels: <?php echo json_encode($days_in_month); ?>, // Các ngày trong tháng
+                datasets: [{
+                    label: 'Doanh thu',
+                    data: <?php echo json_encode($monthly_revenues); ?>, // Doanh thu từng ngày
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Màu nền dưới đường
+                    borderColor: 'rgba(255, 99, 132, 1)', // Màu đường
+                    borderWidth: 2,
+                    tension: 0.4 // Độ cong của đường
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Biểu đồ thống kê doanh thu trong tháng'
+                        },
+                        ticks: {
+                            stepSize: 1 // Hiển thị tất cả các ngày
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Doanh thu (VND)'
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let value = context.raw || 0;
+                                return value.toLocaleString() + ' đ'; // Format doanh thu VND
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+
         </div>
     </div>
 </body>
