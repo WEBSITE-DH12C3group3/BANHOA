@@ -251,6 +251,27 @@ CREATE TABLE `vnpay` (
 -- Indexes for dumped tables
 --
 
+CREATE TABLE `favourite` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `favourite`
+--
+ALTER TABLE `favourite`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+
 --
 -- Indexes for table `categories`
 --
@@ -318,7 +339,11 @@ ALTER TABLE `vnpay`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
+--
+-- AUTO_INCREMENT for table `favourite`
+--
+ALTER TABLE `favourite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `comments`
 --
