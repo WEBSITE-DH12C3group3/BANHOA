@@ -1,5 +1,6 @@
 <?php
 include 'header.php';
+
 // Giả sử product_id được truyền qua URL dưới dạng tham số GET
 if (isset($_GET['id'])) {
     $product_id = $_GET['id'];
@@ -7,7 +8,6 @@ if (isset($_GET['id'])) {
     // Đặt biến phiên
     $_SESSION['product_id'] = $product_id;
 }
-
 
 $db = new Database();
 
@@ -97,7 +97,22 @@ if ($ratings_result) {
                 <!-- Customer Service -->
                 <div class="mt-3">
                     <button class="btn btn-success"><i class="fas fa-phone"></i> <a href="tel:+84333268135" style="text-decoration: none; color: white;">0333268135</a></button>
-                    <span style="margin-left: 20px;"><?php echo $row['stock']; ?> sản phẩm có sẵn</span>
+                    <button class="like-button btn" name="like" type="submit">
+                        <?php
+                        $count_like = 0;
+                        $count_like = $db->count("SELECT * FROM favourite WHERE product_id = '" . $product_id . "'");
+                        echo $count_like;
+                        $check_sql = "SELECT * FROM favourite WHERE user_id = '" . $_SESSION['users_id'] . "' AND product_id = '" . $product_id . "'";
+                        $check_query = $db->select($check_sql);
+                        if ($check_query && $check_query->num_rows > 0) { ?>
+                            <i class="fa-solid fa-heart" style="color: red;"></i> Đã thích
+                        <?php } else { ?>
+                            <i class="fa-regular fa-heart"></i> Đã thích
+                        <?php } ?>
+                    </button>
+                </div>
+                <div class="mt-3">
+                    <span><?php echo $row['stock']; ?> sản phẩm có sẵn</span>
                 </div>
 
                 <!-- Offers Section -->
@@ -336,7 +351,6 @@ if ($ratings_result) {
             filterReviews(0); // Hiển thị tất cả đánh giá khi trang load
         });
     </script>
-
 
 </body>
 

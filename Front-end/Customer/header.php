@@ -160,7 +160,8 @@ if ($categories_result) {
                       role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      Tài khoản <i class="fa-regular fa-user"></i>
+                      <i class="fa-regular fa-user"></i>
+                      Tài khoản
                     </a>
                     <ul class="dropdown-menu">
                       <li>
@@ -227,6 +228,11 @@ if ($categories_result) {
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="index.php" style="color: #093608;"><b>Trang Chủ</b></a>
               </li>
+              <?php if (isset($_SESSION['user_logged_in'])): ?>
+                <li class="nav-item">
+                  <a class="nav-link" href="liked.php" style="color: #093608;"><b>Yêu thích</b></a>
+                </li>
+              <?php endif; ?>
               <!-- Other menu items -->
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #093608;">

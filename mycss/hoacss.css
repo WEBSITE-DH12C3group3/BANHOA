@@ -1,209 +1,209 @@
 /* CSS tổng quát cho đánh giá */
-        .customer-reviews {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            font-family: Arial, sans-serif;
-        }
+.customer-reviews {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
 
-        .customer-reviews h5 {
-            font-size: 22px;
-            font-weight: bold;
-            color: #ff6f00;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #ff6f00;
-            padding-bottom: 10px;
-        }
+.customer-reviews h5 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff6f00;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ff6f00;
+  padding-bottom: 10px;
+}
 
-        #reviewList ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
+#reviewList ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 
-        #reviewList li {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+#reviewList li {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-        #reviewList li:last-child {
-            margin-bottom: 0;
-        }
-   
-        #reviewList strong {
-            font-size: 16px;
-            color: #333;
-            display: block;
-            margin-bottom: 5px;
-        }
+#reviewList li:last-child {
+  margin-bottom: 0;
+}
 
-        #reviewList p {
-            font-size: 14px;
-            color: #555;
-            margin: 8px 0;
-        }
+#reviewList strong {
+  font-size: 16px;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
 
-        #reviewList span em {
-            font-size: 12px;
-            color: #888;
-            display: inline-block;
-            margin-top: 5px;
-        }
+#reviewList p {
+  font-size: 14px;
+  color: #555;
+  margin: 8px 0;
+}
 
-        /* CSS cho phần hiển thị sao */
-        .rating {
-            display: flex;
-            gap: 4px;
-            margin: 5px 0;
-        }
+#reviewList span em {
+  font-size: 12px;
+  color: #888;
+  display: inline-block;
+  margin-top: 5px;
+}
 
-        .rating .star {
-            font-size: 18px;
-        }
+/* CSS cho phần hiển thị sao */
+.rating {
+  display: flex;
+  gap: 4px;
+  margin: 5px 0;
+}
 
-        .rating .star.full {
-            color: #FFD700; /* Màu vàng cho sao đầy */
-        }
+.rating .star {
+  font-size: 18px;
+}
 
-        .rating .star.empty {
-            color: #ddd; /* Màu xám cho sao rỗng */
-        }
+.rating .star.full {
+  color: #ffd700; /* Màu vàng cho sao đầy */
+}
 
-        body {
-            background-color: #f7f7f7;
-        }
+.rating .star.empty {
+  color: #ddd; /* Màu xám cho sao rỗng */
+}
 
-        .product-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
+body {
+  background-color: #f7f7f7;
+}
 
-        .price {
-            font-size: 1.5rem;
-            color: red;
-        }
+.product-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
 
-        .old-price {
-            text-decoration: line-through;
-            color: #999;
-        }
+.price {
+  font-size: 1.5rem;
+  color: red;
+}
 
-        .offer-section {
-            background-color: #e9f7ef;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
+.old-price {
+  text-decoration: line-through;
+  color: #999;
+}
 
-        .offer-section li {
-            list-style-type: none;
-            margin: 5px 0;
-        }
+.offer-section {
+  background-color: #e9f7ef;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
 
-        .product-buttons {
-            margin-top: 20px;
-        }
+.offer-section li {
+  list-style-type: none;
+  margin: 5px 0;
+}
 
-        .product-buttons button {
-            margin-right: 10px;
-        }
+.product-buttons {
+  margin-top: 20px;
+}
 
-        .note {
-            background-color: #ffefef;
-            padding: 10px;
-            margin-top: 10px;
-            border-left: 5px solid red;
-        }
+.product-buttons button {
+  margin-right: 10px;
+}
 
-        .rating-container {
-            background-color: #fdf7f2;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #f5ece6;
-            margin-top: 20px;
-        }
+.note {
+  background-color: #ffefef;
+  padding: 10px;
+  margin-top: 10px;
+  border-left: 5px solid red;
+}
 
-        .rating-stars {
-            color: #f44336;
-            font-size: 20px;
-        }
+.rating-container {
+  background-color: #fdf7f2;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #f5ece6;
+  margin-top: 20px;
+}
 
-        .btn-group-toggle .btn {
-            border: 1px solid #ccc;
-            background-color: white;
-            color: #333;
-        }
+.rating-stars {
+  color: #f44336;
+  font-size: 20px;
+}
 
-        .btn.active {
-            background-color: #f5ece6;
-            border-color: #f44336;
-            color: #f44336;
-        }
+.btn-group-toggle .btn {
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #333;
+}
 
-        .star-rating input {
-            display: none;
-        }
+.btn.active {
+  background-color: #f5ece6;
+  border-color: #f44336;
+  color: #f44336;
+}
 
-        .star-rating label {
-            font-size: 24px;
-            color: #ddd;
-            cursor: pointer;
-        }
+.star-rating input {
+  display: none;
+}
 
-        .star-rating input:checked~label,
-        .star-rating label:hover,
-        .star-rating label:hover~label {
-            color: #f44336;
-        }
+.star-rating label {
+  font-size: 24px;
+  color: #ddd;
+  cursor: pointer;
+}
 
-        .sale-badge {
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            font-size: 12px;
-        }
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #f44336;
+}
 
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
-        }
+.sale-badge {
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  font-size: 12px;
+}
 
-        .card h5 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
 
-        .card p {
-            font-size: 16px;
-        }
+.card h5 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
 
-        .card-body {
-            padding: 10px;
-        }
+.card p {
+  font-size: 16px;
+}
 
-        .text-danger {
-            color: #dc3545 !important;
-        }
+.card-body {
+  padding: 10px;
+}
 
-        .text-white {
-            color: #fff !important;
-        }
+.text-danger {
+  color: #dc3545 !important;
+}
 
-        .bg-danger {
-            background-color: #dc3545 !important;
-        }
+.text-white {
+  color: #fff !important;
+}
 
-        .bg-warning {
-            background-color: #ffc107 !important;
-        }
+.bg-danger {
+  background-color: #dc3545 !important;
+}
 
-        a:hover {
-            text-decoration: none;
-            color: black;
-        }
+.bg-warning {
+  background-color: #ffc107 !important;
+}
+
+a:hover {
+  text-decoration: none;
+  color: black;
+}

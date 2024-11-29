@@ -1,5 +1,5 @@
 <?php
-include "/xampp/htdocs/BANHOA/database/connect.php";
+include "../../database/connect.php";
 session_start();
 $db = new Database();
 
@@ -163,4 +163,38 @@ if (isset($_POST['add'])) {
     // Chuyển hướng đến trang giỏ hàng
     header('Location: hoa.php?id=' . $product_id . '&added=1');
     exit();
+}
+if (isset($_POST['like'])) {
+    $product_id = $_GET['product_id'];
+    $user_id = $_SESSION['users_id']; // Lấy user_id từ session hoặc phương thức xác thực khách hàng của bạn
+    // Kiểm tra xem người dùng đã thích sản phẩm này chưa
+    $check_sql = "SELECT 1 FROM favourite WHERE user_id = $user_id AND product_id = $product_id";
+    $check_query = $db->select($check_sql);
+    if ($check_query->num_rows > 0) {
+        // Bỏ thích
+        $stmt = $db->conn->prepare("DELETE FROM favourite WHERE user_id = ? AND product_id = ?");
+        $stmt->bind_param("ii", $user_id, $product_id);
+        $stmt->execute();
+        header('Location: hoa.php?id=' . $product_id);
+    } else {
+        // Thích
+        $stmt = $db->conn->prepare("INSERT INTO favourite (user_id, product_id) VALUES (?, ?)");
+        $stmt->bind_param("ii", $user_id, $product_id);
+        $stmt->execute();
+        header('Location: hoa.php?id=' . $product_id);
+    }
+}
+if (isset($_GET['unlike'])) {
+    $product_id = $_GET['unlike'];
+    $user_id = $_SESSION['users_id']; // Lấy user_id từ session hoặc phương thức xác thực khách hàng của bạn
+    // Kiểm tra xem người dùng đã thích sản phẩm này chưa
+    $check_sql = "SELECT 1 FROM favourite WHERE user_id = $user_id AND product_id = $product_id";
+    $check_query = $db->select($check_sql);
+    if ($check_query->num_rows > 0) {
+        // Bỏ thích
+        $stmt = $db->conn->prepare("DELETE FROM favourite WHERE user_id = ? AND product_id = ?");
+        $stmt->bind_param("ii", $user_id, $product_id);
+        $stmt->execute();
+        header('Location: liked.php');
+    }
 }
