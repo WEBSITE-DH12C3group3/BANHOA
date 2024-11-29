@@ -76,7 +76,7 @@
             </div>
         </div>
         <div style="text-align: center;">
-            Copyright ©2024, Edenggyt.com, All rights reserved.
+            Copyright ©2024, eden.com.vn, All rights reserved.
         </div>
         </div>
     </section>

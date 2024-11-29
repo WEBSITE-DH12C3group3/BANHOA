@@ -49,45 +49,44 @@ while ($row = $result_hourly->fetch_assoc()) {
     <title>EDEN Shop</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-    /* Cải thiện giao diện biểu đồ */
-    .chart-container {
-        width: 80%;
-        margin: auto;
-        background-color: #f9f9f9;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-top: 40px;
-    }
+        /* Cải thiện giao diện biểu đồ */
+        .chart-container {
+            width: 80%;
+            margin: auto;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 40px;
+        }
 
-    /* Tăng chiều cao của biểu đồ */
-    #hourly-revenue-chart {
-        height: 400px;
-        background-color: #fff;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-    }
+        /* Tăng chiều cao của biểu đồ */
+        #hourly-revenue-chart {
+            height: 400px;
+            background-color: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
 
-    /* Tùy chỉnh tiêu đề biểu đồ */
-    .chart-container h2 {
-        text-align: center;
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #333;
-        font-weight: bold;
-    }
+        /* Tùy chỉnh tiêu đề biểu đồ */
+        .chart-container h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
 
-    
 
-    /* Tùy chỉnh form chọn khoảng thời gian */
-    .date-range-form {
-        margin: 20px 0;
-        padding: 10px;
-        background-color: #fafafa;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
 
+        /* Tùy chỉnh form chọn khoảng thời gian */
+        .date-range-form {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
@@ -137,9 +136,11 @@ while ($row = $result_hourly->fetch_assoc()) {
                 .total-revenue {
                     border-left: 10px solid #8BC34A;
                 }
+
                 .total-revenue-week {
                     border-left: 10px solid #2196F3;
                 }
+
                 .total-revenue-month {
                     border-left: 10px solid #FFC107;
                 }
@@ -188,69 +189,69 @@ while ($row = $result_hourly->fetch_assoc()) {
 
                 // Hiển thị bảng doanh thu cho khoảng thời gian tùy chọn
                 echo "
-        <div class='container'>
-            <h5 style='text-align: center;'>Doanh thu từ ngày $start_date đến ngày $end_date</h5>
-            <table class='table' style='border-collapse: collapse; border: 1px solid #ddd;'>
-                <thead>
-                    <tr>
-                        <th>Khoảng thời gian</th>
-                        <th>Tổng doanh thu</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Từ ngày " . $start_date . " đến ngày " . $end_date . "</td>
-                        <td>" . number_format($total_revenue_custom, 0, ',', '.') . " đ</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>";
+                    <div class='container'>
+                        <h5 style='text-align: center;'>Doanh thu từ ngày $start_date đến ngày $end_date</h5>
+                        <table class='table' style='border-collapse: collapse; border: 1px solid #ddd;'>
+                            <thead>
+                                <tr>
+                                    <th>Khoảng thời gian</th>
+                                    <th>Tổng doanh thu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Từ ngày " . $start_date . " đến ngày " . $end_date . "</td>
+                                    <td>" . number_format($total_revenue_custom, 0, ',', '.') . " đ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>";
             }
             ?>
-        </div>
 
-        <!-- Biểu đồ doanh thu theo giờ -->
-        <div class="chart-container" style="width: 70%; margin: auto;">
-            <canvas id="hourly-revenue-chart"></canvas>
-            <script>
-                var ctx = document.getElementById('hourly-revenue-chart').getContext('2d');
-                var chart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: <?php echo json_encode($hours); ?>,  // Giờ trong ngày từ 0h đến 23h
-                        datasets: [{
-                            label: 'Doanh thu',
-                            data: <?php echo json_encode($revenues); ?>,  // Doanh thu từng giờ
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Biểu đồ thống kê doanh thu trong ngày'
+            <!-- Biểu đồ doanh thu theo giờ -->
+            <div class="chart-container" style="width: 60%; margin: auto;">
+                <canvas id="hourly-revenue-chart"></canvas>
+                <script>
+                    var ctx = document.getElementById('hourly-revenue-chart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: <?php echo json_encode($hours); ?>, // Giờ trong ngày từ 0h đến 23h
+                            datasets: [{
+                                label: 'Doanh thu',
+                                data: <?php echo json_encode($revenues); ?>, // Doanh thu từng giờ
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Biểu đồ thống kê doanh thu trong ngày'
+                                    },
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
                                 },
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Doanh thu (VND)'
-                                },
-                                ticks: {
-                                    beginAtZero: true
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Doanh thu (VND)'
+                                    },
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
                                 }
                             }
                         }
-                    }
-                });
-            </script>
+                    });
+                </script>
+            </div>
         </div>
     </div>
 </body>
