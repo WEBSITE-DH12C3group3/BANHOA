@@ -1,6 +1,12 @@
 <?php
 include '../baidautot.php';
 $db = new Database();
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $sql = "DELETE FROM contact_submissions WHERE id = $id";
+    $db->delete($sql);
+    header("Location: display_contact.php");
+}
 ?>
 <!Doctype html>
 <html lang="en">
@@ -77,6 +83,7 @@ $db = new Database();
                         <th>Email</th>
                         <th>Nội dung liên hệ</th>
                         <th>Ngày gửi</th>
+                        <th>Xóa</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,6 +98,7 @@ $db = new Database();
                             echo "<td>" . $row['email'] . "</td>";
                             echo "<td>" . $row['message'] . "</td>";
                             echo "<td>" . date('h:i:s A d-m-Y', strtotime($row['submitted_at'])) . "</td>";
+                            echo "<td><a class='btn btn-danger'href='display_contact.php?id=" . $row['id'] . "' onclick='return confirm(\"Bạn có chắc muốn xóa liên hệ này?\")'><i class='fa fa-trash'></i></a></td>";
                             echo "</tr>";
                         }
                     } else {
