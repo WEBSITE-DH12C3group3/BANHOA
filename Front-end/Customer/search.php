@@ -15,11 +15,11 @@ $result = $db->select($sql);
 
 <body style="margin-top: 200px;">
     <header class="bg-light p-3 text-center">
-        <div class="product-count">
-            <?php
-            // Lấy tổng số sản phẩm trong danh sách "Siêu sale" để tính tổng số trang
-            echo $count;
-            ?> sản phẩm
+        <div class="product-count"><strong>
+                <?php
+                // Lấy tổng số sản phẩm trong danh sách "Siêu sale" để tính tổng số trang
+                echo $count;
+                ?> sản phẩm tìm kiếm với từ khóa "<?php echo $q; ?>"</strong>
         </div>
     </header>
 
@@ -39,15 +39,13 @@ $result = $db->select($sql);
                                 <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
 
                                 <p class="text-muted">
-                                    <?php if ($price_sale) {
-                                        $discount_percentage = round((($row['price'] - $row['price_sale']) / $row['price']) * 100, 2);
-                                    ?>
-                                        <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span>
+                                    <?php if ($row['sale'] > 0) { ?>
+                                        <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span><br>
                                         <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
                                         <br>
-                                        <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
+                                        <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>
                                     <?php } else { ?>
-                                        <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
+                                        <span style="font-weight: bold; font-size: 1.2em; color:#f2231d"><?php echo $price; ?></span>
                                     <?php } ?>
                                 </p>
 

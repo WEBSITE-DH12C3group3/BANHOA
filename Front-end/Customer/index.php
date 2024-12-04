@@ -137,13 +137,13 @@ $db = new Database();
                                                                                 <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
                                                                                 <!-- Hiển thị giá -->
                                                                                 <p class="text-muted">
-                                                                                    <?php if ($price_sale) { ?>
+                                                                                    <?php if ($row['sale'] > 0) { ?>
                                                                                         <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span><br>
                                                                                         <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
                                                                                         <br>
                                                                                         <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>
                                                                                     <?php } else { ?>
-                                                                                        <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
+                                                                                        <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price; ?></span>
                                                                                     <?php } ?>
                                                                                 </p>
                                                                                 <form action="modelcart.php?product_id=<?php echo $row['id'] ?>" method="post">

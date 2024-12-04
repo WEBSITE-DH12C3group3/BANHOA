@@ -207,15 +207,13 @@ $result = $db->select($sql);
                                         <div class="card-body text-center">
                                             <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
                                             <p class="text-muted">
-                                                <?php if ($price_sale) {
-                                                    $discount_percentage = round((($row['price'] - $row['price_sale']) / $row['price']) * 100, 2);
-                                                ?>
+                                                <?php if ($row['sale'] > 0) { ?>
                                                     <span style="text-decoration: line-through; color: black; font-weight: bold;"><?php echo $price; ?></span><br>
                                                     <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price_sale; ?></span>
                                                     <br>
-                                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $discount_percentage; ?>%</small>
+                                                    <small style="color: green; font-weight: bold;">Giảm <?php echo $row['sale']; ?>%</small>
                                                 <?php } else { ?>
-                                                    <span style="font-weight: bold; font-size: 1.2em;"><?php echo $price; ?></span>
+                                                    <span style="font-weight: bold; font-size: 1.2em; color: #f2231d;"><?php echo $price; ?></span>
                                                 <?php } ?>
                                             </p>
                                             <button class="btn btn-primary">Đặt hàng</button>
