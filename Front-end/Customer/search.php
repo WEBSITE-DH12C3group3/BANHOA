@@ -48,8 +48,9 @@ $result = $db->select($sql);
                                         <span style="font-weight: bold; font-size: 1.2em; color:#f2231d"><?php echo $price; ?></span>
                                     <?php } ?>
                                 </p>
-
-                                <button class="btn btn-primary">Đặt hàng</button>
+                                <form action="modelcart.php?product_id=<?php echo $row['id'] ?>" method="post">
+                                    <button class="btn btn-primary" name="addcart">Đặt hàng</button>
+                                </form>
                             </div>
                         </a>
                     </div>

@@ -304,10 +304,12 @@ if ($ratings_result) {
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $row['product_name']; ?></h5>
                                 <p class="card-text">
-                                    <del style="font-weight: bold;"><?php echo $price; ?></del> <!-- Original price in bold -->
+                                    <del style="font-weight: bold;"><?php echo $price; ?></del> <!-- Original price in bold --><br />
                                     <span class="text-danger" style="font-weight: bold;color: #f2231d;"><?php echo $price_sale; ?></span> <!-- Sale price in bold -->
                                 </p>
-                                <button class="btn btn-primary">Đặt hàng</button>
+                                <form action="modelcart.php?product_id=<?php echo $row['id'] ?>" method="post">
+                                    <button class="btn btn-primary" name="addcart">Đặt hàng</button>
+                                </form>
                             </div>
 
                         </a>
