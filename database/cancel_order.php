@@ -1,5 +1,5 @@
 <?php
-include_once '/xampp/htdocs/BANHOA/database/connect.php';
+include_once 'connect.php';
 
 $db = new Database();
 

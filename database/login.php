@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '/xampp/htdocs/BANHOA/database/connect.php'; // Kết nối với cơ sở dữ liệu
+require 'connect.php'; // Kết nối với cơ sở dữ liệu
 $conn = new Database();
 $error = '';
 
@@ -26,7 +26,11 @@ if (isset($_POST['btn-login'])) {
             $_SESSION['fullname'] = $row['fullname'];
             $_SESSION['email'] = $row['email'];
             // Chuyển hướng đến giao diện khách hàng hoặc admin
-            header("Location: http://localhost/BANHOA/Front-end/Customer/index.php"); // Giao diện dành cho khách hàng
+            if (isset($_SESSION['cart']) && $_SESSION['cart'] != null) {
+                header("Location: ../Front-end/Customer/cart.php"); // Giao diện dành cho khách hàng
+                exit();
+            }
+            header("Location: ../Front-end/Customer/index.php"); // Giao diện dành cho khách hàng
             exit();
         } else {
             $_SESSION['error'] = "Mật khẩu không chính xác, hãy thử lại!";
@@ -36,5 +40,5 @@ if (isset($_POST['btn-login'])) {
     }
 }
 
-header("Location: /BANHOA/Front-end/Customer/dangnhap.php");
+header("Location: ../Front-end/Customer/dangnhap.php");
 exit();
