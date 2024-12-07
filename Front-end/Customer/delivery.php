@@ -135,6 +135,7 @@ if (isset($_POST['update'])) {
                 <div class="checkout-container">
                     <h2 class=" text-center mb-4" style="color: #d8243c;">Thông tin thanh toán</h2>
                     <div class="form-section">
+                        <div class="section-title">Thông tin vận chuyển</div>
                         <form id="deliveryForm" action="delivery.php" method="POST">
                             <?php
                             $sql = "SELECT * FROM delivery WHERE user_id = '" . $uid . "' LIMIT 1";

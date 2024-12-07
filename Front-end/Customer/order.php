@@ -46,7 +46,6 @@ if ($payment_method == 'vnpay') {
             $db->update($update_stock);
             $db->handleSqlError($update_stock);
         }
-        include 'formmail.php';
     }
     header("Location: arigatou.php?order_code=" . $order_code);
 }
