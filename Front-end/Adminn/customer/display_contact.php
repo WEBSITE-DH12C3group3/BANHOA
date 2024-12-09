@@ -13,6 +13,8 @@ if (isset($_GET['id'])) {
 
 <head>
     <title>EDEN | Khách hàng</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -83,7 +85,7 @@ if (isset($_GET['id'])) {
                         <th>Email</th>
                         <th>Nội dung liên hệ</th>
                         <th>Ngày gửi</th>
-                        <th>Xóa</th>
+                        <th>Chức năng</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -98,7 +100,9 @@ if (isset($_GET['id'])) {
                             echo "<td>" . $row['email'] . "</td>";
                             echo "<td>" . $row['message'] . "</td>";
                             echo "<td>" . date('h:i:s A d-m-Y', strtotime($row['submitted_at'])) . "</td>";
-                            echo "<td><a class='btn btn-danger'href='display_contact.php?id=" . $row['id'] . "' onclick='return confirm(\"Bạn có chắc muốn xóa liên hệ này?\")'><i class='fa fa-trash'></i></a></td>";
+                            echo "<td><a class='btn btn-danger'href='display_contact.php?id=" . $row['id'] . "' onclick='return confirm(\"Bạn có chắc muốn xóa liên hệ này?\")'><i class='fa fa-trash'></i></a>";
+                            echo "<a class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#replyModal' data-id='" . $row['id'] . "' data-email='" . $row['email'] . "'>Phản hồi</a>";
+                            echo "</td>";
                             echo "</tr>";
                         }
                     } else {
@@ -108,8 +112,46 @@ if (isset($_GET['id'])) {
                 </tbody>
             </table>
         </div>
+          
+ <!-- Modal phản hồi -->
+ <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="replyModalLabel">Gửi Phản Hồi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="send_feedback.php" method="post">
+                            <input type="hidden" name="contact_id" id="contactId">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="contactEmail" name="email" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Nội dung phản hồi</label>
+                                <textarea class="form-control" id="replyMessage" name="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success">Gửi phản hồi</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <script>
+            // Xử lý khi modal mở
+            const replyModal = document.getElementById('replyModal');
+            replyModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const id = button.getAttribute('data-id');
+                const email = button.getAttribute('data-email');
 
+                // Gắn dữ liệu cho modal
+                document.getElementById('contactId').value = id;
+                document.getElementById('contactEmail').value = email;
+            });
+        </script>
         <script>
             $('#edit').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
