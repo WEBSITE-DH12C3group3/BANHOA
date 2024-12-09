@@ -13,7 +13,6 @@ if (isset($_GET['id'])) {
 
 <head>
     <title>EDEN | Khách hàng</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
@@ -80,7 +79,7 @@ if (isset($_GET['id'])) {
             <table class="table table-bordered" id="Table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th  >ID</th>
                         <th>Tên</th>
                         <th>Email</th>
                         <th>Nội dung liên hệ</th>
