@@ -100,19 +100,7 @@
                 if (password !== confirmPassword) {
                     errorMessage.textContent = "Mật khẩu không khớp!";
                     return false;
-                }
-
-                // Gửi yêu cầu AJAX kiểm tra email
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "check_email.php", false); // "false" để thực hiện đồng bộ (chờ kết quả)
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.send("email=" + encodeURIComponent(email));
-
-                if (xhr.responseText === "exists") {
-                    errorMessage.textContent = "Email đã tồn tại!";
-                    return false;
-                }
-
+                }       
                 errorMessage.textContent = "";
                 return true; // Form sẽ được gửi nếu mọi thứ đúng
             }
