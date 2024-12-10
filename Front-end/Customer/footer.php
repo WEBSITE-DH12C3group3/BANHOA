@@ -15,7 +15,7 @@
                     <ul class="list-menu">
                         <li><a href="about.html">Giới Thiệu</a></li>
                         <li><a href="#">Tuyển dụng</a></li>
-                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                        <li><a href="/BANHOA/Front-end/Customer/footer/faqs.html">Câu hỏi thường gặp</a></li>
                         <li><a href="/BANHOA/Front-end/Customer/contact.php">Liên hệ</a></li>
                     </ul>
                 </div>
@@ -33,9 +33,9 @@
                     <h4>Chăm Sóc Khách Hàng</h4>
                     <ul class="list-menu">
                         <li><a href="#">Thắc mắc</a></li>
-                        <li><a href="#">Chính sách và điều khoản</a></li>
+                        <li><a href="/BANHOA/Front-end/Customer/footer/chinhsach.html">Chính sách và điều khoản</a></li>
                         <li><a href="#">Phí giao hàng</a></li>
-                        <li><a href="#">Hướng dẫn thanh toán</a></li>
+                        <li><a href="/BANHOA/Front-end/Customer/footer/hdthanhtoan.html">Hướng dẫn thanh toán</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
