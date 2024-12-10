@@ -25,7 +25,7 @@ class ResetPassword {
         $row = $result->fetch_assoc();
 
         // Kiểm tra mật khẩu cũ có đúng không
-        if ($row['password'] === $oldPassword) {
+        if (password_verify($oldPassword, $row['password'])) {
             return true;
         }
         return false;
@@ -86,10 +86,12 @@ class ResetPassword {
 
     // Cập nhật mật khẩu mới (dành cho người dùng đã đăng nhập)
     public function updatePassword($userId, $newPassword) {
-        // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu (tốt cho bảo mật)
+        // Mã hóa mật khẩu bằng password_hash
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
         $query = "UPDATE users SET password = ? WHERE id = ?";
         $stmt = $this->db->conn->prepare($query);
-        $stmt->bind_param("si", $newPassword, $userId);
+        $stmt->bind_param("si", $hashedPassword, $userId);
         return $stmt->execute();
     }
 }

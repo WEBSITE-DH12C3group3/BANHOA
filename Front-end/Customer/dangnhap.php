@@ -62,7 +62,7 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
     </section>
 
     <?php include 'footer.php'; ?>
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             $('.owl-carousel').owlCarousel({
                 loop: true,
@@ -92,5 +92,5 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
             next.preventDefault();
             window.location.href = "/BANHOA/Front-end/Customer/index.html";
         }
-    </script>
+    </script> -->
 </body>
