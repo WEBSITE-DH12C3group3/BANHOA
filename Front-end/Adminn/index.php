@@ -208,36 +208,41 @@ while ($row = $result_monthly->fetch_assoc()) {
             $total_revenue_custom = 0;
 
             // Xử lý khi người dùng gửi form
-            if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
-                $start_date = date('Y-m-d', strtotime($_GET['start_date']));
-                $end_date = date('Y-m-d', strtotime($_GET['end_date']));
+// Xử lý khi người dùng gửi form
+    if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
+    $start_date = date('Y-m-d', strtotime($_GET['start_date']));
+    $end_date = date('Y-m-d 23:59:59', strtotime($_GET['end_date']));
 
-                // Truy vấn doanh thu cho khoảng thời gian được chọn
-                $sql_custom = "SELECT SUM(total) AS total_revenue_custom 
-                       FROM orders 
-                       WHERE order_date BETWEEN '$start_date' AND '$end_date'";
-                $result_custom = $conn->query($sql_custom);
-                $total_revenue_custom = $result_custom->fetch_assoc()['total_revenue_custom'] ?? 0;
+    // Truy vấn doanh thu cho khoảng thời gian được chọn
+    $sql_custom = "SELECT SUM(total) AS total_revenue_custom 
+                   FROM orders 
+                   WHERE order_date >= '$start_date' AND order_date <= '$end_date'";
+    $result_custom = $conn->query($sql_custom);
+    if (!$result_custom) {
+        echo "Lỗi truy vấn: " . $conn->error;
+        exit;
+    }
+    $total_revenue_custom = $result_custom->fetch_assoc()['total_revenue_custom'] ?: 0;
 
-                // Hiển thị bảng doanh thu cho khoảng thời gian tùy chọn
-                echo "
-                    <div class='container'>
-                        <h5 style='text-align: center;'>Doanh thu từ ngày $start_date đến ngày $end_date</h5>
-                        <table class='table' style='border-collapse: collapse; border: 1px solid #ddd;'>
-                            <thead>
-                                <tr>
-                                    <th>Khoảng thời gian</th>
-                                    <th>Tổng doanh thu</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Từ ngày " . $start_date . " đến ngày " . $end_date . "</td>
-                                    <td>" . number_format($total_revenue_custom, 0, ',', '.') . " đ</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>";
+    // Hiển thị bảng doanh thu cho khoảng thời gian tùy chọn
+    echo "
+        <div class='container'>
+            <h5>Doanh thu từ ngày $start_date đến ngày " . date('d-m-Y', strtotime($_GET['end_date'])) . "</h5>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>Khoảng thời gian</th>
+                        <th>Tổng doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Từ ngày $start_date đến ngày " . date('d-m-Y', strtotime($_GET['end_date'])) . "</td>
+                        <td>" . number_format($total_revenue_custom, 0, ',', '.') . " đ</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>";
             }
             ?>
 
