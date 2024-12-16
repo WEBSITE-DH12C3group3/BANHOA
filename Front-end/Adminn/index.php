@@ -192,42 +192,53 @@ while ($row = $result_monthly->fetch_assoc()) {
                 </div>
             </div>
 
-            <!-- Form chọn khoảng thời gian -->
-            <div class="date-range-form" style="text-align: center; margin: 20px;">
-                <form method="GET" action="">
-                    <label for="start_date">Từ ngày:</label>
-                    <input type="date" id="start_date" name="start_date" required style="border-radius: 5px;">
-                    <label for="end_date">Đến ngày:</label>
-                    <input type="date" id="end_date" name="end_date" required style="border-radius: 5px;">
-                    <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Xem</button>
-                </form>
-            </div>
+<!-- Form chọn khoảng thời gian -->
+<div class="date-range-form" style="text-align: center; margin: 20px;">
+    <form method="GET" action="">
+        <label for="start_date">Từ ngày:</label>
+        <input type="date" id="start_date" name="start_date" required style="border-radius: 5px;"
+               value="<?php echo isset($_GET['start_date']) ? $_GET['start_date'] : ''; ?>">
+        <label for="end_date">Đến ngày:</label>
+        <input type="date" id="end_date" name="end_date" required style="border-radius: 5px;"
+               value="<?php echo isset($_GET['end_date']) ? $_GET['end_date'] : ''; ?>">
+        <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Xem</button>
+    </form>
+</div>
 
-            <?php
-            // Khởi tạo biến doanh thu trong khoảng tùy chọn
-            $total_revenue_custom = 0;
+<?php
+// Khởi tạo biến doanh thu trong khoảng tùy chọn
+$total_revenue_custom = 0;
 
-            // Xử lý khi người dùng gửi form
 // Xử lý khi người dùng gửi form
-    if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
-    $start_date = date('Y-m-d', strtotime($_GET['start_date']));
-    $end_date = date('Y-m-d 23:59:59', strtotime($_GET['end_date']));
+if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
+    // Chuyển ngày từ dd/mm/yyyy sang Y-m-d để làm việc với database
+    $start_date_input = $_GET['start_date'];
+    $end_date_input = $_GET['end_date'];
+    $start_date = date('Y-m-d', strtotime($start_date_input));
+    $end_date = date('Y-m-d 23:59:59', strtotime($end_date_input));
 
     // Truy vấn doanh thu cho khoảng thời gian được chọn
     $sql_custom = "SELECT SUM(total) AS total_revenue_custom 
                    FROM orders 
                    WHERE order_date >= '$start_date' AND order_date <= '$end_date'";
     $result_custom = $conn->query($sql_custom);
+
     if (!$result_custom) {
         echo "Lỗi truy vấn: " . $conn->error;
         exit;
     }
+
+    // Lấy doanh thu
     $total_revenue_custom = $result_custom->fetch_assoc()['total_revenue_custom'] ?: 0;
 
-    // Hiển thị bảng doanh thu cho khoảng thời gian tùy chọn
+    // Chuyển định dạng ngày sang dd/mm/yyyy
+    $start_date_display = date('d/m/Y', strtotime($start_date_input));
+    $end_date_display = date('d/m/Y', strtotime($end_date_input));
+
+    // Hiển thị bảng doanh thu
     echo "
         <div class='container'>
-            <h5>Doanh thu từ ngày $start_date đến ngày " . date('d-m-Y', strtotime($_GET['end_date'])) . "</h5>
+            <h5>Doanh thu từ ngày $start_date_display đến ngày $end_date_display</h5>
             <table class='table'>
                 <thead>
                     <tr>
@@ -237,14 +248,27 @@ while ($row = $result_monthly->fetch_assoc()) {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Từ ngày $start_date đến ngày " . date('d-m-Y', strtotime($_GET['end_date'])) . "</td>
+                        <td>Từ ngày $start_date_display đến ngày $end_date_display</td>
                         <td>" . number_format($total_revenue_custom, 0, ',', '.') . " đ</td>
                     </tr>
                 </tbody>
             </table>
         </div>";
-            }
-            ?>
+}
+?>
+
+<script>
+// JavaScript để đặt placeholder ban đầu là dd/mm/yyyy
+document.addEventListener("DOMContentLoaded", function () {
+    const inputs = document.querySelectorAll("input[type='date']");
+    inputs.forEach(input => {
+        if (!input.value) {
+            input.placeholder = "dd/mm/yyyy";
+        }
+    });
+});
+</script>
+
 
             <!-- Biểu đồ doanh thu theo giờ -->
             <div class="chart-container" style="width: 60%; margin: auto;">
@@ -403,7 +427,52 @@ while ($row = $result_monthly->fetch_assoc()) {
             }
         });
     </script>
+
+<!-- Nút xem PDF -->
+<div style="text-align: center; margin: 20px;">
+    <button id="view-pdf" class="btn btn-danger">Xem PDF</button>
 </div>
+
+<!-- Thư viện html2pdf.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+<script>
+    document.getElementById('view-pdf').addEventListener('click', function () {
+        // Lấy phần nội dung cần xuất PDF
+        var content = document.getElementById('content');
+
+        // Tinh chỉnh CSS cho nội dung PDF (căn giữa và cân đối lề)
+        content.style.width = '90%'; // Giới hạn chiều rộng nội dung trong PDF
+        content.style.margin = '0 auto'; // Căn giữa nội dung
+        content.style.textAlign = 'center';
+
+        // Cấu hình PDF
+        var opt = {
+            margin: [0, 0, 0, 0], // Loại bỏ lề để không ngắt trang
+            filename: 'bao-cao-doanh-thu.pdf', // Tên file PDF
+            image: { type: 'jpeg', quality: 0.98 }, // Định dạng hình ảnh
+            html2canvas: { scale: 3, useCORS: true }, // Độ phân giải cao hơn (giúp nội dung sắc nét)
+            jsPDF: { unit: 'px', format: [content.scrollWidth, content.scrollHeight], orientation: 'landscape' } // Kích thước PDF dựa trên kích thước nội dung
+        };
+
+        // Tạo PDF và mở trong tab mới
+        html2pdf()
+            .set(opt)
+            .from(content)
+            .outputPdf('blob') // Chuyển PDF thành Blob
+            .then(function (pdfBlob) {
+                // Tạo URL tạm thời từ Blob
+                var pdfUrl = URL.createObjectURL(pdfBlob);
+
+                // Mở URL trong tab mới
+                window.open(pdfUrl, '_blank');
+            });
+    });
+</script>
+
+
+
+</id=>
 
         </div>
     </div>
