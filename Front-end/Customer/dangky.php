@@ -1,108 +1,145 @@
-<?php include 'header.php'; ?>
-<DOCTYPE html>
-    <html lang="en">
+<?php
+include 'header.php';
+?>
 
-    <head>
-        <title>EDEN | Đăng Ký</title>
-        <link rel="stylesheet" href="/BANHOA/mycss/form.css">
-        <style>
-            .log {
-                background-color: #28a228;
-                cursor: pointer;
-                color: #fff;
-            }
+<!DOCTYPE html>
+<html lang="vi">
 
-            .log:hover {
-                background-color: #196f38;
-                color: #fff;
-            }
-        </style>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>EDEN | Đăng Ký</title>
+    <link rel="stylesheet" href="/BANHOA/mycss/form.css">
+    <style>
+        .log {
+            background-color: #28a228;
+            cursor: pointer;
+            color: #fff;
+        }
 
-    <body style="margin-top: 200px;">
-        <section>
-            <div class="container mt-5 py-5">
-                <div class="row justify-content-center">
-                    <div class="form-container">
-                        <h2 class="text-center mb-4">Đăng Ký Tài Khoản</h2>
-                        <form action="/BANHOA/database/reg.php" method="post" onsubmit="return validateForm()">
-                            <!-- Fullname -->
-                            <div class="form-group">
-                                <label for="fullnamee">Họ và Tên</label>
-                                <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Nhập họ và tên" required>
-                            </div>
+        .log:hover {
+            background-color: #196f38;
+            color: #fff;
+        }
 
-                            <!-- Email -->
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Nhập email" required>
-                            </div>
+        .alert {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
 
-                            <!-- Password -->
-                            <div class="form-group">
-                                <label for="password">Mật khẩu</label>
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Nhập mật khẩu" required>
-                            </div>
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
 
-                            <!-- Confirm Password -->
-                            <div class="form-group">
-                                <label for="confirmPassword">Nhập lại mật khẩu</label>
-                                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
-                            </div>
-                            <!-- Thêm thông báo lỗi cho mật khẩu không khớp -->
-                            <div id="errorMessage" style="color: red;"></div>
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
 
+<body style="margin-top: 200px;">
+    <section>
+        <div class="container mt-5 py-5">
+            <div class="row justify-content-center">
+                <div class="form-container">
+                    <h2 class="text-center mb-4">Đăng Ký Tài Khoản</h2>
 
-                            <!-- Phone Number -->
-                            <div class="form-group">
-                                <label for="phone">Số điện thoại</label>
-                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="Nhập số điện thoại" required>
-                            </div>
+                    <!-- Hiển thị thông báo -->
+                    <?php if (isset($_SESSION['error'])): ?>
+                        <div class="alert alert-danger"><?= $_SESSION['error'];
+                                                        unset($_SESSION['error']); ?></div>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['success'])): ?>
+                        <div class="alert alert-success"><?= $_SESSION['success'];
+                                                            unset($_SESSION['success']); ?></div>
+                    <?php endif; ?>
 
-                            <div class="form-group">
-                                <label for="address">Địa chỉ</label>
-                                <input type="text" class="form-control" name="address" id="address" placeholder="Tỉnh thành/quận huyện/thị xã/số nhà" required>
-                            </div>
+                    <form action="/BANHOA/database/reg.php" method="post" onsubmit="return validateForm()">
+                        <div class="form-group">
+                            <label for="fullname">Họ và Tên</label>
+                            <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Nhập họ và tên">
+                        </div>
 
-                            <!-- Submit Button -->
-                            <div class="d-flex py-3 form-group">
-                                <button type="submit" name="btn-reg" class="btn btn-block log">Đăng Ký</button>
-                            </div>
-                            <div>
-                                Đã có tài khoản?
-                                <a href="dangnhap.php">Đăng nhập ở đây.</a>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" name="email" id="email" placeholder="Nhập email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Nhập mật khẩu">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Nhập lại mật khẩu</label>
+                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Nhập lại mật khẩu">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại</label>
+                            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Nhập số điện thoại">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Địa chỉ</label>
+                            <input type="text" class="form-control" name="address" id="address" placeholder="Tỉnh thành/quận huyện/thị xã/số nhà">
+                        </div>
+
+                        <div class="d-flex py-3 form-group">
+                            <button type="submit" name="btn-reg" class="btn btn-block log">Đăng Ký</button>
+                        </div>
+
+                        <div>
+                            Đã có tài khoản? <a href="dangnhap.php">Đăng nhập ở đây.</a>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <?php include 'footer.php'; ?>
+    <?php include 'footer.php'; ?>
 
-        <script src="/BANHOA/js/bootstrap.bundle.min.js"></script>
-        <script src="/BANHOA/js/bootstrap.bundle.js"></script>
-        <script src="/BANHOA/js/bootstrap.js"></script>
-        <script>
-            function validateForm() {
-                var email = document.getElementById("email").value;
-                var password = document.getElementById("password").value;
-                var confirmPassword = document.getElementById("confirmPassword").value;
-                var errorMessage = document.getElementById("errorMessage");
+    <script>
+        function validateForm() {
+            const fullname = document.getElementById("fullname").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const phone = document.getElementById("phone").value.trim();
+            const address = document.getElementById("address").value.trim();
 
-                // Kiểm tra độ dài của mật khẩu
-                if (password.length < 6) {
-                    errorMessage.textContent = "Mật khẩu phải có ít nhất 6 ký tự!";
-                    return false;
-                }
-
-                // Kiểm tra mật khẩu và xác nhận mật khẩu
-                if (password !== confirmPassword) {
-                    errorMessage.textContent = "Mật khẩu không khớp!";
-                    return false;
-                }       
-                errorMessage.textContent = "";
-                return true; // Form sẽ được gửi nếu mọi thứ đúng
+            if (!fullname || !email || !password || !confirmPassword || !phone || !address) {
+                alert("Vui lòng nhập đầy đủ thông tin!");
+                return false;
             }
-        </script>
-    </body>
+
+            if (fullname.length > 220) {
+                alert("Họ và tên quá dài, tối đa 220 ký tự!");
+                return false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("Email sai định dạng!");
+                return false;
+            }
+
+            if (password.length < 6 || password.length > 20) {
+                alert("Mật khẩu phải từ 6 đến 20 ký tự!");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Mật khẩu không khớp!");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+
+</html>

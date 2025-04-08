@@ -41,13 +41,11 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
                         <!-- Email -->
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email">
                         </div>
-
-                        <!-- Password -->
                         <div class="form-group">
                             <label for="password">Mật khẩu</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu">
                         </div>
                         <div class="form-group" style="margin-top: 20px;">
                             <a href="/BANHOA/Front-end/Customer/forgotpassword.php">Quên mật khẩu?</a>

@@ -1,44 +1,55 @@
 <?php
 session_start();
-require 'connect.php'; // Kết nối với cơ sở dữ liệu
+require 'connect.php';
 $conn = new Database();
 $error = '';
 
 if (isset($_POST['btn-login'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-    // Truy vấn thông tin người dùng từ bảng users
-    $query = "SELECT * FROM users WHERE email = '$email'";
-    $result = $conn->select($query);
-
-    // Kiểm tra nếu có kết quả
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-
-        // Kiểm tra mật khẩu
-        if (password_verify($password, $row['password'])) {
-            // Mật khẩu chính xác, tiến hành xác thực người dùng (ví dụ: lưu thông tin vào session, cookie, ...)
-            // Lưu thông tin người dùng vào session
-            $_SESSION['user_logged_in'] = true;
-            $_SESSION['users_id'] = $row['id'];
-            $_SESSION['role'] = $row['role'];
-            $_SESSION['fullname'] = $row['fullname'];
-            $_SESSION['email'] = $row['email'];
-            // Chuyển hướng đến giao diện khách hàng hoặc admin
-            if (isset($_SESSION['cart']) && $_SESSION['cart'] != null) {
-                header("Location: ../Front-end/Customer/cart.php"); // Giao diện dành cho khách hàng
-                exit();
-            }
-            header("Location: ../Front-end/Customer/index.php"); // Giao diện dành cho khách hàng
-            exit();
-        } else {
-            $_SESSION['error'] = "Mật khẩu không chính xác, hãy thử lại!";
-        }
+    // Kiểm tra email và mật khẩu rỗng
+    if (empty($email) && empty($password)) {
+        $_SESSION['error'] = "Vui lòng nhập đầy đủ thông tin";
+    } elseif (empty($email)) {
+        $_SESSION['error'] = "Email không được để trống";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['error'] = "Email sai định dạng";
+    } elseif (empty($password)) {
+        $_SESSION['error'] = "Mật khẩu không được để trống";
+    } elseif (strlen($password) < 6 || strlen($password) > 20) {
+        $_SESSION['error'] = "Mật khẩu phải từ 6 đến 20 ký tự";
     } else {
-        $_SESSION['error'] = "Email không tồn tại, hãy thử lại!";
-    }
-}
+        // Truy vấn người dùng
+        $query = "SELECT * FROM users WHERE email = '$email'";
+        $result = $conn->select($query);
 
-header("Location: ../Front-end/Customer/dangnhap.php");
-exit();
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['user_logged_in'] = true;
+                $_SESSION['users_id'] = $row['id'];
+                $_SESSION['role'] = $row['role'];
+                $_SESSION['fullname'] = $row['fullname'];
+                $_SESSION['email'] = $row['email'];
+                $_SESSION['success'] = "Đăng nhập thành công! Chào mừng bạn, " . $row['fullname'];
+
+                if (isset($_SESSION['cart']) && $_SESSION['cart'] != null) {
+                    header("Location: ../Front-end/Customer/cart.php");
+                    exit();
+                }
+                header("Location: ../Front-end/Customer/index.php");
+                exit();
+            } else {
+                $_SESSION['error'] = "Email hoặc mật khẩu không đúng";
+            }
+        } else {
+            $_SESSION['error'] = "Email chưa được đăng ký";
+        }
+    }
+
+    // Quay lại trang đăng nhập nếu có lỗi
+    header("Location: ../Front-end/Customer/dangnhap.php");
+    exit();
+}

@@ -91,7 +91,7 @@ CREATE TABLE `delivery` (
 --
 
 INSERT INTO `delivery` (`id`, `user_id`, `email`, `name`, `phone`, `address`, `note`) VALUES
-(1, 1, 'admin@1', 'admin', '1', '1', '1'),
+(1, 1, 'admin@gmail.com', 'admin', '1', '1', '1'),
 (2, 4, 'anhha19052004@gmail.com', 'hoangvanha', '0366379629', 'Việt Nam', '...');
 
 -- --------------------------------------------------------
@@ -266,8 +266,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `phone`, `address`, `role`, `created_at`) VALUES
-(1, 'admin', 'admin@1', '$2y$10$EEJca52zNM4q5dGaDxQNa.gB7Er9a9BG99oKLLkE64A.6dKIt4ETW', NULL, NULL, 'admin', '2024-11-10 17:32:49'),
-(2, 'doan hong quan', 'quan@2', '$2y$10$EEJca52zNM4q5dGaDxQNa.gB7Er9a9BG99oKLLkE64A.6dKIt4ETW', '2', '1', 'customer', '2024-11-10 18:26:45'),
+(1, 'admin', 'admin@gmail.com', '$2y$10$EEJca52zNM4q5dGaDxQNa.gB7Er9a9BG99oKLLkE64A.6dKIt4ETW', NULL, NULL, 'admin', '2024-11-10 17:32:49'),
+(2, 'doan hong quan', 'quan@gmail.com', '$2y$10$EEJca52zNM4q5dGaDxQNa.gB7Er9a9BG99oKLLkE64A.6dKIt4ETW', '2', '1', 'customer', '2024-11-10 18:26:45'),
 (4, 'hoang va ha', 'anhha19052004@gmail.com', '$2y$10$X/bje.DmXGcZ39GuBQE8BeK3fwXuWKJ6EGhR22vahkYQe10hct.Kq', '0366379629', 'Việt Nam', 'customer', '2024-11-30 10:42:25');
 
 -- --------------------------------------------------------

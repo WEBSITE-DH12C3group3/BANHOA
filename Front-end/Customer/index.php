@@ -1,6 +1,10 @@
 <?php
 include "header.php";
 $db = new Database();
+if (isset($_SESSION['success'])) {
+    echo "<script>alert('" . $_SESSION['success'] . "');</script>";
+    unset($_SESSION['success']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
