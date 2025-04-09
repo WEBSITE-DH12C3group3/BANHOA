@@ -1,26 +1,72 @@
-<?php include 'header.php';
+<?php
+include 'header.php';
 $db = new Database();
 $uid = $_SESSION["users_id"];
 $total = 0;
-if (isset($_POST['add'])) {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
-    $note = $_POST['note'];
-    $sql = "INSERT INTO delivery (user_id, name, email, phone, address, note) VALUES ('$uid', '$name', '$email', '$phone', '$address', '$note')";
-    $db->insert($sql);
+
+// Hàm kiểm tra email chứa script hoặc ký tự nguy hiểm
+function isMalicious($str)
+{
+    return preg_match("/<[^>]*script|script[^>]*>/i", $str) || strpos($str, '<') !== false || strpos($str, '>') !== false;
 }
-if (isset($_POST['update'])) {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
-    $note = $_POST['note'];
-    $sql = "UPDATE delivery SET name='$name', email='$email', phone='$phone', address='$address', note='$note' WHERE user_id='$uid'";
-    $db->update($sql);
+
+// Regex
+$nameRegex = "/^[\p{L}\d\s]+$/u";
+$emailRegex = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/";
+$phoneRegex = "/^0\d{9}$/";
+
+// Thêm mới
+if (isset($_POST['add']) || isset($_POST['update'])) {
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $phone = trim($_POST['phone']);
+    $address = trim($_POST['address']);
+    $note = trim($_POST['note']);
+
+    // Validate giống JS
+    if ($name === "") {
+        echo "<script>alert('Tên không được để trống!');</script>";
+    } elseif (mb_strlen($name) > 220) {
+        echo "<script>alert('Tên quá dài, tối đa 220 ký tự!');</script>";
+    } elseif (!preg_match($nameRegex, $name)) {
+        echo "<script>alert('Tên chỉ được chứa chữ cái, số và khoảng trắng');</script>";
+    } elseif ($email === "") {
+        echo "<script>alert('Email không được để trống!');</script>";
+    } elseif (isMalicious($email)) {
+        echo "<script>alert('Dữ liệu không hợp lệ!');</script>";
+    } elseif (!preg_match($emailRegex, $email)) {
+        echo "<script>alert('Email sai định dạng!');</script>";
+    } elseif ($phone === "") {
+        echo "<script>alert('Số điện thoại không được để trống!');</script>";
+    } elseif (!ctype_digit($phone)) {
+        echo "<script>alert('Số điện thoại không hợp lệ!');</script>";
+    } elseif (strlen($phone) != 10 || !preg_match($phoneRegex, $phone)) {
+        echo "<script>alert('Số điện thoại phải 10 ký tự!');</script>";
+    } elseif ($address === "") {
+        echo "<script>alert('Địa chỉ không được để trống!');</script>";
+    } else {
+        // Nếu dữ liệu hợp lệ, thực hiện insert hoặc update
+        if (isset($_POST['add'])) {
+            $sql = "INSERT INTO delivery (user_id, name, email, phone, address, note) 
+                    VALUES ('$uid', '$name', '$email', '$phone', '$address', '$note')";
+            if ($db->insert($sql)) {
+                echo "<script>alert('Thêm thông tin giao hàng thành công!')</script>";
+            } else {
+                echo "<script>alert('Thêm thất bại, vui lòng thử lại!')</script>";
+            }
+        } elseif (isset($_POST['update'])) {
+            $sql = "UPDATE delivery SET name='$name', email='$email', phone='$phone', address='$address', note='$note' 
+                    WHERE user_id='$uid'";
+            if ($db->update($sql)) {
+                echo "<script>alert('Cập nhật thông tin giao hàng thành công!');</script>";
+            } else {
+                echo "<script>alert('Cập nhật thất bại, vui lòng thử lại!');</script>";
+            }
+        }
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -136,7 +182,7 @@ if (isset($_POST['update'])) {
                     <h2 class=" text-center mb-4" style="color: #d8243c;">Thông tin thanh toán</h2>
                     <div class="form-section">
                         <div class="section-title">Thông tin vận chuyển</div>
-                        <form id="deliveryForm" action="delivery.php" method="POST">
+                        <form id="deliveryForm" action="delivery.php" method="POST" onsubmit="return validateForm()">
                             <?php
                             $sql = "SELECT * FROM delivery WHERE user_id = '" . $uid . "' LIMIT 1";
                             $result = $db->select($sql);
@@ -159,15 +205,15 @@ if (isset($_POST['update'])) {
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="firstName" class="form-label">Họ tên</label>
-                                    <input type="text" class="form-control" id="firstName" name="name" required value="<?php echo $name; ?>" placeholder="Họ tên...">
+                                    <input type="text" class="form-control" id="firstName" name="name" value="<?php echo $name; ?>" placeholder="Họ tên...">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" required value="<?php echo $email; ?>" placeholder="Email...">
+                                    <input type="text" class="form-control" id="email" name="email" value="<?php echo $email; ?>" placeholder="Email...">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="phone" class="form-label">Số điện thoại</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" required value="<?php echo $phone; ?>" placeholder="Số điện thoại...">
+                                    <input type="text" class="form-control" id="phone" name="phone" value="<?php echo $phone; ?>" placeholder="Số điện thoại...">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="note" class="form-label">Ghi chú</label>
@@ -179,7 +225,7 @@ if (isset($_POST['update'])) {
                             <div class="row">
                                 <!-- Địa chỉ -->
                                 <div class="col-md-12 mb-3">
-                                    <input type="text" class="form-control" id="address" name="address" value="<?php echo $address; ?>" placeholder="Địa chỉ..." required>
+                                    <input type="text" class="form-control" id="address" name="address" value="<?php echo $address; ?>" placeholder="Địa chỉ...">
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <?php if ($name == "" || $email == "" || $phone == ""): ?>
