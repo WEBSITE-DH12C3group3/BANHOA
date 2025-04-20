@@ -173,11 +173,11 @@ $db = new Database();
                     <form id="addForm" method="POST" action="addpro.php" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="product_name">Tên Sản phẩm</label>
-                            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Tên sản phẩm" required>
+                            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Tên sản phẩm">
                         </div>
                         <div class="form-group">
                             <label for="image">Hình ảnh</label>
-                            <input type="file" class="form-control" id="image" name="image" placeholder="URL Hình ảnh" accept="image/*" required>
+                            <input type="file" class="form-control" id="image" name="image" placeholder="URL Hình ảnh" accept="image/*">
                         </div>
                         <div class="form-group">
                             <label for="description">Mô tả</label>
@@ -185,19 +185,19 @@ $db = new Database();
                         </div>
                         <div class="form-group">
                             <label for="price">Giá</label>
-                            <input type="text" class="form-control" id="price" name="price" placeholder="Giá sản phẩm" required>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="Giá sản phẩm">
                         </div>
                         <div class="form-group">
                             <label for="sale">Sale (%)</label>
-                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" required min="0" max="99" step="1" />
+                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" min="0" max="99" step="1" />
                         </div>
                         <div class="form-group">
                             <label for="stock">Số lượng</label>
-                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng" required>
+                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng">
                         </div>
                         <div class="form-group">
                             <label for="remark">Nổi bật</label>
-                            <select class="form-control" name="remark" id="remark" required>
+                            <select class="form-control" name="remark" id="remark">
                                 <option value="">Chọn kiểu</option>
                                 <option value="0">Không nổi bật</option>
                                 <option value="1">Nổi bật</option>
@@ -205,7 +205,7 @@ $db = new Database();
                         </div>
                         <div class="form-group">
                             <label for="category_id">Danh mục</label>
-                            <select class="form-control" id="category_id" name="category_id" required>
+                            <select class="form-control" id="category_id" name="category_id">
                                 <option value="">Chọn danh mục</option>
                                 <?php
                                 // Truy vấn để lấy các danh mục từ bảng categories
@@ -247,7 +247,7 @@ $db = new Database();
                         </div>
                         <div class="form-group">
                             <label for="product_name">Tên Sản phẩm</label>
-                            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Tên sản phẩm" required value="<?php echo $row['product_name'] ?>">
+                            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Tên sản phẩm" value="<?php echo $row['product_name'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="image">Hình ảnh hiện tại</label><br />
@@ -261,26 +261,26 @@ $db = new Database();
                         </div>
                         <div class="form-group">
                             <label for="price">Giá</label>
-                            <input type="text" class="form-control" id="price" name="price" placeholder="Giá sản phẩm" required value="<?php echo $row['price'] ?>">
+                            <input type="text" class="form-control" id="price" name="price" placeholder="Giá sản phẩm" value="<?php echo $row['price'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="sale">Sale (%)</label>
-                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" required value="<?php echo $row['sale'] ?>" min="0" max="99" step="1">
+                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" value="<?php echo $row['sale'] ?>" min="0" max="99" step="1">
                         </div>
                         <div class="form-group">
                             <label for="stock">Số lượng</label>
-                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng" required value="<?php echo $row['stock'] ?>">
+                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Số lượng" value="<?php echo $row['stock'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="remark">Nổi bật</label>
-                            <select class="form-control" name="remark" id="remark" required>
+                            <select class="form-control" name="remark" id="remark">
                                 <option value="0">Không nổi bật</option>
                                 <option value="1">Nổi bật</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="category_id">Danh mục</label>
-                            <select class="form-control" id="category_id" name="category_id" required>
+                            <select class="form-control" id="category_id" name="category_id">
                                 <?php
                                 // Truy vấn để lấy các danh mục từ bảng categories
                                 $sql = "SELECT id, category_name FROM categories";

@@ -153,7 +153,7 @@ $db = new Database();
                         </div>
                         <div class="form-group">
                             <label for="catename">Tên Danh mục</label>
-                            <input type="text" class="form-control" id="catename" name="catename" placeholder="Tên danh mục" required value="<?php echo $row['category_name'] ?>">
+                            <input type="text" class="form-control" id="catename" name="catename" placeholder="Tên danh mục" value="<?php echo $row['category_name'] ?>">
                         </div>
 
                     </form>
@@ -195,11 +195,11 @@ $db = new Database();
                     <form id="addForm" method="POST" action="addcate.php">
                         <div class="form-group">
                             <label for="ID">Mã Danh mục</label>
-                            <input type="text" class="form-control" id="ID" name="ID" placeholder="Mã danh mục" required>
+                            <input type="text" class="form-control" id="ID" name="ID" placeholder="Mã danh mục">
                         </div>
                         <div class="form-group">
                             <label for="Name">Tên Danh mục</label>
-                            <input type="text" class="form-control" id="Name" name="Name" placeholder="Tên danh mục" required>
+                            <input type="text" class="form-control" id="Name" name="Name" placeholder="Tên danh mục">
                         </div>
                     </form>
                 </div>
