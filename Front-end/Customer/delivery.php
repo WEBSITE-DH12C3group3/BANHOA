@@ -44,6 +44,8 @@ if (isset($_POST['add']) || isset($_POST['update'])) {
         echo "<script>alert('Số điện thoại phải 10 ký tự!');</script>";
     } elseif ($address === "") {
         echo "<script>alert('Địa chỉ không được để trống!');</script>";
+    } elseif (mb_strlen($note) > 255) {
+        echo "<script>alert('Ghi chú quá dài, tối đa 255 ký tự!');</script>";
     } else {
         // Nếu dữ liệu hợp lệ, thực hiện insert hoặc update
         if (isset($_POST['add'])) {

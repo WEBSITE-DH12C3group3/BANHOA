@@ -13,6 +13,10 @@ if (isset($_POST['btn-login'])) {
         $_SESSION['error'] = "Vui lòng nhập đầy đủ thông tin";
     } elseif (empty($email)) {
         $_SESSION['error'] = "Email không được để trống";
+    } elseif ($email !== strip_tags($email)) {
+        $_SESSION['error'] = "Email không hợp lệ (chứa mã script)";
+    } elseif (strlen($email) > 220) {
+        $_SESSION['error'] = "Email quá dài (tối đa 220 ký tự)";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['error'] = "Email sai định dạng";
     } elseif (empty($password)) {

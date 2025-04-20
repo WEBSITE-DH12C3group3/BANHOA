@@ -41,7 +41,7 @@ unset($_SESSION['error']); // Xóa thông báo lỗi sau khi hiển thị
                         <!-- Email -->
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Nhập email">
                         </div>
                         <div class="form-group">
                             <label for="password">Mật khẩu</label>
