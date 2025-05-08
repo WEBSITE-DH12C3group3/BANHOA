@@ -1,15 +1,12 @@
 <?php
 include "header.php";
 $db = new Database();
-if (isset($_SESSION['success'])) {
-    echo "<script>alert('" . $_SESSION['success'] . "');</script>";
-    unset($_SESSION['success']);
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* produc CSS */
         .product-image {
@@ -24,10 +21,45 @@ if (isset($_SESSION['success'])) {
             /* 2 giây */
         }
     </style>
+    <style>
+        .swal2-popup {
+            font-size: 0.9rem !important;
+            font-family: Arial, sans-serif;
+        }
+
+        .swal2-toast {
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
     <title>EDEN</title>
 </head>
 
 <body style="margin-top: 200px;">
+    <?php
+    // Di chuyển đoạn check session xuống đây, sau khi đã load thư viện SweetAlert2
+    if (isset($_SESSION['success']) && !empty($_SESSION['success'])) {
+    ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: '<?php echo $_SESSION['success']; ?>',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    toast: true,
+                    position: 'top-end',
+                    customClass: {
+                        popup: 'swal2-custom-popup',
+                        icon: 'swal2-custom-icon'
+                    }
+                });
+            });
+        </script>
+    <?php
+        unset($_SESSION['success']);
+    }
+    ?>
     <section class="mymaincontent my-3">
         <div class="container my-3">
             <div class="slider">
