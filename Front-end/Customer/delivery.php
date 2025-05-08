@@ -1,7 +1,14 @@
 <?php
 include 'header.php';
 $db = new Database();
-$uid = $_SESSION["users_id"];
+if (isset($_SESSION["users_id"])) {
+    $uid = $_SESSION["users_id"];
+} else {
+    // Nếu không có session, chuyển hướng hoặc xử lý phù hợp
+    header("Location: login.php");
+    exit();
+}
+
 $total = 0;
 
 // Hàm kiểm tra email chứa script hoặc ký tự nguy hiểm
