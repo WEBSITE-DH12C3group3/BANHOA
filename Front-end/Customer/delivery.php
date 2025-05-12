@@ -23,58 +23,101 @@ $emailRegex = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/";
 $phoneRegex = "/^0\d{9}$/";
 
 // Thêm mới
+echo "<style>
+    .message {
+        padding: 15px;
+        margin: 10px 0;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        text-align: center;
+    }
+    .message-error {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+    .message-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+</style>";
+
+// Add this variable at the top of your PHP code
+$message = '';
+$messageType = '';
+
+// Replace your alert sections with this:
 if (isset($_POST['add']) || isset($_POST['update'])) {
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $phone = trim($_POST['phone']);
     $address = trim($_POST['address']);
     $note = trim($_POST['note']);
+    $localPart = substr($email, 0, strpos($email, '@'));
+    $forbiddenCharsPattern = '/[#\$%\^&\*\(\)=\+\[\]\{\};:\'\"<>,\?\/\\\\|]/'; // dùng regex
 
-    // Validate giống JS
     if ($name === "") {
-        echo "<script>alert('Tên không được để trống!');</script>";
+        $message = 'Tên không được để trống!';
+        $messageType = 'error';
     } elseif (mb_strlen($name) > 220) {
-        echo "<script>alert('Tên quá dài, tối đa 220 ký tự!');</script>";
+        $message = 'Tên quá dài, tối đa 220 ký tự!';
+        $messageType = 'error';
     } elseif (!preg_match($nameRegex, $name)) {
-        echo "<script>alert('Tên chỉ được chứa chữ cái, số và khoảng trắng');</script>";
+        $message = 'Tên chỉ được chứa chữ cái, số và khoảng trắng';
+        $messageType = 'error';
     } elseif ($email === "") {
-        echo "<script>alert('Email không được để trống!');</script>";
-    } elseif (isMalicious($email)) {
-        echo "<script>alert('Dữ liệu không hợp lệ!');</script>";
-    } elseif (!preg_match($emailRegex, $email)) {
-        echo "<script>alert('Email sai định dạng!');</script>";
+        $message = 'Email không được để trống!';
+        $messageType = 'error';
+    } elseif (isMalicious($email) || isMalicious($name) || isMalicious($address) || isMalicious($note)) {
+        $message = 'Dữ liệu không hợp lệ!';
+        $messageType = 'error';
+    } elseif (!preg_match($emailRegex, $email) || ctype_digit($localPart) || preg_match($forbiddenCharsPattern, $localPart) || !preg_match('/^[\x20-\x7E]+$/', $localPart) || is_numeric($localPart[0])) {
+        $message = 'Email sai định dạng!';
+        $messageType = 'error';
+    } elseif (strlen($email) > 220) {
+        $message = 'Email quá dài, tối đa 220 ký tự!';
+        $messageType = 'error';
     } elseif ($phone === "") {
-        echo "<script>alert('Số điện thoại không được để trống!');</script>";
+        $message = 'Số điện thoại không được để trống!';
+        $messageType = 'error';
     } elseif (!ctype_digit($phone)) {
-        echo "<script>alert('Số điện thoại không hợp lệ!');</script>";
+        $message = 'Số điện thoại không hợp lệ!';
+        $messageType = 'error';
     } elseif (strlen($phone) != 10 || !preg_match($phoneRegex, $phone)) {
-        echo "<script>alert('Số điện thoại phải 10 ký tự!');</script>";
+        $message = 'Số điện thoại phải 10 ký tự!';
+        $messageType = 'error';
     } elseif ($address === "") {
-        echo "<script>alert('Địa chỉ không được để trống!');</script>";
+        $message = 'Địa chỉ không được để trống!';
+        $messageType = 'error';
     } elseif (mb_strlen($note) > 255) {
-        echo "<script>alert('Ghi chú quá dài, tối đa 255 ký tự!');</script>";
+        $message = 'Ghi chú quá dài, tối đa 255 ký tự!';
+        $messageType = 'error';
     } else {
-        // Nếu dữ liệu hợp lệ, thực hiện insert hoặc update
         if (isset($_POST['add'])) {
             $sql = "INSERT INTO delivery (user_id, name, email, phone, address, note) 
                     VALUES ('$uid', '$name', '$email', '$phone', '$address', '$note')";
             if ($db->insert($sql)) {
-                echo "<script>alert('Thêm thông tin giao hàng thành công!')</script>";
+                $message = 'Thêm thông tin giao hàng thành công!';
+                $messageType = 'success';
             } else {
-                echo "<script>alert('Thêm thất bại, vui lòng thử lại!')</script>";
+                $message = 'Thêm thất bại, vui lòng thử lại!';
+                $messageType = 'error';
             }
         } elseif (isset($_POST['update'])) {
             $sql = "UPDATE delivery SET name='$name', email='$email', phone='$phone', address='$address', note='$note' 
                     WHERE user_id='$uid'";
             if ($db->update($sql)) {
-                echo "<script>alert('Cập nhật thông tin giao hàng thành công!');</script>";
+                $message = 'Cập nhật thông tin giao hàng thành công!';
+                $messageType = 'success';
             } else {
-                echo "<script>alert('Cập nhật thất bại, vui lòng thử lại!');</script>";
+                $message = 'Cập nhật thất bại, vui lòng thử lại!';
+                $messageType = 'error';
             }
         }
     }
 }
-?>
+?>?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -236,6 +279,13 @@ if (isset($_POST['add']) || isset($_POST['update'])) {
                                 <div class="col-md-12 mb-3">
                                     <input type="text" class="form-control" id="address" name="address" value="<?php echo $address; ?>" placeholder="Địa chỉ...">
                                 </div>
+                                <?php if (!empty($message)): ?>
+                                    <div class="container">
+                                        <div class="message message-<?php echo $messageType; ?>">
+                                            <?php echo $message; ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="col-md-12 mb-3">
                                     <?php if ($name == "" || $email == "" || $phone == ""): ?>
                                         <button type="submit" name="add" form="deliveryForm" class="form-control w-50 btn btn-primary btn-lg">Thêm vận chuyển</button>

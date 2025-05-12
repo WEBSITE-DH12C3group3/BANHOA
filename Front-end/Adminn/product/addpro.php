@@ -35,6 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ((float)$price <= 0) {
         echo "<script>alert('Giá sản phẩm phải lớn hơn 0!'); window.location.href='product.php';</script>";
         exit();
+    } elseif ($price > 100000000) {
+        echo "<script>alert('Giá sản phẩm không được lớn hơn 100 triệu đồng!'); window.location.href='product.php';</script>";
+        exit();
     }
 
     // Kiểm tra mô tả

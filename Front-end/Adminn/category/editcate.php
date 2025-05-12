@@ -6,6 +6,7 @@ $db = new Database();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = isset($_POST['cateid']) ? trim($_POST['cateid']) : '';
     $name = isset($_POST['catename']) ? trim($_POST['catename']) : '';
+    $forbiddenCharsPattern = '/[#\$%\^&\*\(\)=\+\[\]\{\};:\'\"<>,\?\/\\\\|]/'; // dùng regex
 
     // RÀNG BUỘC DỮ LIỆU
     if (empty($id)) {
@@ -21,9 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (strlen($name) > 29) {
         echo "<script>alert('Tên danh mục quá dài, tối đa 29 ký tự!'); window.location.href = 'category.php';</script>";
         exit();
+    } elseif (preg_match($forbiddenCharsPattern, $name)) {
+        echo "<script>alert('Tên danh mục không được chứa ký tự đặc biệt!'); window.location.href = 'category.php';</script>";
+        exit();
     }
-
-
 
     $stmt = $db->conn->prepare("UPDATE categories SET category_name=? WHERE id=?");
     $stmt->bind_param("ss", $name, $id);
