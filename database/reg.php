@@ -16,9 +16,10 @@ if (isset($_POST['btn-reg'])) {
     $confirmPassword = $_POST['confirmPassword'];
     $phone = trim($_POST['phone']);
     $address = trim($_POST['address']);
-
+    $localPart = substr($email, 0, strpos($email, '@'));
+    $forbiddenCharsPattern = '/[#\$%\^&\*\(\)=\+\[\]\{\};:\'\"<>,\?\/\\\\|]/';
     // ❗ Xử lý XSS
-    if (contains_script_or_tags($fullname) || contains_script_or_tags($email) || contains_script_or_tags($address)) {
+    if (contains_script_or_tags($fullname) || contains_script_or_tags($email) || contains_script_or_tags($address) || contains_script_or_tags($password) || contains_script_or_tags($confirmPassword)) {
         $_SESSION['error'] = "Dữ liệu không hợp lệ!";
         header("Location: ../Front-end/Customer/dangky.php");
         exit;
@@ -43,19 +44,28 @@ if (isset($_POST['btn-reg'])) {
         header("Location: ../Front-end/Customer/dangky.php");
         exit;
     }
-    if (empty($email)) {
-        $_SESSION['error'] = "Email không được để trống!";
-        header("Location: ../Front-end/Customer/dangky.php");
-        exit;
-    }
-
     if (strlen($fullname) > 220) {
         $_SESSION['error'] = "Họ và tên quá dài, tối đa 220 ký tự!";
         header("Location: ../Front-end/Customer/dangky.php");
         exit;
     }
+    if (preg_match($forbiddenCharsPattern, $fullname)) {
+        $_SESSION['error'] = "Họ và tên chỉ chứa chữ cái và khoảng trắng!";
+        header("Location: ../Front-end/Customer/dangky.php");
+        exit;
+    }
+    if (empty($email)) {
+        $_SESSION['error'] = "Email không được để trống!";
+        header("Location: ../Front-end/Customer/dangky.php");
+        exit;
+    }
+    if (strlen($email) > 220) {
+        $_SESSION['error'] = "Email quá dài, tối đa 220 ký tự!";
+        header("Location: ../Front-end/Customer/dangky.php");
+        exit;
+    }
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || is_numeric($localPart[0]) || preg_match($forbiddenCharsPattern, $localPart) || !preg_match('/^[\x20-\x7E]+$/', $localPart) || ctype_digit($localPart)) {
         $_SESSION['error'] = "Email sai định dạng!";
         header("Location: ../Front-end/Customer/dangky.php");
         exit;
@@ -72,6 +82,11 @@ if (isset($_POST['btn-reg'])) {
         header("Location: ../Front-end/Customer/dangky.php");
         exit;
     }
+    if (strlen($confirmPassword) < 6 || strlen($confirmPassword) > 20) {
+        $_SESSION['error'] = "Nhập lại mật khẩu phải từ 6 đến 20 ký tự!";
+        header("Location: ../Front-end/Customer/dangky.php");
+        exit;
+    }
 
     if (!preg_match('/^[0-9]{10,11}$/', $phone)) {
         $_SESSION['error'] = "Số điện thoại không hợp lệ!";
@@ -83,8 +98,11 @@ if (isset($_POST['btn-reg'])) {
         header("Location: ../Front-end/Customer/dangky.php");
         exit;
     }
-
-
+    if (strlen($address) > 220) {
+        $_SESSION['error'] = "Địa chỉ quá dài, tối đa 220 ký tự!";
+        header("Location: ../Front-end/Customer/dangky.php");
+        exit;
+    }
     // Kiểm tra email đã tồn tại
     $stmt = $db->conn->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
