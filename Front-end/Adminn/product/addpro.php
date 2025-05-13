@@ -2,7 +2,10 @@
 include '/xampp/htdocs/BANHOA/database/connect.php';
 
 $db = new Database();
-
+function containsScript($input)
+{
+    return preg_match('/<script\b[^>]*>(.*?)<\/script>/is', $input);
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $name = isset($_POST['product_name']) ? trim($_POST['product_name']) : '';
@@ -13,6 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sale = isset($_POST['sale']) ? trim($_POST['sale']) : '';
     $remark = isset($_POST['remark']) ? trim($_POST['remark']) : '';
 
+    if (containsScript($name) || containsScript($description) || containsScript($price)) {
+        echo "<script>alert('Dữ liệu không hợp lệ!'); window.location.href='product.php';</script>";
+        exit();
+    }
     // Kiểm tra tên sản phẩm
     if (empty($name)) {
         echo "<script>alert('Tên sản phẩm không được để trống!'); window.location.href='product.php';</script>";
@@ -44,6 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($description)) {
         echo "<script>alert('Mô tả không được để trống!'); window.location.href='product.php';</script>";
         exit();
+    } elseif (strlen($description) > 1000) {
+        echo "<script>alert('Mô tả quá dài!'); window.location.href='product.php';</script>";
+        exit();
     }
 
     // Kiểm tra danh mục
@@ -58,6 +68,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    // Kiểm tra Số lượng
+    if (empty($stock)) {
+        echo "<script>alert('Số lượng không được để trống!'); window.location.href='product.php';</script>";
+        exit();
+    } elseif ((int)$stock < 0) {
+        echo "<script>alert('Số lượng phải lớn hơn 0!'); window.location.href='product.php';</script>";
+        exit();
+    } elseif ($stock > 1000000) {
+        echo "<script>alert('Số lượng vượt quá giới hạn cho phép!'); window.location.href='product.php';</script>";
+        exit();
+    }
+
+    // Kiểm tra giảm giá
+    if (empty($sale)) {
+        echo "<script>alert('Giảm giá không được để trống!'); window.location.href='product.php';</script>";
+        exit();
+    } elseif (!is_numeric($sale)) {
+        echo "<script>alert('Giảm giá phải là số hợp lệ!'); window.location.href='product.php';</script>";
+        exit();
+    } elseif ((int)$sale < 0) {
+        echo "<script>alert('Giảm giá phải là số không âm!'); window.location.href='product.php';</script>";
+        exit();
+    } elseif ($sale > 100) {
+        echo "<script>alert('Giảm giá không được lớn hơn 100%!'); window.location.href='product.php';</script>";
+        exit();
+    }
     // Kiểm tra ảnh
     if (!isset($_FILES['image']) || $_FILES['image']['error'] != UPLOAD_ERR_OK) {
         echo "<script>alert('Phải chọn ảnh sản phẩm!'); window.location.href='product.php';</script>";

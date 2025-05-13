@@ -117,7 +117,7 @@ if ($categories_result) {
                 aria-label="Tìm Kiếm"
                 aria-describedby="basic-addon2"
                 name="q"
-                required />
+                maxlength="220" />
               <button
                 class="btn btn-outline-secondary"
                 type="submit"
