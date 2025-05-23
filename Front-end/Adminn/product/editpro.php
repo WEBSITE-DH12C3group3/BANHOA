@@ -114,21 +114,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sale = (int)$sale;
 
-    // Kiểm tra ảnh
-    if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
-        echo "<script>alert('Phải chọn ảnh sản phẩm!'); window.location.href='product.php';</script>";
-        exit();
-    }
-
-    $image = $_FILES['image']['name'];
-    $file_type = strtolower(pathinfo($image, PATHINFO_EXTENSION));
-    $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
-
-    if (!in_array($file_type, $allowed_types)) {
-        echo "<script>alert('Định dạng ảnh không hợp lệ!'); window.location.href='product.php';</script>";
-        exit();
-    }
-
     // Xử lý nếu có ảnh
     $hasImage = isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK;
     if ($hasImage) {
@@ -137,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
 
         if (!in_array($file_ext, $allowed_ext)) {
-            echo "<script>alert('Định dạng ảnh không hợp lệ! Chỉ chấp nhận JPG, JPEG, PNG, GIF.'); window.location.href='product.php';</script>";
+            echo "<script>alert('Định dạng ảnh không hợp lệ!'); window.location.href='product.php';</script>";
             exit();
         }
 
