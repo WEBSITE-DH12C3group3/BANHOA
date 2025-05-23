@@ -192,7 +192,6 @@ while ($row = $result_monthly->fetch_assoc()) {
                 </div>
             </div>
 
-<!-- Form chọn khoảng thời gian -->
 <div class="date-range-form" style="text-align: center; margin: 20px;">
     <form method="GET" action="">
         <label for="start_date">Từ ngày:</label>
@@ -211,11 +210,37 @@ $total_revenue_custom = 0;
 
 // Xử lý khi người dùng gửi form
 if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
-    // Chuyển ngày từ dd/mm/yyyy sang Y-m-d để làm việc với database
     $start_date_input = $_GET['start_date'];
     $end_date_input = $_GET['end_date'];
-    $start_date = date('Y-m-d', strtotime($start_date_input));
-    $end_date = date('Y-m-d 23:59:59', strtotime($end_date_input));
+
+    // --- Bổ sung kiểm tra validation tại đây ---
+    // Chuyển đổi sang timestamp để so sánh dễ dàng hơn
+    $start_timestamp = strtotime($start_date_input);
+    $end_timestamp = strtotime($end_date_input);
+
+    if ($start_timestamp > $end_timestamp) {
+        // Assume showAlertAndRedirect is available from connect.php or product.php includes
+        // If not, you might need to include it or define it here, or use a simple alert.
+        // For consistency with previous interactions, we'll assume it's available.
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+        echo "<script>";
+        echo "Swal.fire({";
+        echo "    icon: 'error',";
+        echo "    title: 'Lỗi ngày tháng!',";
+        echo "    text: 'Ngày bắt đầu không được lớn hơn ngày kết thúc.',";
+        echo "    showConfirmButton: true";
+        echo "}).then(function() {";
+        echo "    window.location.href=window.location.pathname;"; // Redirect back to the same page
+        echo "});";
+        echo "</script>";
+        exit(); // Dừng thực thi script nếu ngày không hợp lệ
+    }
+    // --- Kết thúc phần kiểm tra validation ---
+
+    // Chuyển ngày từ dd/mm/yyyy sang Y-m-d để làm việc với database
+    $start_date = date('Y-m-d', $start_timestamp);
+    // Để bao gồm cả ngày cuối cùng, set thời gian đến cuối ngày
+    $end_date = date('Y-m-d 23:59:59', $end_timestamp);
 
     // Truy vấn doanh thu cho khoảng thời gian được chọn
     $sql_custom = "SELECT SUM(total) AS total_revenue_custom 
