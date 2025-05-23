@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Rất quan trọng để tránh lỗi headers already sent
 include '/xampp/htdocs/BANHOA/database/connect.php';
 $db = new Database();
 
@@ -27,12 +28,15 @@ if (isset($_GET['id'])) {
 
         // Commit the transaction
         $db->conn->commit();
-        echo "<script>alert('Xóa thành công!'); window.location.href = 'category.php';</script>";
+        header("Location: category.php?status=success&title=Thành công!&message=" . urlencode('Xóa danh mục thành công!'));
     } catch (Exception $e) {
         // Rollback the transaction if an error occurred
         $db->conn->rollback();
-        echo "<script>alert('Lỗi khi xóa: " . $e->getMessage() . "'); window.location.href = 'category.php';</script>";
+        header("Location: category.php?status=error&title=Lỗi!&message=" . urlencode('Lỗi khi xóa: ' . $e->getMessage()));
+    } finally {
+        $db->conn->close();
     }
 } else {
-    echo "<script>alert('Mã danh mục không được xác định.'); window.location.href = 'category.php';</script>";
+    header("Location: category.php?status=error&title=Lỗi!&message=" . urlencode('Mã danh mục không được xác định.'));
 }
+ob_end_flush(); // Đẩy buffer ra trình duyệt

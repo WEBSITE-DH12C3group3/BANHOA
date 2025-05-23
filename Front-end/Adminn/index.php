@@ -192,76 +192,76 @@ while ($row = $result_monthly->fetch_assoc()) {
                 </div>
             </div>
 
-<div class="date-range-form" style="text-align: center; margin: 20px;">
-    <form method="GET" action="">
-        <label for="start_date">Từ ngày:</label>
-        <input type="date" id="start_date" name="start_date" required style="border-radius: 5px;"
-               value="<?php echo isset($_GET['start_date']) ? $_GET['start_date'] : ''; ?>">
-        <label for="end_date">Đến ngày:</label>
-        <input type="date" id="end_date" name="end_date" required style="border-radius: 5px;"
-               value="<?php echo isset($_GET['end_date']) ? $_GET['end_date'] : ''; ?>">
-        <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Xem</button>
-    </form>
-</div>
+            <div class="date-range-form" style="text-align: center; margin: 20px;">
+                <form method="GET" action="">
+                    <label for="start_date">Từ ngày:</label>
+                    <input type="date" id="start_date" name="start_date" required style="border-radius: 5px;"
+                        value="<?php echo isset($_GET['start_date']) ? $_GET['start_date'] : ''; ?>">
+                    <label for="end_date">Đến ngày:</label>
+                    <input type="date" id="end_date" name="end_date" required style="border-radius: 5px;"
+                        value="<?php echo isset($_GET['end_date']) ? $_GET['end_date'] : ''; ?>">
+                    <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Xem</button>
+                </form>
+            </div>
 
-<?php
-// Khởi tạo biến doanh thu trong khoảng tùy chọn
-$total_revenue_custom = 0;
+            <?php
+            // Khởi tạo biến doanh thu trong khoảng tùy chọn
+            $total_revenue_custom = 0;
 
-// Xử lý khi người dùng gửi form
-if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
-    $start_date_input = $_GET['start_date'];
-    $end_date_input = $_GET['end_date'];
+            // Xử lý khi người dùng gửi form
+            if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
+                $start_date_input = $_GET['start_date'];
+                $end_date_input = $_GET['end_date'];
 
-    // --- Bổ sung kiểm tra validation tại đây ---
-    // Chuyển đổi sang timestamp để so sánh dễ dàng hơn
-    $start_timestamp = strtotime($start_date_input);
-    $end_timestamp = strtotime($end_date_input);
+                // --- Bổ sung kiểm tra validation tại đây ---
+                // Chuyển đổi sang timestamp để so sánh dễ dàng hơn
+                $start_timestamp = strtotime($start_date_input);
+                $end_timestamp = strtotime($end_date_input);
 
-    if ($start_timestamp > $end_timestamp) {
-        // Assume showAlertAndRedirect is available from connect.php or product.php includes
-        // If not, you might need to include it or define it here, or use a simple alert.
-        // For consistency with previous interactions, we'll assume it's available.
-        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-        echo "<script>";
-        echo "Swal.fire({";
-        echo "    icon: 'error',";
-        echo "    title: 'Lỗi ngày tháng!',";
-        echo "    text: 'Ngày bắt đầu không được lớn hơn ngày kết thúc.',";
-        echo "    showConfirmButton: true";
-        echo "}).then(function() {";
-        echo "    window.location.href=window.location.pathname;"; // Redirect back to the same page
-        echo "});";
-        echo "</script>";
-        exit(); // Dừng thực thi script nếu ngày không hợp lệ
-    }
-    // --- Kết thúc phần kiểm tra validation ---
+                if ($start_timestamp > $end_timestamp) {
+                    // Assume showAlertAndRedirect is available from connect.php or product.php includes
+                    // If not, you might need to include it or define it here, or use a simple alert.
+                    // For consistency with previous interactions, we'll assume it's available.
 
-    // Chuyển ngày từ dd/mm/yyyy sang Y-m-d để làm việc với database
-    $start_date = date('Y-m-d', $start_timestamp);
-    // Để bao gồm cả ngày cuối cùng, set thời gian đến cuối ngày
-    $end_date = date('Y-m-d 23:59:59', $end_timestamp);
+                    echo "<script>";
+                    echo "Swal.fire({";
+                    echo "    icon: 'error',";
+                    echo "    title: 'Lỗi ngày tháng!',";
+                    echo "    text: 'Ngày bắt đầu không được lớn hơn ngày kết thúc.',";
+                    echo "    showConfirmButton: true";
+                    echo "}).then(function() {";
+                    echo "    window.location.href=window.location.pathname;"; // Redirect back to the same page
+                    echo "});";
+                    echo "</script>";
+                    exit(); // Dừng thực thi script nếu ngày không hợp lệ
+                }
+                // --- Kết thúc phần kiểm tra validation ---
 
-    // Truy vấn doanh thu cho khoảng thời gian được chọn
-    $sql_custom = "SELECT SUM(total) AS total_revenue_custom 
+                // Chuyển ngày từ dd/mm/yyyy sang Y-m-d để làm việc với database
+                $start_date = date('Y-m-d', $start_timestamp);
+                // Để bao gồm cả ngày cuối cùng, set thời gian đến cuối ngày
+                $end_date = date('Y-m-d 23:59:59', $end_timestamp);
+
+                // Truy vấn doanh thu cho khoảng thời gian được chọn
+                $sql_custom = "SELECT SUM(total) AS total_revenue_custom 
                    FROM orders 
                    WHERE order_date >= '$start_date' AND order_date <= '$end_date'";
-    $result_custom = $conn->query($sql_custom);
+                $result_custom = $conn->query($sql_custom);
 
-    if (!$result_custom) {
-        echo "Lỗi truy vấn: " . $conn->error;
-        exit;
-    }
+                if (!$result_custom) {
+                    echo "Lỗi truy vấn: " . $conn->error;
+                    exit;
+                }
 
-    // Lấy doanh thu
-    $total_revenue_custom = $result_custom->fetch_assoc()['total_revenue_custom'] ?: 0;
+                // Lấy doanh thu
+                $total_revenue_custom = $result_custom->fetch_assoc()['total_revenue_custom'] ?: 0;
 
-    // Chuyển định dạng ngày sang dd/mm/yyyy
-    $start_date_display = date('d/m/Y', strtotime($start_date_input));
-    $end_date_display = date('d/m/Y', strtotime($end_date_input));
+                // Chuyển định dạng ngày sang dd/mm/yyyy
+                $start_date_display = date('d/m/Y', strtotime($start_date_input));
+                $end_date_display = date('d/m/Y', strtotime($end_date_input));
 
-    // Hiển thị bảng doanh thu
-    echo "
+                // Hiển thị bảng doanh thu
+                echo "
         <div class='container'>
             <h5>Doanh thu từ ngày $start_date_display đến ngày $end_date_display</h5>
             <table class='table'>
@@ -279,20 +279,20 @@ if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
                 </tbody>
             </table>
         </div>";
-}
-?>
+            }
+            ?>
 
-<script>
-// JavaScript để đặt placeholder ban đầu là dd/mm/yyyy
-document.addEventListener("DOMContentLoaded", function () {
-    const inputs = document.querySelectorAll("input[type='date']");
-    inputs.forEach(input => {
-        if (!input.value) {
-            input.placeholder = "dd/mm/yyyy";
-        }
-    });
-});
-</script>
+            <script>
+                // JavaScript để đặt placeholder ban đầu là dd/mm/yyyy
+                document.addEventListener("DOMContentLoaded", function() {
+                    const inputs = document.querySelectorAll("input[type='date']");
+                    inputs.forEach(input => {
+                        if (!input.value) {
+                            input.placeholder = "dd/mm/yyyy";
+                        }
+                    });
+                });
+            </script>
 
 
             <!-- Biểu đồ doanh thu theo giờ -->
@@ -339,168 +339,178 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 </script>
             </div>
-  <!-- Biểu đồ doanh thu theo tuần -->
-<div class="chart-container" style="width: 60%; margin: auto; margin-top: 40px;">
-    <canvas id="weekly-revenue-line-chart"></canvas>
-    <script>
-        var weeklyLineCtx = document.getElementById('weekly-revenue-line-chart').getContext('2d');
-        var weeklyLineChart = new Chart(weeklyLineCtx, {
-            type: 'line', // Loại biểu đồ đường
-            data: {
-                labels: <?php echo json_encode($days_of_week); ?>, // Các ngày trong tuần
-                datasets: [{
-                    label: 'Doanh thu',
-                    data: <?php echo json_encode($weekly_revenues); ?>, // Doanh thu từng ngày trong tuần
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền dưới đường
-                    borderColor: '#333', // Màu đường
-                    borderWidth: 2,
-                    tension: 0.4 // Độ cong của đường
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Biểu đồ thống kê doanh thu theo tuần'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Doanh thu (VND)'
+            <!-- Biểu đồ doanh thu theo tuần -->
+            <div class="chart-container" style="width: 60%; margin: auto; margin-top: 40px;">
+                <canvas id="weekly-revenue-line-chart"></canvas>
+                <script>
+                    var weeklyLineCtx = document.getElementById('weekly-revenue-line-chart').getContext('2d');
+                    var weeklyLineChart = new Chart(weeklyLineCtx, {
+                        type: 'line', // Loại biểu đồ đường
+                        data: {
+                            labels: <?php echo json_encode($days_of_week); ?>, // Các ngày trong tuần
+                            datasets: [{
+                                label: 'Doanh thu',
+                                data: <?php echo json_encode($weekly_revenues); ?>, // Doanh thu từng ngày trong tuần
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền dưới đường
+                                borderColor: '#333', // Màu đường
+                                borderWidth: 2,
+                                tension: 0.4 // Độ cong của đường
+                            }]
                         },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let value = context.raw || 0;
-                                return value.toLocaleString() + ' đ'; // Format doanh thu VND
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Biểu đồ thống kê doanh thu theo tuần'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Doanh thu (VND)'
+                                    },
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top'
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let value = context.raw || 0;
+                                            return value.toLocaleString() + ' đ'; // Format doanh thu VND
+                                        }
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-            }
-        });
-    </script>
-</div>
+                    });
+                </script>
+            </div>
 
-<!-- Biểu đồ doanh thu theo tháng -->
-<div class="chart-container" style="width: 60%; margin: auto; margin-top: 40px;">
-    <canvas id="monthly-revenue-line-chart"></canvas>
-    <script>
-        var monthlyLineCtx = document.getElementById('monthly-revenue-line-chart').getContext('2d');
-        var monthlyLineChart = new Chart(monthlyLineCtx, {
-            type: 'line', // Loại biểu đồ đường
-            data: {
-                labels: <?php echo json_encode($days_in_month); ?>, // Các ngày trong tháng
-                datasets: [{
-                    label: 'Doanh thu',
-                    data: <?php echo json_encode($monthly_revenues); ?>, // Doanh thu từng ngày
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Màu nền dưới đường
-                    borderColor: '#333', // Màu đường
-                    borderWidth: 2,
-                    tension: 0.4 // Độ cong của đường
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Biểu đồ thống kê doanh thu trong tháng'
+            <!-- Biểu đồ doanh thu theo tháng -->
+            <div class="chart-container" style="width: 60%; margin: auto; margin-top: 40px;">
+                <canvas id="monthly-revenue-line-chart"></canvas>
+                <script>
+                    var monthlyLineCtx = document.getElementById('monthly-revenue-line-chart').getContext('2d');
+                    var monthlyLineChart = new Chart(monthlyLineCtx, {
+                        type: 'line', // Loại biểu đồ đường
+                        data: {
+                            labels: <?php echo json_encode($days_in_month); ?>, // Các ngày trong tháng
+                            datasets: [{
+                                label: 'Doanh thu',
+                                data: <?php echo json_encode($monthly_revenues); ?>, // Doanh thu từng ngày
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)', // Màu nền dưới đường
+                                borderColor: '#333', // Màu đường
+                                borderWidth: 2,
+                                tension: 0.4 // Độ cong của đường
+                            }]
                         },
-                        ticks: {
-                            stepSize: 1 // Hiển thị tất cả các ngày
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Doanh thu (VND)'
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let value = context.raw || 0;
-                                return value.toLocaleString() + ' đ'; // Format doanh thu VND
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Biểu đồ thống kê doanh thu trong tháng'
+                                    },
+                                    ticks: {
+                                        stepSize: 1 // Hiển thị tất cả các ngày
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Doanh thu (VND)'
+                                    },
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top'
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let value = context.raw || 0;
+                                            return value.toLocaleString() + ' đ'; // Format doanh thu VND
+                                        }
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-            }
-        });
-    </script>
+                    });
+                </script>
 
-<!-- Nút xem PDF -->
-<div style="text-align: center; margin: 20px;">
-    <button id="view-pdf" class="btn btn-danger">Xem PDF</button>
-</div>
+                <!-- Nút xem PDF -->
+                <div style="text-align: center; margin: 20px;">
+                    <button id="view-pdf" class="btn btn-danger">Xem PDF</button>
+                </div>
 
-<!-- Thư viện html2pdf.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+                <!-- Thư viện html2pdf.js -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
-<script>
-    document.getElementById('view-pdf').addEventListener('click', function () {
-        // Lấy phần nội dung cần xuất PDF
-        var content = document.getElementById('content');
+                <script>
+                    document.getElementById('view-pdf').addEventListener('click', function() {
+                        // Lấy phần nội dung cần xuất PDF
+                        var content = document.getElementById('content');
 
-        // Tinh chỉnh CSS cho nội dung PDF (căn giữa và cân đối lề)
-        content.style.width = '90%'; // Giới hạn chiều rộng nội dung trong PDF
-        content.style.margin = '0 auto'; // Căn giữa nội dung
-        content.style.textAlign = 'center';
+                        // Tinh chỉnh CSS cho nội dung PDF (căn giữa và cân đối lề)
+                        content.style.width = '90%'; // Giới hạn chiều rộng nội dung trong PDF
+                        content.style.margin = '0 auto'; // Căn giữa nội dung
+                        content.style.textAlign = 'center';
 
-        // Cấu hình PDF
-        var opt = {
-            margin: [0, 0, 0, 0], // Loại bỏ lề để không ngắt trang
-            filename: 'bao-cao-doanh-thu.pdf', // Tên file PDF
-            image: { type: 'jpeg', quality: 0.98 }, // Định dạng hình ảnh
-            html2canvas: { scale: 3, useCORS: true }, // Độ phân giải cao hơn (giúp nội dung sắc nét)
-            jsPDF: { unit: 'px', format: [content.scrollWidth, content.scrollHeight], orientation: 'landscape' } // Kích thước PDF dựa trên kích thước nội dung
-        };
+                        // Cấu hình PDF
+                        var opt = {
+                            margin: [0, 0, 0, 0], // Loại bỏ lề để không ngắt trang
+                            filename: 'bao-cao-doanh-thu.pdf', // Tên file PDF
+                            image: {
+                                type: 'jpeg',
+                                quality: 0.98
+                            }, // Định dạng hình ảnh
+                            html2canvas: {
+                                scale: 3,
+                                useCORS: true
+                            }, // Độ phân giải cao hơn (giúp nội dung sắc nét)
+                            jsPDF: {
+                                unit: 'px',
+                                format: [content.scrollWidth, content.scrollHeight],
+                                orientation: 'landscape'
+                            } // Kích thước PDF dựa trên kích thước nội dung
+                        };
 
-        // Tạo PDF và mở trong tab mới
-        html2pdf()
-            .set(opt)
-            .from(content)
-            .outputPdf('blob') // Chuyển PDF thành Blob
-            .then(function (pdfBlob) {
-                // Tạo URL tạm thời từ Blob
-                var pdfUrl = URL.createObjectURL(pdfBlob);
+                        // Tạo PDF và mở trong tab mới
+                        html2pdf()
+                            .set(opt)
+                            .from(content)
+                            .outputPdf('blob') // Chuyển PDF thành Blob
+                            .then(function(pdfBlob) {
+                                // Tạo URL tạm thời từ Blob
+                                var pdfUrl = URL.createObjectURL(pdfBlob);
 
-                // Mở URL trong tab mới
-                window.open(pdfUrl, '_blank');
-            });
-    });
-</script>
+                                // Mở URL trong tab mới
+                                window.open(pdfUrl, '_blank');
+                            });
+                    });
+                </script>
 
 
 
-</id=>
+                </id=>
 
+            </div>
         </div>
-    </div>
 </body>
 
 </html>
