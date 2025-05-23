@@ -20,43 +20,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Kiểm tra mã script
     if (containsScript($name) || containsScript($description) || containsScript($price)) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Dữ liệu không hợp lệ!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Dữ liệu không hợp lệ!'); window.location.href='product.php';</script>";
         exit();
     }
 
     // Kiểm tra tên sản phẩm
     if (empty($name)) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Tên sản phẩm không được để trống!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Tên sản phẩm không được để trống!'); window.location.href='product.php';</script>";
         exit();
     } elseif (strlen($name) > 220) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Tên quá dài, tối đa 220 ký tự!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Tên quá dài, tối đa 220 ký tự!'); window.location.href='product.php';</script>";
         exit();
     } elseif (!preg_match('/^[\p{L}\p{N} ]+$/u', $name)) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Tên chỉ được chứa chữ cái, số và khoảng trắng!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Tên chỉ được chứa chữ cái, số và khoảng trắng!'); window.location.href='product.php';</script>";
         exit();
     }
     // Kiểm tra tên sản phẩm đã tồn tại, ngoại trừ sản phẩm hiện tại
@@ -68,53 +44,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $row = $result->fetch_assoc();
 
     if ($row['count'] > 0) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Tên sản phẩm đã tồn tại!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Tên sản phẩm đã tồn tại!'); window.location.href='product.php';</script>";
         $stmt->close();
         exit();
     }
     $stmt->close();
     // Kiểm tra giá
     if (empty($price)) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Giá không được để trống!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Giá không được để trống!'); window.location.href='product.php';</script>";
         exit();
     } elseif (!is_numeric($price)) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Giá phải là số hợp lệ!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Giá phải là số hợp lệ!'); window.location.href='product.php';</script>";
         exit();
     } elseif ((float)$price <= 0) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Giá sản phẩm phải lớn hơn 0!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Giá sản phẩm phải lớn hơn 0!'); window.location.href='product.php';</script>";
         exit();
     } elseif ((float)$price > 100000000) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Giá sản phẩm không được lớn hơn 100 triệu đồng!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Giá sản phẩm không được lớn hơn 100 triệu đồng!'); window.location.href='product.php';</script>";
         exit();
     }
 
@@ -122,76 +68,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Kiểm tra mô tả
     if (empty($description)) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Mô tả không được để trống!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Mô tả không được để trống!'); window.location.href='product.php';</script>";
         exit();
     } elseif (strlen($description) > 1000) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Mô tả quá dài!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Mô tả quá dài!'); window.location.href='product.php';</script>";
         exit();
     }
 
     // Kiểm tra danh mục
     if (empty($category_id) || !is_numeric($category_id) || (int)$category_id <= 0) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Phải chọn danh mục sản phẩm hợp lệ!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Phải chọn danh mục sản phẩm hợp lệ!'); window.location.href='product.php';</script>";
         exit();
     }
 
     // Kiểm tra nổi bật
     if ($remark === '') {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Vui lòng chọn sản phẩm có nổi bật hay không!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Vui lòng chọn sản phẩm có nổi bật hay không!'); window.location.href='product.php';</script>";
         exit();
     }
 
     // Kiểm tra số lượng tồn kho
     if (empty($stock)) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Số lượng không được để trống!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Số lượng không được để trống!'); window.location.href='product.php';</script>";
         exit();
     } elseif (!is_numeric($stock) || (int)$stock < 0) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Số lượng phải là số không âm!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Số lượng phải là số không âm!'); window.location.href='product.php';</script>";
         exit();
     } elseif ((int)$stock > 1000000) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Số lượng vượt quá giới hạn cho phép!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Số lượng vượt quá giới hạn cho phép!'); window.location.href='product.php';</script>";
         exit();
     }
 
@@ -199,31 +103,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Kiểm tra giảm giá
     if (empty($sale)) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Giảm giá không được để trống!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Giảm giá không được để trống!'); window.location.href='product.php';</script>";
         exit();
     } elseif (!is_numeric($sale) || (int)$sale < 0) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Giảm giá phải là số không âm!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Giảm giá phải là số không âm!'); window.location.href='product.php';</script>";
         exit();
     } elseif ((int)$sale > 100) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Giảm giá không được lớn hơn 100%!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Giảm giá không được lớn hơn 100%!'); window.location.href='product.php';</script>";
         exit();
     }
 
@@ -237,25 +123,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
 
         if (!in_array($file_ext, $allowed_ext)) {
-            echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Định dạng ảnh không hợp lệ!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+            echo "<script>alert('Định dạng ảnh không hợp lệ!'); window.location.href='product.php';</script>";
             exit();
         }
 
-        $target_path = "../Uploads/" . basename($image);
+        $target_path = "../uploads/" . basename($image);
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-            echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Lỗi khi tải ảnh lên!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+            echo "<script>alert('Lỗi khi tải ảnh lên!'); window.location.href='product.php';</script>";
             error_log("Upload file failed: " . print_r($_FILES['image'], true));
             exit();
         }
@@ -270,32 +144,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($stmt->execute()) {
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Sửa sản phẩm thành công!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        echo "<script>alert('Sửa sản phẩm thành công!'); window.location.href='product.php';</script>";
     } else {
-        $error = htmlspecialchars($stmt->error, ENT_QUOTES, 'UTF-8');
-        echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Lỗi khi sửa sản phẩm: $error</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+        $error = addslashes($stmt->error);
+        echo "<script>alert('Lỗi khi sửa sản phẩm: $error'); window.location.href='product.php';</script>";
     }
 
     $stmt->close();
 } else {
-    echo "<div id='custom-alert' style='position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ff4444; color: white; padding: 15px; border-radius: 5px; z-index: 1000;'>Yêu cầu không hợp lệ!</div>
-<script>
-    setTimeout(function() {
-        document.getElementById('custom-alert').style.display = 'none';
-        window.location.href = 'product.php';
-    }, 2000);
-</script>";
+    echo "<script>alert('Yêu cầu không hợp lệ!'); window.location.href='product.php';</script>";
 }
-?>
