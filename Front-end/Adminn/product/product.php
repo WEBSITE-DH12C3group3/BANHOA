@@ -189,7 +189,7 @@ $db = new Database();
                         </div>
                         <div class="form-group">
                             <label for="sale">Sale (%)</label>
-                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" min="0" max="99" step="1" />
+                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" step="1" />
                         </div>
                         <div class="form-group">
                             <label for="stock">Số lượng</label>
@@ -265,7 +265,7 @@ $db = new Database();
                         </div>
                         <div class="form-group">
                             <label for="sale">Sale (%)</label>
-                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" value="<?php echo $row['sale'] ?>" min="0" max="99" step="1">
+                            <input type="number" class="form-control" id="sale" name="sale" placeholder="Giảm giá" value="<?php echo $row['sale'] ?>" step="1">
                         </div>
                         <div class="form-group">
                             <label for="stock">Số lượng</label>
