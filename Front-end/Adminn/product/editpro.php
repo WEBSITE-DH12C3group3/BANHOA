@@ -35,7 +35,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Tên chỉ được chứa chữ cái, số và khoảng trắng!'); window.location.href='product.php';</script>";
         exit();
     }
+    $check_sql = "SELECT COUNT(*) as count FROM products WHERE product_name = ?";
+    $stmt = $db->conn->prepare($check_sql);
+    $stmt->bind_param("s", $name);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
 
+    if ($row['count'] > 0) {
+        echo "<script>alert('Tên sản phẩm đã tồn tại!'); window.location.href='product.php';</script>";
+        $stmt->close();
+        exit();
+    }
+    $stmt->close();
     // Kiểm tra giá
     if (empty($price)) {
         echo "<script>alert('Giá không được để trống!'); window.location.href='product.php';</script>";
