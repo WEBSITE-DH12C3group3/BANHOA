@@ -35,9 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Tên chỉ được chứa chữ cái, số và khoảng trắng!'); window.location.href='product.php';</script>";
         exit();
     }
-    $check_sql = "SELECT COUNT(*) as count FROM products WHERE product_name = ?";
+    // Kiểm tra tên sản phẩm đã tồn tại, ngoại trừ sản phẩm hiện tại
+    $check_sql = "SELECT COUNT(*) as count FROM products WHERE product_name = ? AND id != ?";
     $stmt = $db->conn->prepare($check_sql);
-    $stmt->bind_param("s", $name);
+    $stmt->bind_param("si", $name, $id);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
