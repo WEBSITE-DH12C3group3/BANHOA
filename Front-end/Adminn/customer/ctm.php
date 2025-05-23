@@ -160,23 +160,23 @@ $db = new Database();
                         <input type="text" class="form-control" id="customerID" name="customerID" placeholder="Mã khách hàng" value="<?php echo $row['id'] ?>" hidden>
                         <div class="form-group">
                             <label for="customerName">Tên Khách Hàng</label>
-                            <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Tên khách hàng" required value="<?php echo $row['fullname'] ?>">
+                            <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Tên khách hàng" value="<?php echo $row['fullname'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="customerEmail">Email</label>
-                            <input type="email" class="form-control" id="customerEmail" name="customerEmail" placeholder="Nhập email" required value="<?php echo $row['email'] ?>">
+                            <input type="text" class="form-control" id="customerEmail" name="customerEmail" placeholder="Nhập email" value="<?php echo $row['email'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="customerPhone">Số Điện Thoại</label>
-                            <input type="text" class="form-control" id="customerPhone" name="customerPhone" placeholder="Nhập số điện thoại" required value="<?php echo $row['phone'] ?>">
+                            <input type="text" class="form-control" id="customerPhone" name="customerPhone" placeholder="Nhập số điện thoại" value="<?php echo $row['phone'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="customerAddress">Địa Chỉ</label>
-                            <input type="text" class="form-control" id="customerAddress" name="customerAddress" placeholder="Nhập địa chỉ" required value="<?php echo $row['address'] ?>">
+                            <input type="text" class="form-control" id="customerAddress" name="customerAddress" placeholder="Nhập địa chỉ" value="<?php echo $row['address'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="role">Vai trò</label>
-                            <select class="form-control" name="role" id="role" required>
+                            <select class="form-control" name="role" id="role">
                                 <option value="customer">Khách Hàng</option>
                                 <option value="admin">Admin</option>
                             </select>

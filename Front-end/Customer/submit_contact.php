@@ -19,7 +19,7 @@ $email = $_POST['email'];
 $message = $_POST['message'];
 
 // Kiểm tra nếu có trường nào bị bỏ trống
-if(empty($name) || empty($email) || empty($message)) {
+if (empty($name) || empty($email) || empty($message)) {
     echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); window.location.href = 'contact.php';</script>";
     exit;
 }
@@ -45,4 +45,3 @@ if ($stmt->execute()) {
 // Đóng kết nối
 $stmt->close();
 $conn->close();
-?>

@@ -9,11 +9,11 @@ if (isset($_GET['id'])) {
     $query = "DELETE FROM users WHERE id = $id";
     if ($db->delete($query)) {
         // Hiển thị thông báo thành công bằng JavaScript
-        echo "<script>alert('Xóa thành công!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=success&title=Thành công!&message=" . urlencode('Xóa thành công!'));
     } else {
         // Hiển thị thông báo lỗi bằng JavaScript
-        echo "<script>alert('Lỗi khi xóa!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Lỗi khi xóa!'));
     }
 } else {
-    echo "<script>alert('Mã khách không được xác định.'); window.location.href = 'ctm.php';</script>";
+    header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Mã khách không được xác định.'));
 }

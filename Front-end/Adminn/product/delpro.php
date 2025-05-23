@@ -1,23 +1,24 @@
 <?php
+ob_start(); // Thêm ob_start() để tránh lỗi header already sent
 include '/xampp/htdocs/BANHOA/database/connect.php';
 $db = new Database();
 
-// Kiểm tra xem ID sinh viên có tồn tại trong GET hay không
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // Use parameterized query to prevent SQL injection
     $stmt = $db->conn->prepare("DELETE FROM products WHERE id = ?");
-    $stmt->bind_param("s", $id); // 'i' specifies that $id is an integer
+    $stmt->bind_param("i", $id); // 'i' specifies that $id is an integer
 
     if ($stmt->execute()) {
-        // Hiển thị thông báo thành công bằng JavaScript
-        echo "<script>alert('Xóa thành công!'); window.location.href = 'product.php';</script>";
+        header("Location: product.php?status=success&title=Thành công!&message=" . urlencode('Xóa sản phẩm thành công!'));
     } else {
-        // Hiển thị thông báo lỗi bằng JavaScript
-        echo "<script>alert('Lỗi khi xóa!'); window.location.href = 'product.php';</script>";
+        $error = addslashes($stmt->error);
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Lỗi khi xóa sản phẩm: ' . $error));
     }
     $stmt->close();
 } else {
-    echo "<script>alert('Mã sản phẩm không được xác định.'); window.location.href = 'product.php';</script>";
+    header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Mã sản phẩm không được xác định.'));
 }
+$db->conn->close();
+ob_end_flush(); // Đẩy buffer ra trình duyệt

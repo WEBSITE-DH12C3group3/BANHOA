@@ -52,10 +52,12 @@ if (isset($_GET['id']) && isset($_GET['order_code'])) {
         }
 
         // Chuyển hướng về trang order.php sau khi duyệt đơn hàng
-        echo "<script>window.location.href = 'order.php';</script>";
+        header("Location: order.php?status=success&title=Thành công!&message=" . urlencode('Duyệt đơn hàng thành công và email đã được gửi!'));
         exit(); // Đảm bảo rằng không còn mã PHP nào chạy sau khi chuyển hướng
     } else {
-        echo "<script>alert('Lỗi khi duyệt đơn hàng!'); window.location.href = 'order.php';</script>";
+        $error = addslashes($update_stmt->error);
+        header("Location: order.php?status=error&title=Lỗi!&message=" . urlencode('Lỗi khi duyệt đơn hàng: ' . $error));
+        exit();
     }
 
     // Đóng các kết nối

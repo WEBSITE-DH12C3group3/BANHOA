@@ -144,14 +144,49 @@ $db = new Database();
                                 <td><?php echo $row['status']; ?></td>
                                 <td>
                                     <a href="order_detail.php?code=<?php echo $row['order_code']; ?>&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                                    <a onclick="return confirm('Bạn có muốn xóa?')" href="delorder.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    <a href="#" onclick="confirmDelete(<?php echo $row['id']; ?>);" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                     <?php if ($row['status'] === 'Đã duyệt' || $row['status'] === 'Đã thanh toán' || $row['status'] === 'Đã nhận') { ?>
                                         <a href="print.php?code=<?php echo $row['order_code']; ?>" class="btn btn-secondary"><i class="fa fa-print"></i></a>
                                     <?php } ?>
                                     <?php if ($row['status'] === 'Chờ duyệt') { ?>
-                                        <a onclick="return confirm('Bạn có muốn duyệt?')" href="approve.php?id=<?php echo $row['id']; ?>&order_code=<?php echo $row['order_code']; ?>" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
+                                        <a href="#" onclick="confirmApprove(<?php echo $row['id']; ?>, '<?php echo $row['order_code']; ?>');" class="btn btn-success"><i class="fa fa-check-circle"></i></a>
                                     <?php } ?>
                                 </td>
+
+                                <script>
+                                    function confirmDelete(id) {
+                                        Swal.fire({
+                                            title: 'Bạn có chắc chắn muốn xóa?',
+                                            text: "Hành động này không thể hoàn tác!",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#d33',
+                                            cancelButtonColor: '#3085d6',
+                                            confirmButtonText: 'Có, xóa nó!',
+                                            cancelButtonText: 'Hủy'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                window.location.href = 'delorder.php?id=' + id;
+                                            }
+                                        });
+                                    }
+
+                                    function confirmApprove(id, orderCode) {
+                                        Swal.fire({
+                                            title: 'Bạn có muốn duyệt đơn hàng này?',
+                                            icon: 'question',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#28a745',
+                                            cancelButtonColor: '#6c757d',
+                                            confirmButtonText: 'Có, duyệt ngay!',
+                                            cancelButtonText: 'Hủy'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                window.location.href = 'approve.php?id=' + id + '&order_code=' + orderCode;
+                                            }
+                                        });
+                                    }
+                                </script>
                             </tr>
                     <?php
                         }

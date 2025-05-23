@@ -17,69 +17,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Kiểm tra rỗng
     if (empty($id) && empty($name) && empty($email) && empty($phone) && empty($address) && empty($role)) {
-        echo "<script>alert('Vui lòng điền đầy đủ thông tin!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Vui lòng điền đầy đủ thông tin!'));
         exit();
     }
     if (empty($name)) {
-        echo "<script>alert('Tên khách hàng không được để trống!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Tên khách hàng không được để trống!'));
         exit();
     }
     // Kiểm tra tên
     if (strlen($name) > 220) {
-        echo "<script>alert('Tên quá dài, tối đa 220 ký tự!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Tên quá dài, tối đa 220 ký tự!'));
         exit();
     }
     if (!preg_match("/^[a-zA-ZÀ-ỹ\s]+$/u", $name)) {
-        echo "<script>alert('Tên chỉ được chứa chữ cái, số và khoảng trắng!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Tên chỉ được chứa chữ cái, số và khoảng trắng!'));
         exit();
     }
     if (containsScript($name) || containsScript($address) || containsScript($email)) {
-        echo "<script>alert('Dữ liệu không hợp lệ!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Dữ liệu không hợp lệ!'));
         exit();
     }
 
     // Kiểm tra email
     if (empty($email)) {
-        echo "<script>alert('Email không được để trống!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Email không được để trống!'));
         exit();
     }
     if (strlen($email) > 220) {
-        echo "<script>alert('Email không được dài quá 220 ký tự!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Email không được dài quá 220 ký tự!'));
         exit();
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || preg_match('/[\sà-ỹÀ-Ỵ]|[^a-zA-Z0-9@._-]/u', $email)) {
-        echo "<script>alert('Email sai định dạng!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Email sai định dạng!'));
         exit();
     }
 
     if (preg_match('/^\d/', $email)) {
-        echo "<script>alert('Email không được bắt đầu bằng số!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Email không được bắt đầu bằng số!'));
         exit();
     }
 
 
     // Kiểm tra số điện thoại
     if (empty($phone)) {
-        echo "<script>alert('Số điện thoại không được để trống!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Số điện thoại không được để trống!'));
         exit();
     }
     if (!preg_match('/^\d{10}$/', $phone)) {
         if (strlen($phone) !== 10) {
-            echo "<script>alert('Số điện thoại phải 10 ký tự!'); window.location.href = 'ctm.php';</script>";
+            header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Số điện thoại phải 10 ký tự!'));
         } else {
-            echo "<script>alert('Số điện thoại không hợp lệ!'); window.location.href = 'ctm.php';</script>";
+            header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Số điện thoại không hợp lệ!'));
         }
         exit();
     }
 
     // Kiểm tra địa chỉ
     if (empty($address)) {
-        echo "<script>alert('Địa chỉ không được để trống!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Địa chỉ không được để trống!'));
         exit();
     }
 
     if (preg_match('/[#\$%\^&\*\(\)=\+\[\]\{\}@;:\'\"<>,\?\/\\\\|]/', $address)) {
-        echo "<script>alert('Địa chỉ không được chứa ký tự đặc biệt!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Địa chỉ không được chứa ký tự đặc biệt!'));
         exit();
     }
 
@@ -95,10 +95,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssi", $name, $email, $phone, $address, $role, $id);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Cập nhật thành công!'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=success&title=Thành công!&message=" . urlencode('Cập nhật thành công!'));
+        exit();
     } else {
         $error = $stmt->error;
-        echo "<script>alert('Lỗi khi cập nhật: $error'); window.location.href = 'ctm.php';</script>";
+        header("Location: ctm.php?status=error&title=Lỗi!&message=" . urlencode('Lỗi khi cập nhật: ' . $error));
+        exit();
     }
 
     $stmt->close();

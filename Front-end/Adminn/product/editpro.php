@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Thêm ob_start() để tránh lỗi header already sent
 include '/xampp/htdocs/BANHOA/database/connect.php';
 
 $db = new Database();
@@ -16,121 +17,102 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stock = isset($_POST['stock']) ? trim($_POST['stock']) : '';
     $category_id = isset($_POST['category_id']) ? trim($_POST['category_id']) : '';
     $sale = isset($_POST['sale']) ? trim($_POST['sale']) : '';
-    $remark = isset($_POST['remark']) ? trim($_POST['remark']) : '';
+    $remark = isset($_POST['remark']) ? (int)$_POST['remark'] : 0; // Đảm bảo remark là số nguyên, 0 nếu không có
 
     // Kiểm tra mã script
     if (containsScript($name) || containsScript($description) || containsScript($price)) {
-        echo "<script>alert('Dữ liệu không hợp lệ!'); window.location.href='product.php';</script>";
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Dữ liệu không hợp lệ!'));
         exit();
     }
 
     // Kiểm tra tên sản phẩm
     if (empty($name)) {
-        echo "<script>alert('Tên sản phẩm không được để trống!'); window.location.href='product.php';</script>";
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Tên sản phẩm không được để trống!'));
         exit();
     } elseif (strlen($name) > 220) {
-        echo "<script>alert('Tên quá dài, tối đa 220 ký tự!'); window.location.href='product.php';</script>";
-        exit();
-    } elseif (!preg_match('/^[\p{L}\p{N} ]+$/u', $name)) {
-        echo "<script>alert('Tên chỉ được chứa chữ cái, số và khoảng trắng!'); window.location.href='product.php';</script>";
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Tên sản phẩm quá dài, tối đa 220 ký tự!'));
         exit();
     }
-    // Kiểm tra tên sản phẩm đã tồn tại, ngoại trừ sản phẩm hiện tại
     $check_sql = "SELECT COUNT(*) as count FROM products WHERE product_name = ? AND id != ?";
-    $stmt = $db->conn->prepare($check_sql);
-    $stmt->bind_param("si", $name, $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $st = $db->conn->prepare($check_sql);
+    $st->bind_param("si", $name, $id);
+    $st->execute();
+    $result = $st->get_result();
     $row = $result->fetch_assoc();
-
     if ($row['count'] > 0) {
-        echo "<script>alert('Tên sản phẩm đã tồn tại!'); window.location.href='product.php';</script>";
-        $stmt->close();
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Tên sản phẩm đã tồn tại!'));
+        $st->close();
         exit();
     }
-    $stmt->close();
+
     // Kiểm tra giá
     if (empty($price)) {
-        echo "<script>alert('Giá không được để trống!'); window.location.href='product.php';</script>";
-        exit();
-    } elseif (!is_numeric($price)) {
-        echo "<script>alert('Giá phải là số hợp lệ!'); window.location.href='product.php';</script>";
-        exit();
-    } elseif ((float)$price <= 0) {
-        echo "<script>alert('Giá sản phẩm phải lớn hơn 0!'); window.location.href='product.php';</script>";
-        exit();
-    } elseif ((float)$price > 100000000) {
-        echo "<script>alert('Giá sản phẩm không được lớn hơn 100 triệu đồng!'); window.location.href='product.php';</script>";
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Giá không được để trống!'));
         exit();
     }
-
+    if (!is_numeric($price) || $price <= 0) {
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Giá phải là số dương!'));
+        exit();
+    }
+    if ($price > 100000000) {
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Giá không được lớn hơn 100 triệu đồng!'));
+        exit();
+    }
     $price = (float)$price;
 
     // Kiểm tra mô tả
     if (empty($description)) {
-        echo "<script>alert('Mô tả không được để trống!'); window.location.href='product.php';</script>";
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Mô tả không được để trống!'));
         exit();
-    } elseif (strlen($description) > 1000) {
-        echo "<script>alert('Mô tả quá dài!'); window.location.href='product.php';</script>";
-        exit();
-    }
-
-    // Kiểm tra danh mục
-    if (empty($category_id) || !is_numeric($category_id) || (int)$category_id <= 0) {
-        echo "<script>alert('Phải chọn danh mục sản phẩm hợp lệ!'); window.location.href='product.php';</script>";
-        exit();
-    }
-
-    // Kiểm tra nổi bật
-    if ($remark === '') {
-        echo "<script>alert('Vui lòng chọn sản phẩm có nổi bật hay không!'); window.location.href='product.php';</script>";
+    } elseif (strlen($description) > 220) {
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Mô tả quá dài, tối đa 220 ký tự!'));
         exit();
     }
 
     // Kiểm tra số lượng tồn kho
-    if (empty($stock)) {
-        echo "<script>alert('Số lượng không được để trống!'); window.location.href='product.php';</script>";
-        exit();
-    } elseif (!is_numeric($stock) || (int)$stock < 0) {
-        echo "<script>alert('Số lượng phải là số không âm!'); window.location.href='product.php';</script>";
-        exit();
-    } elseif ((int)$stock > 1000000) {
-        echo "<script>alert('Số lượng vượt quá giới hạn cho phép!'); window.location.href='product.php';</script>";
+    if (empty($stock) && $stock !== "0") {
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Số lượng không được để trống!'));
         exit();
     }
-
+    if (!is_numeric($stock) || $stock < 0) {
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Số lượng tồn kho phải là số không âm!'));
+        exit();
+    }
     $stock = (int)$stock;
 
     // Kiểm tra giảm giá
-    if (empty($sale)) {
-        echo "<script>alert('Giảm giá không được để trống!'); window.location.href='product.php';</script>";
+    if (empty($sale) && $sale !== "0") {
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Giảm giá không được để trống!'));
         exit();
-    } elseif (!is_numeric($sale) || (int)$sale < 0) {
-        echo "<script>alert('Giảm giá phải là số không âm!'); window.location.href='product.php';</script>";
+    }
+    if (!is_numeric($sale) || $sale < 0 || $sale > 100) {
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Giảm giá phải là số từ 0 đến 100!'));
         exit();
-    } elseif ((int)$sale > 100) {
-        echo "<script>alert('Giảm giá không được lớn hơn 100%!'); window.location.href='product.php';</script>";
+    }
+    $sale = (int)$sale;
+
+    // Kiểm tra danh mục
+    if (empty($category_id)) {
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Mã danh mục không được để trống!'));
         exit();
     }
 
-    $sale = (int)$sale;
+    $image = $_FILES['image']['name'];
+    $file_tmp = $_FILES['image']['tmp_name'];
 
-    // Xử lý nếu có ảnh
-    $hasImage = isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK;
-    if ($hasImage) {
-        $image = $_FILES['image']['name'];
+    if (!empty($image)) {
         $file_ext = strtolower(pathinfo($image, PATHINFO_EXTENSION));
         $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
 
         if (!in_array($file_ext, $allowed_ext)) {
-            echo "<script>alert('Định dạng ảnh không hợp lệ!'); window.location.href='product.php';</script>";
+            header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Định dạng ảnh không hợp lệ!'));
             exit();
         }
 
         $target_path = "../uploads/" . basename($image);
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-            echo "<script>alert('Lỗi khi tải ảnh lên!'); window.location.href='product.php';</script>";
             error_log("Upload file failed: " . print_r($_FILES['image'], true));
+            header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Lỗi khi tải ảnh lên!'));
             exit();
         }
 
@@ -144,13 +126,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($stmt->execute()) {
-        echo "<script>alert('Sửa sản phẩm thành công!'); window.location.href='product.php';</script>";
+        header("Location: product.php?status=success&title=Thành công!&message=" . urlencode('Sửa sản phẩm thành công!'));
     } else {
         $error = addslashes($stmt->error);
-        echo "<script>alert('Lỗi khi sửa sản phẩm: $error'); window.location.href='product.php';</script>";
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Lỗi khi sửa sản phẩm: ' . $error));
     }
-
     $stmt->close();
+    $db->conn->close();
 } else {
-    echo "<script>alert('Yêu cầu không hợp lệ!'); window.location.href='product.php';</script>";
+    header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Yêu cầu không hợp lệ!'));
+    exit();
 }
+ob_end_flush(); // Đẩy buffer ra trình duyệt

@@ -11,13 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Kiểm tra định dạng email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Địa chỉ email không hợp lệ.";
+        header("Location: display_contact.php?status=error&title=Lỗi!&message=" . urlencode('Địa chỉ email không hợp lệ.'));
         exit;
     }
 
     // Kiểm tra nội dung tin nhắn (có thể thêm kiểm tra độ dài, ký tự đặc biệt,...)
     if (empty($message)) {
-        echo "Nội dung tin nhắn không được để trống.";
+        header("Location: display_contact.php?status=error&title=Lỗi!&message=" . urlencode('Nội dung tin nhắn không được để trống.'));
         exit;
     }
 
@@ -25,12 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Gửi email sử dụng Mailer class
     if ($mailer->sendMail($subject, $message, $email)) {
-        echo "Phản hồi đã được gửi thành công!";
-         // Redirect after success
+        header("Location: display_contact.php?status=success&title=Thành công!&message=" . urlencode('Phản hồi đã được gửi thành công.'));
         exit;
         // Xử lý lỗi chi tiết hơn, ví dụ: in ra lỗi từ Mailer class
     }
-    echo "<script>alert('Phản hồi đã được gửi thành công!'); window.location.href = 'display_contact.php';</script>";
+    header("Location: display_contact.php?status=error&title=Lỗi!&message=" . urlencode('Lỗi khi gửi phản hồi.'));
     exit;
 }
-?>

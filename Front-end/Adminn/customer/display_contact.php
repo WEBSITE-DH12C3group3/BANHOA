@@ -79,7 +79,7 @@ if (isset($_GET['id'])) {
             <table class="table table-bordered" id="Table">
                 <thead>
                     <tr>
-                        <th  >ID</th>
+                        <th>ID</th>
                         <th>Tên</th>
                         <th>Email</th>
                         <th>Nội dung liên hệ</th>
@@ -111,9 +111,9 @@ if (isset($_GET['id'])) {
                 </tbody>
             </table>
         </div>
-          
- <!-- Modal phản hồi -->
- <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+
+        <!-- Modal phản hồi -->
+        <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

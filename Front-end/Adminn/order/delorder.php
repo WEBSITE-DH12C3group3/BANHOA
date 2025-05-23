@@ -9,11 +9,11 @@ if (isset($_GET['id'])) {
     $query = "DELETE FROM orders WHERE id = $id";
     if ($db->delete($query)) {
         // Hiển thị thông báo thành công bằng JavaScript
-        echo "<script>alert('Xóa thành công!'); window.location.href = 'order.php';</script>";
+        header("Location: order.php?status=success&title=Thành công!&message=" . urlencode('Xóa đơn hàng thành công!'));
     } else {
         // Hiển thị thông báo lỗi bằng JavaScript
-        echo "<script>alert('Lỗi khi xóa!'); window.location.href = 'order.php';</script>";
+        header("Location: order.php?status=error&title=Lỗi!&message=" . urlencode('Lỗi khi xóa đơn hàng.'));
     }
 } else {
-    echo "<script>alert('Mã khách không được xác định.'); window.location.href = 'order.php';</script>";
+    header("Location: order.php?status=error&title=Lỗi!&message=" . urlencode('Mã đơn hàng không được xác định.'));
 }
