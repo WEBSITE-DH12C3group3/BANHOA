@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (strlen($name) > 220) {
         header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Tên sản phẩm quá dài, tối đa 220 ký tự!'));
         exit();
-    } elseif (preg_match('/[^a-zA-Z0-9\s]/', $name)) {
+    } elseif (!preg_match('/^[\p{L}\p{N}\s]+$/u', $name)) {
         header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Tên sản phẩm chỉ được chứa chữ cái, số và khoảng trắng!'));
         exit();
     }
