@@ -30,6 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (strlen($name) > 220) {
         header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Tên sản phẩm quá dài, tối đa 220 ký tự!'));
         exit();
+    } elseif (preg_match('/[^a-zA-Z0-9\s]/', $name)) {
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Tên sản phẩm chỉ được chứa chữ cái, số và khoảng trắng!'));
+        exit();
     }
     $check_sql = "SELECT COUNT(*) as count FROM products WHERE product_name = ? AND id != ?";
     $st = $db->conn->prepare($check_sql);
@@ -48,12 +51,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Giá không được để trống!'));
         exit();
     }
-    if (!is_numeric($price) || $price <= 0) {
+    if ($price <= 0) {
         header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Giá phải là số dương!'));
         exit();
     }
     if ($price > 100000000) {
         header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Giá không được lớn hơn 100 triệu đồng!'));
+        exit();
+    } elseif (!is_numeric($price)) {
+        header("Location: product.php?status=error&title=Lỗi!&message=" . urlencode('Giá phải là một số hợp lệ!'));
         exit();
     }
     $price = (float)$price;
