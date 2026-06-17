@@ -14,13 +14,7 @@
 
 ### Sinh viên thực hiện
 
-| **STT** | **MSSV**    | **Họ và tên**   | **Email**                |
-| ------- | ----------- | --------------- | ------------------------ |
-| 1       | 22111061102 | Phùng Thị Trang | 22111061102@hunre.edu.vn |
-| 2       | 22111061150 | Tạ Hoàng Nam    | 22111061150@hunre.edu.vn |
-| 3       | 22111061026 | Hoàng Văn Hà    | 22111061026@hunre.edu.vn |
-| 4       | 22111061403 | Lê Trường Giang | 22111061403@hunre.edu.vn |
-| 5       | 22111061173 | Chử Trung Huân  | 22111061173@hunre.edu.vn |
+
 
 ## Chạy thử project
 
